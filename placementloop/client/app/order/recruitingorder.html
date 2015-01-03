@@ -1,0 +1,201 @@
+  <div ng-include="'components/navbar/navbar.html'"></div>
+<div ng-include="'components/sidebar/sidebar.html'"></div>
+
+
+   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+         <!--<h1 class="page-header">Dashboard</h1>-->
+
+          <h2 class="sub-header">Recruitment Order Entry</h2>
+
+
+<div class="jumbotron">
+            <div class="form-group">
+               <span class="help-block">Talent Seeker Name</span>
+               <input type="text" ng-model="order.name" class="form-control" required>
+            </div>
+
+            <div class="form-group" style="margin-bottom:15px;">
+              <span class="help-block">What league is this for?</span>
+                <div ng-dropdown-multiselect="" options="hockeyLeagueData"
+                     selected-model="order.hockeyLeague" 
+                     extra-settings="hockeyLeagueSettings" 
+                     translation-texts="hockeyLeagueTextSettings">
+                </div>
+
+            </div>
+
+            <div class="form-group" style="margin-bottom:3px;">
+              <span class="help-block">Player Position <small>{{radioModel || ''}}</small></span>
+            
+            </div>
+
+            <div class="form-group  btn-group">
+                <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Goalie'">Goalie</label>
+                <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left wing'">Left wing</label>
+                <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left Defense'">Left Defense</label>
+                <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Center'">Center</label>
+                <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right Defense'">Right Defense</label>
+                <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right wing'">Right wing</label>               
+            </div>
+
+            <div class="form-group"
+              ng-class="{'has-error': datepickerForm.date.$invalid}">
+
+              <span class="help-block">
+                <i class="fa fa-calendar"></i>
+                Player's Date of Birth <small>(as date)</small>
+              </span>
+              <input type="text"
+                class="form-control" readonly ng-model="order.playerDateOfBirth" name="date" bs-datepicker>
+            </div>
+
+
+   
+  </div>
+
+
+
+
+<div class="jumbotron">
+        <form role="form">
+            
+              <div class="form-group">
+               <h4>What are the Player's Physical Traits is the team looking for?</h4>
+               <span class="help-block">Height Range</span>
+                  <rzslider
+                    rz-slider-floor="162"
+                    rz-slider-ceil="204"
+                    rz-slider-model="order.playerHeight"
+                    rz-slider-translate="translateCentimeter"
+                    rz-slider-step="1">
+                  </rzslider>
+            </div>
+
+
+               <div class="form-group">
+               <span class="help-block">Weight Range</span>
+                  <rzslider
+                    rz-slider-floor="150"
+                    rz-slider-ceil="250"
+                    rz-slider-model="order.playerWeight"
+                    rz-slider-translate="translateLbs"
+                    rz-slider-step="1">
+                  </rzslider>
+                </div>
+
+                <div class="form-group">
+                  <span class="help-block">What hand does the player shoot with?</span>
+                </div>
+
+                <div class="form-group  btn-group">
+                    <label class="btn btn-primary" ng-model="order.playerShootWith"
+                           btn-radio="'Left'">Left</label>
+                    <label class="btn btn-primary" ng-model="order.playerShootWith" 
+                           btn-radio="'Right'">Right</label>
+                </div>
+
+                <div class="form-group">
+                  <span class="help-block">What style of player is the team looking for?</span>
+                </div>
+                <div class="form-group">
+                    <label class="pull-left">More Defensive</label>
+                    <label class="pull-right">More Offensive</label>
+                    <rzslider
+                      rz-slider-floor="1"
+                      rz-slider-ceil="10"
+                      rz-slider-model="order.playerDefensiveScale"
+                      rz-slider-translate="translateDefensiveStyle"
+                      rz-slider-step="1">
+                    </rzslider> 
+                </div>
+
+                <div class="form-group">
+                  <label class="pull-left">System Based</label>
+                  <label class="pull-right">Free Flowing</label>
+                  <rzslider
+                    rz-slider-floor="1"
+                    rz-slider-ceil="10"
+                    rz-slider-model="order.playerSystemBasedScale"
+                    rz-slider-translate="translateSystemBasedStyle"
+                    rz-slider-step="1">
+                  </rzslider> 
+                  
+                </div>
+
+                <div class="form-group" style="margin-bottom:25px;">
+                  <label class="pull-left">Physical</label>
+                  <label class="pull-right">Skill</label>
+                  <rzslider
+                    rz-slider-floor="1"
+                    rz-slider-ceil="10"
+                    rz-slider-model="order.playerPhysicalScale"
+                    rz-slider-translate="translatePhysicalStyle"
+                    rz-slider-step="1">
+                  </rzslider> 
+                 
+                </div>
+
+    
+              <div class="form-group">
+               <span class="help-block">Player must be able to afford at least</span>
+              </div>
+
+              <div class="form-group">
+                <label>Team Fee $</label>
+                  <rzslider
+                    rz-slider-floor="0"
+                    rz-slider-ceil="12"
+                    rz-slider-model="order.playerTeamFee"
+                    rz-slider-translate="translateTeamFee"
+                    rz-slider-step="1">
+                  </rzslider> 
+                </div>
+
+                <div class="form-group">
+                  <label>Accomodation $</label>
+                  <rzslider
+                    rz-slider-floor="0"
+                    rz-slider-ceil="2000"
+                    rz-slider-model="order.playerAccomodationCost"
+                    rz-slider-translate="translatePerMonthAccomodation"
+                    rz-slider-step="1">
+                  </rzslider> 
+                </div>
+
+                <div class="form-group" style="margin-bottom:25px;">
+                  <span class="help-block">Equipment Player Resposibility</span>
+                  <rzslider
+                    rz-slider-floor="0"
+                    rz-slider-ceil="500"
+                    rz-slider-model="order.playerEquipmentFee"
+                    rz-slider-translate="translatePerMonthEquip"
+                    rz-slider-step="1">
+                  </rzslider> 
+                </div>
+
+
+
+                <div class="form-group">
+                    <span class="help-block">Does the Player need their own transportation?</span>
+                </div> 
+                <div class="form-group  btn-group">
+                    <label class="btn btn-primary" ng-model="order.playerOwnTransport"
+                           btn-radio="'Left'">Yes</label>
+                    <label class="btn btn-primary" ng-model="order.playerOwnTransport"
+                           btn-radio="'Right'">No</label>
+                </div>
+
+
+                <div class="form-group">
+                  <button ng-click="enterPlacementOrder()" class="btn btn-info pull-right">Enter Order</button>
+                </div>
+
+            </form>                            
+</div>
+
+
+</div>
+<!-- END CONTENT FRAME BODY -->  
+
+
+

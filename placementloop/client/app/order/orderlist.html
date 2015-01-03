@@ -1,0 +1,39 @@
+  <div ng-include="'components/navbar/navbar.html'"></div>
+<div ng-include="'components/sidebar/sidebar.html'"></div>
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Orders</div>
+
+  <!-- Table -->
+  <table class="table">
+    <table class="table">
+	  <th>ID</th>
+	  <th>Name</th>
+	  <th>Type</th>
+	  <th>Date Entered</th>
+	  <th>Status</th>
+	  <th>Action</th>
+	  <th></th>
+	  <th></th>
+	    <tr ng-repeat="order in orderList">
+			    <td>{{$index + 1 }}</td>
+			    <td>{{order.name}}</td>
+			    <td>{{order.orderType}}</td>
+			    <td>{{order.createdaAt}}</td>
+			    <td>{{order.status}}</td>
+			    <td><button class="btn btn-sm btn-info">Cancel</button></td>
+			    <td><button class="btn btn-sm btn-info">Edit</button></td>
+			    <td><button class="btn btn-sm btn-info" ng-click="viewMatches(order._id)">View Matches</button></td>
+			  </tr>
+	  </table>
+  </table>
+</div>
+
+
+</div>
+
+
+

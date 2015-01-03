@@ -1,0 +1,89 @@
+$icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
+$fa-font-path: "/bower_components/font-awesome/fonts";
+
+@import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
+@import 'font-awesome/scss/font-awesome';
+@import url(http://fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en);
+/**
+ * App-wide Styles
+ */
+
+// Component styles are injected through grunt
+// injector
+@import 'account/login/login.scss';
+@import 'admin/admin.scss';
+@import 'dashboard/dashboard.scss';
+@import 'guest/guest.scss';
+@import 'order/order.scss';
+@import 'guestnavbar/guestnavbar.scss';
+@import 'modal/modal.scss';
+@import 'sidebar/sidebar.scss';
+// endinjector
+
+
+
+$font-stack: 'RobotoDraft', 'Helvetica Neue', Helvetica, Arial;
+$primary-color-700: #2fb3db;//#303F9F;//#1976D2;
+$primary-color-500: #7bd454;//#3F51B5;//#2196F3;
+
+
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+
+* {
+  /*box-sizing: border-box;*/
+}
+html, body {
+  height: 100%;
+  padding: 0;
+  padding-top: 30px;
+  margin: 0;
+}
+body {
+  font-family: $font-stack;
+  /*font-weight: 300;*/
+  background-color: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+h2, h3 {
+  font-weight: 300;
+  margin: 0;
+}
+h3 {
+  font-weight: 400;
+}
+.navbar-default {
+  background-color: $primary-color-700;
+  border-color: #0D47A1;
+  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.navbar-default .navbar-brand {
+color: #FFFFFF;
+}
+
+.navbar-brand a:hover {
+color: #FFFFFF;
+
+}
+.navbar-brand:hover { 
+  color: #FFFFFF;
+}
+
+.sub-nav {
+  background-color:#f3f3f3;
+  //position: fixed;
+  top: 50px;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  //left: 300px;
+}
+
+label {
+font-weight: 300;
+}
