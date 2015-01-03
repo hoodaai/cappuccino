@@ -13,7 +13,7 @@
 
 /* global angular: false */
 
-angular.module('rzModule', [])
+angular.module('cpSlider', [])
 
 .value('throttle',
   /**

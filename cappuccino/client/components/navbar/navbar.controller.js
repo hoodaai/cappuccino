@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cappuccinoApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, $modal, $log) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
@@ -20,4 +20,26 @@ angular.module('cappuccinoApp')
     $scope.isActive = function(route) {
       return route === $location.path();
     };
+
+    $scope.open = function () {
+      var modalInstance = $modal.open({
+        templateUrl: 'enterorderModalContent.html',
+        controller: 'ModalInstanceCtrl'
+      });
+    };
+
   });
+
+  angular.module('cappuccinoApp').controller('ModalInstanceCtrl',
+   function ($scope, $modalInstance, $location) {
+
+  $scope.recruitingOrder = function () {
+    $modalInstance.close();
+    $location.path('/recruitingorder');
+  };
+
+  $scope.placementOrder = function () {
+    $modalInstance.close();
+    $location.path('/placementorder');
+  };
+});

@@ -7,10 +7,10 @@ angular.module('cappuccinoApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'rzModule',
+  'cpSlider',
   'hljs',
   'angularjs-dropdown-multiselect',
-  'mgcrea.ngStrap',
+  //'mgcrea.ngStrap',
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
