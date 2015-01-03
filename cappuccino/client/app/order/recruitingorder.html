@@ -7,45 +7,39 @@
     <h2 class="sub-header">Recruitment Order Entry</h2>
 
     <div class="jumbotron">
-      <div class="form-group">
-         <span class="help-block">Talent Seeker Name</span>
-         <input type="text" ng-model="order.name" class="form-control" required>
+     
+      <h4>Player Name</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <input type="text" ng-model="order.name" class="form-control" required>
+        </div>
       </div>
 
-      <div class="form-group" style="margin-bottom:15px;">
-        <span class="help-block">What league is this for?</span>
-          <div ng-dropdown-multiselect="" options="hockeyLeagueData"
-               selected-model="order.hockeyLeague" 
-               extra-settings="hockeyLeagueSettings" 
-               translation-texts="hockeyLeagueTextSettings">
-          </div>
-
-      </div>
-
-      <div class="form-group" style="margin-bottom:3px;">
-        <span class="help-block">Player Position <small>{{radioModel || ''}}</small></span>
-      
-      </div>
+        
+      <h4>Player Position <small>{{radioModel || ''}}</small></h4>
 
       <div class="form-group  btn-group">
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Goalie'">Goalie</label>
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left wing'">Left wing</label>
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left Defense'">Left Defense</label>
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Center'">Center</label>
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right Defense'">Right Defense</label>
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right wing'">Right wing</label>               
+        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Goalie'">Goalie</label>
+        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left wing'">Left wing</label>
+        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left Defense'">Left Defense</label>
+        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Center'">Center</label>
+        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right Defense'">Right Defense</label>
+        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right wing'">Right wing</label>               
       </div>
 
-      <div class="form-group"
-        ng-class="{'has-error': datepickerForm.date.$invalid}">
+      <h4><i class="fa fa-calendar"></i>
+            Player's Date of Birth <small>(as date)</small></h4>
+      <div class="row">
+        <div class="col-md-6">
+            <p class="input-group">
+              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="order.playerDateOfBirth" is-open="opened"  ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+        </div>
 
-        <span class="help-block">
-          <i class="fa fa-calendar"></i>
-          Player's Date of Birth <small>(as date)</small>
-        </span>
-        <input type="text"
-          class="form-control" readonly ng-model="order.playerDateOfBirth" name="date" bs-datepicker>
-      </div>
     </div>
 
     <div class="jumbotron">

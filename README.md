@@ -105,6 +105,7 @@ http://localhost:9200/_plugin/HQ/?#cluster
 ```
 
 ### Few tutorials
+http://swagger.io/
 
 [Elasticsearch Security Issue](https://www.found.no/foundation/elasticsearch-security/#staying-safe-while-developing-with-elasticsearch)
 [Firewall setting ufw](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-iptables-on-ubuntu-14-04)
