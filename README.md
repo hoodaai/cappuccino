@@ -1,5 +1,8 @@
-# Steps to set up a new development machine
-http://locast.mit.edu/memorytraces/
+# cappuccino
+Front end stack for PlacementLoop. Its contains REST APIs along with client application
+
+## Installation
+
 ### Installing node
 
 ```
@@ -76,6 +79,7 @@ port = 28019
 mongodb Config File: `/etc/mongodb.conf`
 elastic http.port: 9292
 Finding how many core a machine have: grep processor /proc/cpuinfo | wc -l
+
 ### General mongodb command
 
 ```
@@ -87,33 +91,37 @@ show collections;
 db.users.find();
 
 ```
-## Setting JAVA
+## Installing maven
 sudo apt-get install maven
 command apt-get install the Maven in /usr/share/maven.
 
-### Setting Firewalls
-[Elasticsearch Security Issue](https://www.found.no/foundation/elasticsearch-security/#staying-safe-while-developing-with-elasticsearch)
-[Firewall setting ufw](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-iptables-on-ubuntu-14-04)
-[initial server setup](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-14-04)
-sudo shutdown -r now
-### Few good links worth of reading
+## Installing Elasticsearch
 
-[Source](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04)
-
-[Source](http://www.integratedwebsystems.com/hosting-a-nodejs-express-application-on-amazon-web-services-ec2/)
-
-[Source](https://gun.io/blog/tutorial-deploy-node-js-server-with-example/)
-
-[Source](https://www.digitalocean.com/community/tutorials/how-to-deploy-node-js-applications-using-systemd-and-nginx)
-
-
-[Source](http://ui-patterns.com/ "UI Pattern")
-
-[Source](http://www.thegeekstuff.com/2014/01/mysql-nodejs-intro/ "Mysql Connection Pooling")
-[Source](http://stackoverflow.com/questions/5818312/mysql-with-node-js)
+```
+$ apt-get install elasticsearch
 
 http://localhost:9200/_plugin/bigdesk/#nodes
 http://localhost:9200/_plugin/HQ/?#cluster
+```
+
+### Few tutorials
+
+[Elasticsearch Security Issue](https://www.found.no/foundation/elasticsearch-security/#staying-safe-while-developing-with-elasticsearch)
+[Firewall setting ufw](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-iptables-on-ubuntu-14-04)
+[initial server setup](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-14-04)
+[Adding swap space](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04)
+[Hosting app to EC2](http://www.integratedwebsystems.com/hosting-a-nodejs-express-application-on-amazon-web-services-ec2/)
+[Deploy Node server](https://gun.io/blog/tutorial-deploy-node-js-server-with-example/)
+[DEploy Node server](https://www.digitalocean.com/community/tutorials/how-to-deploy-node-js-applications-using-systemd-and-nginx)
+
+
+
+### UX motivation
+
+- Below are the links which could be good starting point for UX and UI development.
+
+[MIT media lab-example project](http://locast.mit.edu/memorytraces/)
+[UI Pattern](http://ui-patterns.com/ "UI Pattern")
 
 [AngularJS Modal](http://www.dwmkerr.com/the-only-angularjs-modal-service-youll-ever-need/)
 
@@ -126,7 +134,7 @@ http://localhost:9200/_plugin/HQ/?#cluster
 [Google Material Design-CSS](http://cloudcannon.com/deconstructions/2014/12/05/material-design-delightful-details.html)
 [Google MAterial Design](http://www.google.com/design/spec/animation/delightful-details.html)
 
-- Starting point
+
 
 [Material Design Botstrap CSS](http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html)
 [Another Material Design github- made using polymer project](http://ebidel.github.io/material-playground/)
@@ -149,13 +157,11 @@ Use spinner instead of slider
 [Progress indicator Angularjs](http://victorbjelkholm.github.io/ngProgress/#demo) (http://chieffancypants.github.io/angular-loading-bar/#)
 [Angular Spinner](https://github.com/urish/angular-spinner)
 
-
 [Gephi](http://gephi.github.io/)
 
 [d3js](http://d3js.org/)
 
 [Better website design](http://www.smashingmagazine.com/2012/07/11/better-product-pages-turn-visitors-into-customers/)
-
 
 [Iterative Prototyping](http://reecegeorge.com/iterative-prototyping.html)
 
