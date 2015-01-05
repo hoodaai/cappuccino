@@ -6,18 +6,15 @@
     <h2 class="sub-header">Orders</h2>
 
 
-
 <div  ng-repeat="order in orderList">
-
-
 
 <div class="row">
             <div class="col-lg-7 col-md-7 col-sm-7">
                 <div class="panel panel-default">
-                    <div class="panel-body">
+                    <div class="panel-body bgopen">
 					  <div class="row">
 					    <div class="col-md-4">
-					      #{{$index + 1 }} {{order.orderType}} 
+					      #{{$index + 1 }} {{order.orderType}} Order
 					    </div>
 					     <div class="col-md-4">
 					     <span am-time-ago="order.createdaAt"></span>
@@ -33,7 +30,7 @@
 					  </div>
 					  <div class="row">
 					    <div class="col-md-4">
-					      <button class="btn btn-sm btn-default">Cancel</button>
+					      <button class="btn btn-sm btn-default" ng-click="cancelOrder(order._id)">Cancel</button>
 					    </div>
 					     <div class="col-md-4">
 					        <button class="btn btn-sm btn-default" ng-click="viewMatches(order._id)">View Matches</button>

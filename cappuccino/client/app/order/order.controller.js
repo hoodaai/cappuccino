@@ -46,10 +46,11 @@ angular.module('cappuccinoApp')
     $location.path(path);
   }
 
-  $scope.enterOrder = function(orderType) {
+  $scope.enterOrder = function(orderType, actorType) {
     var order = {
         name: $scope.order.name,
         orderType: orderType,
+        actorType: actorType,
         status: 'Open',
         league: $scope.order.hockeyLeague,
         playerPosition: $scope.order.playerPosition,
@@ -99,6 +100,26 @@ var matchOrder = function() {
       }); 
     };
   } 
+
+$scope.cancelOrder = function(orderId) {
+  var order = {
+        status: 'Cancelled'
+  }
+
+  $http.patch('/api/hockey/order/'+orderId, order).success(function(order) {
+            var modalInstance = $modal.open({
+              template: '<div class="modal-header"></div><div class="modal-body">Your Order has been Cancelled.</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
+              controller: 'ModalInstanceCtrl'
+            });
+
+           for (var i = $scope.orderList.length - 1; i >= 0; i--) {
+             if($scope.orderList[i]._id === orderId) {
+               $scope.orderList[i].status = "Cancelled";
+             }
+           };
+
+  });
+}
 
   $scope.viewMatches = function(id) {
      $location.path('/ordermatches/'+id);

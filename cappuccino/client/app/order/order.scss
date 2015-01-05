@@ -9,6 +9,17 @@ background-color: #E8F5E9;
 .panel {
  border-radius: none;
 }
-.panel-body {
- background: #E8F5E9;
+
+.bgopen {
+	background: #E8F5E9;
+}
+
+.bgcancel {
+	background: #FFEBEE;
+}
+
+.img-responsive {
+ display: block;
+ height: auto;
+ max-width: 100%;
 }

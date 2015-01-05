@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 
 var OrderSchema = new Schema({
   orderType: {type:String, es_type:'string'},
+  actorType: {type:String, es_type:'string'},
   name: {type:String, es_type:'string'},
   status: {type:String, es_type:'string'},
   user: { type: Schema.ObjectId, ref: 'User' },
@@ -29,5 +30,5 @@ var OrderSchema = new Schema({
   createdaAt: {type: Date, default: Date.now, es_type:'date'}
 });
 
-OrderSchema.plugin(mongoosastic, {index:'matchine',protocol:'http', hydrate:true, host:'127.0.0.1', port:'9292'})
+OrderSchema.plugin(mongoosastic, {index:'matchine',protocol:'http', hydrate:true, host:'127.0.0.1', port:'9200'})
 module.exports = mongoose.model('Order', OrderSchema);

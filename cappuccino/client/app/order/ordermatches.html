@@ -2,19 +2,71 @@
 <div ng-include="'components/sidebar/sidebar.html'"></div>
 
 
-<div ng-repeat="match in matchedOrderList" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+              <!--<h1 class="page-header">Placement Order Entry</h1>-->
+    <h2 class="sub-header">Matched Talent Seeker</h2>
 
-<div class="media">
-  <a class="media-left" href="#">
-    <img  src="assets/images/users/ghost_person_200x200.png" alt="">
-  </a>
-  <div class="media-body">
-    <h4 class="media-heading">{{match.name}}</h4>
-    <button class="btn btn-danger">Reject</button>
-    <button class="btn btn-info">Notify</button>
-    <rating ng-model="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
-  </div>
+
+<div  ng-repeat="match in matchedOrderList" >
+
+<div class="row">
+            <div class="col-lg-7 col-md-7 col-sm-7">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+					  <div class="row">
+
+					    <div class="col-md-4">
+					     <img  class="img-circle img-responsive" src="assets/images/users/ghost_person_200x200.png">
+					    </div>
+					     <div class="col-md-8">
+
+  						  <div class="row">
+						    <div class="col-md-4">
+						       <h4 class="media-heading">{{match.name}}</h4>
+						    </div>
+						     <div class="col-md-4">
+						       
+						    </div>
+						  </div>
+
+					      <div class="row">
+						    <div class="col-md-4">
+						      {{match.actorType}}
+						    </div>
+						     <div class="col-md-6">
+						       <rating ng-model="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+						    </div>
+						  </div>
+
+
+						  <div class="row">
+						    <div class="col-md-4">
+						       <button class="btn btn-danger">Reject</button>
+						    </div>
+						     <div class="col-md-4">
+						        <button class="btn btn-info">Notify</button>
+						    </div>
+						  </div>
+		  				</div>
+
+					     
+					    </div>
+					  </div>
+
+					  
+                    
+                </div>
+            </div>
+            <!--
+            <div class="col-lg-5 col-md-5 col-sm-5">
+                <div class="panel panel-default">
+                    
+                </div>
+            </div>
+			-->
+	
 </div>
+
 
 </div>
 

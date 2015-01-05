@@ -11,9 +11,39 @@ exports.matchedOrder = function(req, res) {
     if(!order) { return res.send(404); }
 
   Order.search({
-      range: {
+
+    "bool": {
+            "must": [
+                {
+                    "range": {
+                        playerAccomodationCost: {"gte": 0, "lte": 81}
+                    }
+                },
+                {
+                    "match" : {
+                     orderType : 'Recruitment'
+                  }
+                },
+                {
+                    "match" : {
+                     status : 'Open'
+                  }
+
+                }
+            ]
+        }
+
+      /*range: {
         playerAccomodationCost: {"gte": 0, "lte": 81}
-      }
+      },
+      "filtered" : {
+            "filter" : {
+                "term" : {
+                    orderType : order.orderType
+                }
+            }
+        }*/
+
     }, function(err, orders){
           if(err) { return handleError(res, err); }
           return res.json(200, orders); 
