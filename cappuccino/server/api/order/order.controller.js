@@ -25,10 +25,25 @@ exports.matchedOrder = function(req, res) {
 
 // Get list of orders
 exports.index = function(req, res) {
-  Order.find(function (err, orders) {
+  Order
+  .find({})
+  .where('user').equals(req.user._id)
+  .sort('-createdaAt')
+  .exec(function(err, orders) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, orders);
+  });
+
+  /*Order.find({}).sort('-createdaAt').exec(function(err, orders) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, orders);
+  });*/
+
+  
+  /*Order.find(function (err, orders) {
     if(err) { return handleError(res, err); }
     return res.json(200, orders);
-  });
+  });*/
 };
 
 // Get a single order
@@ -42,6 +57,7 @@ exports.show = function(req, res) {
 
 // Creates a new order in the DB.
 exports.create = function(req, res) {
+  req.body.user = req.user._id;
   Order.create(req.body, function(err, order) {
     if(err) { return handleError(res, err); }
 

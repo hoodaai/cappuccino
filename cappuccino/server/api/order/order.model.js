@@ -1,14 +1,15 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-	mongoosastic = require('mongoosastic'),
-    Schema = mongoose.Schema;
+	  mongoosastic = require('mongoosastic'),
+    Schema = mongoose.Schema,
+    relationship = require("mongoose-relationship");
 
 var OrderSchema = new Schema({
   orderType: {type:String, es_type:'string'},
   name: {type:String, es_type:'string'},
   status: {type:String, es_type:'string'},
-  user: {type:String, es_type:'string'},
+  user: { type: Schema.ObjectId, ref: 'User' },
   //league: [{id : {type:String, es_type:'string'}}],
   //league : {'id' : {'type' : 'string'}},
   league: {type:Array, es_type:'string'},

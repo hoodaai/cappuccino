@@ -46,11 +46,11 @@ angular.module('cappuccinoApp')
     $location.path(path);
   }
 
-  $scope.enterPlacementOrder = function() {
+  $scope.enterOrder = function(orderType) {
     var order = {
         name: $scope.order.name,
-        orderType: 'PLACEMENT',
-        user: Auth.getCurrentUser,
+        orderType: orderType,
+        status: 'Open',
         league: $scope.order.hockeyLeague,
         playerPosition: $scope.order.playerPosition,
         playerDOB: $scope.order.playerDateOfBirth,
@@ -65,6 +65,7 @@ angular.module('cappuccinoApp')
         playerEquipmentFee: $scope.order.playerEquipmentFee,
         playerOwnTransport: $scope.order.playerOwnTransport
     } 
+     console.log(order);
     $http.post('/api/hockey/order', order).success(function(matchedOrder) {
       console.log(order);
       var myModal = $modal({title: 'Matched Result',

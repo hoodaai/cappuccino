@@ -10,7 +10,7 @@ angular.module('cappuccinoApp', [
   'cpSlider',
   'hljs',
   'angularjs-dropdown-multiselect',
-  //'mgcrea.ngStrap',
+  'angularMoment',
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
