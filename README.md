@@ -80,6 +80,12 @@ mongodb Config File: `/etc/mongodb.conf`
 elastic http.port: 9292
 Finding how many core a machine have: grep processor /proc/cpuinfo | wc -l
 
+vi dist/server/app.js
+set env to production
+Change Elasticsearch port
+go to dist
+forever start server/app.js
+node server/app.js
 ### General mongodb command
 
 ```

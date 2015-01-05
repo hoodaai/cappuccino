@@ -42,4 +42,9 @@ angular.module('cappuccinoApp')
     $modalInstance.close();
     $location.path('/placementorder');
   };
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
 });

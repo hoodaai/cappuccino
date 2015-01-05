@@ -65,12 +65,14 @@ angular.module('cappuccinoApp')
         playerEquipmentFee: $scope.order.playerEquipmentFee,
         playerOwnTransport: $scope.order.playerOwnTransport
     } 
-     console.log(order);
+     //console.log(order);
+
     $http.post('/api/hockey/order', order).success(function(matchedOrder) {
       console.log(order);
-      var myModal = $modal({title: 'Matched Result',
-       content: 'Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you',
-       show: true});
+       var modalInstance = $modal.open({
+        template: '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
+        controller: 'ModalInstanceCtrl'
+      });
     });
   };
 
@@ -220,5 +222,3 @@ $scope.today = function() {
   $scope.format = $scope.formats[0];
 
   }]);
-
-
