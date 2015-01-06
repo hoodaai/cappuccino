@@ -10,18 +10,23 @@ exports.matchedOrder = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!order) { return res.send(404); }
 
+  var lookingOrderType = 'Recruitment';
+  if(order.orderType == 'Recruitment') {
+    lookingOrderType = 'Placement';
+  }
+
   Order.search({
 
     "bool": {
             "must": [
                 {
                     "range": {
-                        playerAccomodationCost: {"gte": 0, "lte": 81}
+                        playerAccomodationCost: {"gte": 0, "lte": parseInt(order.playerAccomodationCost)}
                     }
                 },
                 {
                     "match" : {
-                     orderType : 'Recruitment'
+                     orderType : lookingOrderType
                   }
                 },
                 {

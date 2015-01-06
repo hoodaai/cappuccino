@@ -46,6 +46,18 @@ angular.module('cappuccinoApp')
     $location.path(path);
   }
 
+  $scope.editOrder = function(orderId) {
+    //$log.debug("editOrder");
+    console.log('editOrder');
+
+    $http.get('/api/hockey/order/'+orderId).success(function(order) {
+        $scope.order = order;
+        console.log(order);
+        $location.path('/placementorder');
+    });
+
+  }
+
   $scope.enterOrder = function(orderType, actorType) {
     var order = {
         name: $scope.order.name,

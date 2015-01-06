@@ -9,37 +9,55 @@
 <div  ng-repeat="order in orderList">
 
 <div class="row">
-            <div class="col-lg-7 col-md-7 col-sm-7">
-                <div class="panel panel-default">
-                    <div class="panel-body bgopen">
-					  <div class="row">
-					    <div class="col-md-4">
-					      #{{$index + 1 }} {{order.orderType}} Order
+    <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-body bgopen" ng-class="{bgcancel: order.status == 'Cancelled'}">
+
+	            <div class="row">
+	                <div class="col-lg-1 col-md-1 col-sm-1">
+				        <div class="row" ng-show="order.status == 'Open'">
+					        <div class="col-md-2">
+					           <a ng-show="order.status == 'Open'" href="#" ng-click="editOrder(order._id)"><span class="fa fa-pencil-square-o fa-2x"></span></a>
+					        </div>
+				        </div>
+			       </div>
+
+	               <div class="col-lg-7 col-md-7 col-sm-7">
+						<div class="row">
+						    <div class="col-md-6">
+						     <!--<span class="glyphicon glyphicon-pencil"></span>-->
+						     
+						      #{{$index + 1 }} {{order.orderType}} Order
+						    </div>
+						     <div class="col-md-4">
+						     <span am-time-ago="order.createdaAt"></span>
+						    </div>
 					    </div>
-					     <div class="col-md-4">
-					     <span am-time-ago="order.createdaAt"></span>
+					    <div class="row">
+						    <div class="col-md-6">
+						      {{order.name}}
+						    </div>
+						     <div class="col-md-4">
+						        Staus: {{order.status}}
+						    </div>
 					    </div>
-					  </div>
-					  <div class="row">
-					    <div class="col-md-4">
-					      {{order.name}}
-					    </div>
-					     <div class="col-md-4">
-					        Staus: {{order.status}}
-					    </div>
-					  </div>
-					  <div class="row">
-					    <div class="col-md-4">
-					      <button class="btn btn-sm btn-default" ng-click="cancelOrder(order._id)">Cancel</button>
-					    </div>
-					     <div class="col-md-4">
-					        <button class="btn btn-sm btn-default" ng-click="viewMatches(order._id)">View Matches</button>
-					    </div>
-					  </div>
-	  				</div>
-                    
-                </div>
-            </div>
+			       </div>
+
+			       <div class="col-lg-4 col-md-4 col-sm-4">
+				        <div class="row" ng-show="order.status == 'Open'">
+					        <div class="col-md-4">
+					           <a class="remove-icon" href="#" ng-click="cancelOrder(order._id)"><span class="fa fa-remove fa-5x"></span></a>
+					        </div>
+					        <div class="col-md-4">
+						       <a class="view-icon" href="#" ng-click="viewMatches(order._id)"><span class="fa fa-chevron-circle-right fa-5x"></span></a>
+					        </div>
+				        </div>
+			       </div>
+			    </div>
+
+			</div>
+        </div>
+    </div>
             <!--
             <div class="col-lg-5 col-md-5 col-sm-5">
                 <div class="panel panel-default">
