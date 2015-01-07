@@ -46,10 +46,10 @@
 			       <div class="col-lg-4 col-md-4 col-sm-4">
 				        <div class="row" ng-show="order.status == 'Open'">
 					        <div class="col-md-4">
-					           <a class="remove-icon" href="#" ng-click="cancelOrder(order._id)"><span class="fa fa-remove fa-3x"></span></a>
+					           <a class="remove-icon" href="#" ng-click="cancelOrderPopup(order._id)"><span class="fa fa-remove fa-3x"></span></a>
 					        </div>
 					        <div class="col-md-4">
-						       <a class="view-icon" href="#" ng-click="viewMatches(order._id)"><span class="fa fa-chevron-circle-right fa-3x"></span></a>
+						       <a class="view-icon" href="#" ng-click="viewMatches(order._id, order.actorType)"><span class="fa fa-chevron-circle-right fa-3x"></span></a>
 					        </div>
 				        </div>
 			       </div>

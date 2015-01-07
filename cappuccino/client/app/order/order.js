@@ -40,7 +40,7 @@ angular.module('cappuccinoApp')
         authenticate: true
       })
       .state('ordermatches', {
-        url: '/ordermatches/:id',
+        url: '/ordermatches/:id/:actor',
         templateUrl: 'app/order/ordermatches.html',
         controller: 'OrderCtrl',
         authenticate: true

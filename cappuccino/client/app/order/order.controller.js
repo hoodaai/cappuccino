@@ -1,8 +1,7 @@
 'use strict';
 
-angular.module('cappuccinoApp')
-  .controller('OrderCtrl',['$scope','$rootScope','$location','$http','$modal','$log', 'Auth',
-  function($scope, $rootScope, $location, $http, $modal, $log, Auth) {
+angular.module('cappuccinoApp').controller('OrderCtrl',
+   function ($scope, $rootScope, $location, $http, $modal, $log, Auth) {
 
   $scope.order = {};
   $scope.rate = 7;
@@ -21,11 +20,12 @@ angular.module('cappuccinoApp')
      $rootScope.screenTitle = 'Recruitment Order Entry';
    }
 
+// View matches
    var ops = $location.url().split('/')[2];
     if(ops === 'e') {
       $http.get('/api/hockey/order/'+$location.url().split('/')[3]).success(function(order) {
         $scope.order = order;
-        console.log($scope.order);
+        $log.debug($scope.order);
     });
    }
 
@@ -61,7 +61,6 @@ angular.module('cappuccinoApp')
     } else {
       $location.path('/placementorder/e/'+orderId);
     }
-    
   }
 
   $scope.enterOrder = function(orderType, actorType) {
@@ -73,7 +72,7 @@ angular.module('cappuccinoApp')
         status: 'Open',
         league: $scope.order.hockeyLeague,
         playerPosition: $scope.order.playerPosition,
-        playerDOB: $scope.order.playerDateOfBirth,
+        playerDOB: $scope.order.playerDOB,
         playerHeight: $scope.order.playerHeight,
         playerWeight: $scope.order.playerWeight,
         playerShootWith: $scope.order.playerShootWith,
@@ -85,29 +84,25 @@ angular.module('cappuccinoApp')
         playerEquipmentFee: $scope.order.playerEquipmentFee,
         playerOwnTransport: $scope.order.playerOwnTransport
     } 
-     //console.log(order);
 
-     if($scope.order._id) {
-
+    if($scope.order._id) {
       $http.put('/api/hockey/order/'+$scope.order._id, order).success(function(matchedOrder) {
-      console.log(order);
+       $log.debug(order);
        var modalInstance = $modal.open({
         template: '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
         controller: 'ModalInstanceCtrl'
        });
       });
 
-     } else {
-
-    $http.post('/api/hockey/order', order).success(function(matchedOrder) {
-      console.log(order);
-       var modalInstance = $modal.open({
-        template: '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
-        controller: 'ModalInstanceCtrl'
-       });
-    });
-
-  }
+    } else {
+      $http.post('/api/hockey/order', order).success(function(matchedOrder) {
+        $log.debug(order);
+         var modalInstance = $modal.open({
+          template: '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
+          controller: 'ModalInstanceCtrl'
+         });
+      });
+    }
   };
 
   var listOrders = function() {
@@ -115,47 +110,53 @@ angular.module('cappuccinoApp')
      if(id === 'orderlist') {
         $rootScope.screenTitle = 'View Customer Orders';
         $http.get('/api/hockey/order').success(function(orderlist) {
-            $scope.orderList = orderlist;
-            console.log(orderlist);
+            $rootScope.orderList = orderlist;
+            $log.debug(orderlist);
       });
      }
   }
 
 var matchOrder = function() {
     var id = $location.url().split('/')[2];
+    var actorType = $location.url().split('/')[3];
+    if(actorType !== undefined) {
+      if(actorType.replace(/%20/g, " ") === 'Talent Seeker') {
+        $scope.viewMatchesTitle = "Matched Candidate";
+      } else {
+        $scope.viewMatchesTitle = "Matched Talent Seeker";
+      }
+    }
 
     if(id !== undefined && id !== 'e') {
-      $rootScope.screenTitle = 'Matched Candidates';
+      
       $http.get('/api/hockey/order/matchine/'+id).success(function(matchedOrder) {
-        console.log(matchedOrder.hits.total);
+        $log.debug(matchedOrder.hits.total);
         $scope.matchedOrderList = matchedOrder.hits.hits;
-         console.log(matchedOrder.hits.hits.length);
+        if (matchedOrder.hits.hits.length<1) {
+          $scope.matchesNotFoundMsg = "We're sorry there aren't any matches meeting your requirements at this time. Would you like to edit your order?" ;
+        }
+        $log.debug(matchedOrder.hits.hits.length);
       }); 
     };
   } 
 
-$scope.cancelOrder = function(orderId) {
-  var order = {
-        status: 'Cancelled'
-  }
-
-  $http.patch('/api/hockey/order/'+orderId, order).success(function(order) {
-            var modalInstance = $modal.open({
-              template: '<div class="modal-header"></div><div class="modal-body">Your Order has been Cancelled.</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
-              controller: 'ModalInstanceCtrl'
-            });
-
-           for (var i = $scope.orderList.length - 1; i >= 0; i--) {
-             if($scope.orderList[i]._id === orderId) {
-               $scope.orderList[i].status = "Cancelled";
-             }
-           };
-
-  });
+$scope.cancelOrderPopup = function(orderId) {
+  $rootScope.cancelOrderId = orderId;
+  var modalInstance = $modal.open({
+      template: '<div class="modal-header"><h3 class="modal-title">Cancel Order</h3></div><div class="modal-body">Do you really want to cancel order.</div><div class="modal-footer"><button class="btn btn-primary" ng-click="cancelOrder()">Yes</button> <button class="btn btn-primary" ng-click="cancel()">No</button></div>',
+      controller: 'ModalInstanceCtrl',
+      resolve: {
+        orderId: function () {
+          return orderId;
+        }
+      }
+    });
 }
 
-  $scope.viewMatches = function(id) {
-     $location.path('/ordermatches/'+id);
+
+
+  $scope.viewMatches = function(id, actorType) {
+     $location.path('/ordermatches/'+id+'/'+actorType);
   }
 
 
@@ -170,7 +171,7 @@ $scope.cancelOrder = function(orderId) {
     $scope.order.playerAccomodationCost = '0';
     $scope.order.playerEquipmentFee = '0';
 
-    $scope.order.playerDateOfBirth = '2014-12-15T10:11:36.001Z';
+    $scope.order.playerDOB = '2014-12-15T10:11:36.001Z';
     $rootScope.userType = 'placementloopuser';
 
   /*League multiselect dropdown settings*/
@@ -235,10 +236,6 @@ $scope.cancelOrder = function(orderId) {
     listOrders();
     matchOrder();
 
-  $scope.modal = {
-    "title": "Title",
-    "content": "Hello Modal<br />This is a multiline message!"
-  };
 
 
 $scope.today = function() {
@@ -275,4 +272,4 @@ $scope.today = function() {
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   $scope.format = $scope.formats[0];
 
-  }]);
+  });

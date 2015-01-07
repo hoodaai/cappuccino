@@ -100,37 +100,51 @@ function performMatch(order, res) {
     "bool": {
             "must": [
                 {
-                    "range": {
-                        playerAccomodationCost: {"gte": 0, "lte": parseInt(order.playerAccomodationCost)}
-                    }
+                  "range": {
+                    playerAccomodationCost: {"gte": 0, "lte": parseInt(order.playerAccomodationCost)}
+                  }
                 },
                 {
-                    "range": {
-                        playerHeight: {"gte": 0, "lte": parseInt(order.playerHeight)}
-                    }
+                  "range": {
+                    playerTeamFee: {"gte": 0, "lte": parseInt(order.playerTeamFee)}
+                  }
                 },
                  {
-                    "range": {
-                        playerWeight: {"gte": 0, "lte": parseInt(order.playerWeight)}
-                    }
-                },
-                {
-                    "match" : {
-                     orderType : lookingOrderType
+                  "range": {
+                    playerEquipmentFee: {"gte": 0, "lte": parseInt(order.playerEquipmentFee)}
                   }
                 },
                 {
-                    "match" : {
-                     status : 'Open'
+                  "range": {
+                    playerHeight: {"gte": 0, "lte": parseInt(order.playerHeight)}
+                  }
+                },
+                {
+                  "range": {
+                    playerWeight: {"gte": 0, "lte": parseInt(order.playerWeight)}
+                  }
+                },
+                {
+                  "match" : {
+                   orderType : lookingOrderType
+                  }
+                },
+                {
+                  "match" : {
+                   status : 'Open'
                   }
 
                 },
-                /*{
-                    "match" : {
-                     playerPosition : order.playerPosition
+                {
+                  "match" : {
+                    playerShootWith : order.playerShootWith
                   }
-
-                }*/
+                },
+                {
+                  "match" : {
+                    playerOwnTransport : order.playerOwnTransport
+                  }
+                }
             ]
         }
 
