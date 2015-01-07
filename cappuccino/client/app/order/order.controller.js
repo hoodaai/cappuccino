@@ -33,6 +33,8 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     isopen: false
   };
 
+  $scope.newContactFormCollapsed = true;
+
   $scope.toggled = function(open) {
     console.log('Dropdown is now: ', open);
   };
@@ -42,7 +44,7 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     $event.stopPropagation();
     $scope.status.isopen = !$scope.status.isopen;
   };
-  
+
   $scope.chooseOrderType = function(loopName) {
     console.log('loopName: '+loopName);
     $scope.loopDropDownValue = loopName;
@@ -83,7 +85,7 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
         playerAccomodationCost: $scope.order.playerAccomodationCost,
         playerEquipmentFee: $scope.order.playerEquipmentFee,
         playerOwnTransport: $scope.order.playerOwnTransport
-    } 
+    }
 
     if($scope.order._id) {
       $http.put('/api/hockey/order/'+$scope.order._id, order).success(function(matchedOrder) {
@@ -128,7 +130,7 @@ var matchOrder = function() {
     }
 
     if(id !== undefined && id !== 'e') {
-      
+
       $http.get('/api/hockey/order/matchine/'+id).success(function(matchedOrder) {
         $log.debug(matchedOrder.hits.total);
         $scope.matchedOrderList = matchedOrder.hits.hits;
@@ -136,9 +138,10 @@ var matchOrder = function() {
           $scope.matchesNotFoundMsg = "We're sorry there aren't any matches meeting your requirements at this time. Would you like to edit your order?" ;
         }
         $log.debug(matchedOrder.hits.hits.length);
-      }); 
+      });
+
     };
-  } 
+  }
 
 $scope.cancelOrderPopup = function(orderId) {
   $rootScope.cancelOrderId = orderId;
@@ -160,8 +163,15 @@ $scope.cancelOrderPopup = function(orderId) {
   }
 
 
-    $scope.order.playerWeight = 150;
-    $scope.order.playerHeight = 167;
+    $scope.order.playerWeight = {
+      min: 150,
+      max: 250
+    };
+
+    $scope.order.playerHeight = {
+      min: 162,
+      max: 204
+    };
 
     $scope.order.playerDefensiveScale = 5;
     $scope.order.playerSystemBasedScale = 1;
@@ -175,7 +185,7 @@ $scope.cancelOrderPopup = function(orderId) {
     $rootScope.userType = 'placementloopuser';
 
   /*League multiselect dropdown settings*/
-    $scope.order.hockeyLeague = [];
+    $scope.order.hockeyLeague = "";
     $scope.hockeyLeagueData = [
         {id: 'EJHL', label: 'EJHL'},
         {id: 'NAHL', label: 'NAHL'},
@@ -190,7 +200,7 @@ $scope.cancelOrderPopup = function(orderId) {
         scrollable: true,
         buttonClasses: 'btn btn-primary',
         //{selectionLimit: 2};
-        
+
     };
 
     $scope.hockeyLeagueTextSettings = {
@@ -199,7 +209,7 @@ $scope.cancelOrderPopup = function(orderId) {
 
 
 /*Slider settings*/
-  
+
     // Value to dollar ammount
     $scope.translateTeamFee = function(value) {
       return '$' + value + 'k';
@@ -231,8 +241,8 @@ $scope.cancelOrderPopup = function(orderId) {
 
     $scope.translatePhysicalStyle = function(value) {
        return '' + value;
-    };    
-  
+    };
+
     listOrders();
     matchOrder();
 

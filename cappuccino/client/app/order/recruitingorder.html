@@ -13,6 +13,42 @@
         <div class="row">
           <div class="col-md-6">
             <input type="text" ng-model="order.name" class="form-control" required>
+            <a ng-click="newContactFormCollapsed = !newContactFormCollapsed">New Contact</a>
+            <hr>
+            <form collapse="newContactFormCollapsed" class="form-horizontal">
+              <div class="form-group">
+              </div>
+              <div class="form-group">
+                <label for="candidate_fn" class="col-sm-4 control-label">First Name</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="candidate_fn" placeholder="Enter First Name">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="candidate_ln" class="col-sm-4 control-label">Last Name</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="candidate_ln" placeholder="Enter Last Name">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="candidate_email" class="col-sm-4 control-label">Email Address</label>
+                <div class="col-sm-8">
+                  <input type="email" class="form-control" id="candidate_email" placeholder="Enter Email Address">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox"> Save Contact
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -23,7 +59,13 @@
         <h3 class="panel-title">League</h3>
       </div>
       <div class="panel-body">
-        Dropdown here
+        <select class="form-control" ng-model="order.hockeyLeague">
+          <option value="" ng-selected="order.hockeyLeague == ''">Enter League Name
+          <option ng-repeat="league in hockeyLeagueData"
+                value="{{league.id}}"
+                ng-selected="order.hockeyLeague == league.id"
+          >{{league.label}}</option>
+        </select>
       </div>
     </div>
 
@@ -32,14 +74,17 @@
         <h3 class="panel-title">Position</h3>
       </div>
       <div class="panel-body">
-        <div class="form-group  btn-group">
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Goalie'">Goalie</label>
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left wing'">Left wing</label>
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left Defense'">Left Defense</label>
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Center'">Center</label>
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right Defense'">Right Defense</label>
-          <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right wing'">Right wing</label>
-        </div>
+
+        <select class="form-control" ng-model="order.playerPosition">
+          <option value="" ng-selected="order.playerPosition == ''">Position of Interest</option>
+          <option value="Goalie" ng-selected="order.playerPosition == Goalie">Goalie</option>
+          <option value="Left wing" ng-selected="order.playerPosition == 'Left wing'">Left wing</option>
+          <option value="Left Defense" ng-selected="order.playerPosition == 'Left Defense'">Left Defense</option>
+          <option value="Center" ng-selected="order.playerPosition == 'Center'">Center</option>
+          <option value="Right Defense" ng-selected="order.playerPosition == 'Right Defense'">Right Defense</option>
+          <option value="Right wing" ng-selected="order.playerPosition == 'Right wing'">Right wing</option>
+        </select>
+
       </div>
     </div>
 
@@ -71,7 +116,8 @@
           <rzslider
             rz-slider-floor="162"
             rz-slider-ceil="204"
-            rz-slider-model="order.playerHeight"
+            rz-slider-model="order.playerHeight.min"
+            rz-slider-high="order.playerHeight.max"
             rz-slider-translate="translateCentimeter"
             rz-slider-step="1">
           </rzslider>
@@ -82,27 +128,23 @@
           <rzslider
               rz-slider-floor="150"
               rz-slider-ceil="250"
-              rz-slider-model="order.playerWeight"
+              rz-slider-model="order.playerWeight.min"
+              rz-slider-high="order.playerWeight.max"
               rz-slider-translate="translateLbs"
               rz-slider-step="1">
           </rzslider>
         </div>
 
         <div class="form-group">
-          <span class="help-block">Strong Hand</span>
+          <span class="help-block">Dominant Hand</span>
         </div>
 
         <div class="form-group">
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="playerHandDropdown" data-toggle="dropdown" aria-expanded="true">
-              Shoots/Catches
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="playerHandDropdown">
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-model="order.playerShootWith">Left</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-model="order.playerShootWith">Right</a></li>
-            </ul>
-          </div>
+          <select class="form-control" ng-model="order.playerShootWith">
+            <option value="" ng-selected="order.playerShootWith == ''">Shoots/Catches</option>
+            <option value="Left" ng-selected="order.playerShootWith == Left">Left</option>
+            <option value="Right" ng-selected="order.playerShootWith == 'Right'">Right</option>
+          </select>
         </div>
       </div>
     </div>
