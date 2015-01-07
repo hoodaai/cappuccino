@@ -21,6 +21,14 @@ angular.module('cappuccinoApp')
      $rootScope.screenTitle = 'Recruitment Order Entry';
    }
 
+   var ops = $location.url().split('/')[2];
+    if(ops === 'e') {
+      $http.get('/api/hockey/order/'+$location.url().split('/')[3]).success(function(order) {
+        $scope.order = order;
+        console.log($scope.order);
+    });
+   }
+
   $scope.status = {
     isopen: false
   };
@@ -46,20 +54,19 @@ angular.module('cappuccinoApp')
     $location.path(path);
   }
 
-  $scope.editOrder = function(orderId) {
+  $scope.editOrder = function(orderId, orderType) {
     //$log.debug("editOrder");
-    console.log('editOrder');
-
-    $http.get('/api/hockey/order/'+orderId).success(function(order) {
-        $scope.order = order;
-        console.log(order);
-        $location.path('/placementorder');
-    });
-
+    if(orderType == 'Recruitment') {
+      $location.path('/recruitingorder/e/'+orderId);
+    } else {
+      $location.path('/placementorder/e/'+orderId);
+    }
+    
   }
 
   $scope.enterOrder = function(orderType, actorType) {
     var order = {
+        id: $scope.order._id,
         name: $scope.order.name,
         orderType: orderType,
         actorType: actorType,
@@ -80,13 +87,27 @@ angular.module('cappuccinoApp')
     } 
      //console.log(order);
 
+     if($scope.order._id) {
+
+      $http.put('/api/hockey/order/'+$scope.order._id, order).success(function(matchedOrder) {
+      console.log(order);
+       var modalInstance = $modal.open({
+        template: '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
+        controller: 'ModalInstanceCtrl'
+       });
+      });
+
+     } else {
+
     $http.post('/api/hockey/order', order).success(function(matchedOrder) {
       console.log(order);
        var modalInstance = $modal.open({
         template: '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
         controller: 'ModalInstanceCtrl'
-      });
+       });
     });
+
+  }
   };
 
   var listOrders = function() {
@@ -103,7 +124,7 @@ angular.module('cappuccinoApp')
 var matchOrder = function() {
     var id = $location.url().split('/')[2];
 
-    if(id !== undefined) {
+    if(id !== undefined && id !== 'e') {
       $rootScope.screenTitle = 'Matched Candidates';
       $http.get('/api/hockey/order/matchine/'+id).success(function(matchedOrder) {
         console.log(matchedOrder.hits.total);

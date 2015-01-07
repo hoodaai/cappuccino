@@ -15,8 +15,20 @@ angular.module('cappuccinoApp')
         controller: 'OrderCtrl',
         authenticate: true
       })
+      .state('recruitingorderEdit', {
+        url: '/recruitingorder/e/:id',
+        templateUrl: 'app/order/recruitingorder.html',
+        controller: 'OrderCtrl',
+        authenticate: true
+      })
       .state('placementorder', {
         url: '/placementorder',
+        templateUrl: 'app/order/placementorder.html',
+        controller: 'OrderCtrl',
+        authenticate: true
+      })
+      .state('placementorderEdit', {
+        url: '/placementorder/e/:id',
         templateUrl: 'app/order/placementorder.html',
         controller: 'OrderCtrl',
         authenticate: true

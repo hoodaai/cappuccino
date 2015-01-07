@@ -10,51 +10,12 @@ exports.matchedOrder = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!order) { return res.send(404); }
 
-  var lookingOrderType = 'Recruitment';
-  if(order.orderType == 'Recruitment') {
-    lookingOrderType = 'Placement';
-  }
-
-  Order.search({
-
-    "bool": {
-            "must": [
-                {
-                    "range": {
-                        playerAccomodationCost: {"gte": 0, "lte": parseInt(order.playerAccomodationCost)}
-                    }
-                },
-                {
-                    "match" : {
-                     orderType : lookingOrderType
-                  }
-                },
-                {
-                    "match" : {
-                     status : 'Open'
-                  }
-
-                }
-            ]
-        }
-
-      /*range: {
-        playerAccomodationCost: {"gte": 0, "lte": 81}
-      },
-      "filtered" : {
-            "filter" : {
-                "term" : {
-                    orderType : order.orderType
-                }
-            }
-        }*/
-
-    }, function(err, orders){
-          if(err) { return handleError(res, err); }
-          return res.json(200, orders); 
+    var lookingOrderType = 'Recruitment';
+    if(order.orderType == 'Recruitment') {
+      lookingOrderType = 'Placement';
+    }
+    performMatch(order, res);
     });
-
-  });
 };
 
 
@@ -69,16 +30,6 @@ exports.index = function(req, res) {
       return res.json(200, orders);
   });
 
-  /*Order.find({}).sort('-createdaAt').exec(function(err, orders) {
-      if(err) { return handleError(res, err); }
-      return res.json(200, orders);
-  });*/
-
-  
-  /*Order.find(function (err, orders) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, orders);
-  });*/
 };
 
 // Get a single order
@@ -103,15 +54,7 @@ exports.create = function(req, res) {
       });
 
    //search matched orders in elastic search cluster
-    Order.search({
-      range: {
-        playerAccomodationCost: {from:0, to: 81}
-      }
-    }, function(err, orders){
-          if(err) { return handleError(res, err); }
-          return res.json(200, orders); 
-    });
-   //return res.json(200, order); 
+   return performMatch(order, res);
   });
 };
 
@@ -125,7 +68,7 @@ exports.update = function(req, res) {
     var updated = _.merge(order, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.json(200, order);
+        return performMatch(order, res);
     });
   });
 };
@@ -144,4 +87,67 @@ exports.destroy = function(req, res) {
 
 function handleError(res, err) {
   return res.send(500, err);
+}
+
+function performMatch(order, res) {
+  var lookingOrderType = 'Recruitment';
+  if(order.orderType == 'Recruitment') {
+    lookingOrderType = 'Placement';
+  }
+
+  Order.search({
+
+    "bool": {
+            "must": [
+                {
+                    "range": {
+                        playerAccomodationCost: {"gte": 0, "lte": parseInt(order.playerAccomodationCost)}
+                    }
+                },
+                {
+                    "range": {
+                        playerHeight: {"gte": 0, "lte": parseInt(order.playerHeight)}
+                    }
+                },
+                 {
+                    "range": {
+                        playerWeight: {"gte": 0, "lte": parseInt(order.playerWeight)}
+                    }
+                },
+                {
+                    "match" : {
+                     orderType : lookingOrderType
+                  }
+                },
+                {
+                    "match" : {
+                     status : 'Open'
+                  }
+
+                },
+                /*{
+                    "match" : {
+                     playerPosition : order.playerPosition
+                  }
+
+                }*/
+            ]
+        }
+
+      /*range: {
+        playerAccomodationCost: {"gte": 0, "lte": 81}
+      },
+      "filtered" : {
+            "filter" : {
+                "term" : {
+                    orderType : order.orderType
+                }
+            }
+        }*/
+
+    }, function(err, orders){
+          if(err) { return handleError(res, err); }
+          return res.json(200, orders); 
+    });
+
 }
