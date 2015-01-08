@@ -43,7 +43,6 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
       scrollable: true,
       buttonClasses: 'btn btn-primary',
       //{selectionLimit: 2};
-
     };
 
     $scope.hockeyLeagueTextSettings = {
@@ -86,6 +85,8 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     $scope.order.playerOwnTransport = false;
 
     $scope.setTitle();
+    $scope.listOrders();
+    $scope.matchOrder();
   }
 
 
@@ -170,7 +171,7 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
 
   };
 
-  var listOrders = function() {
+  $scope.listOrders = function() {
     var id = $location.url().split('/')[1];
      if(id === 'orderlist') {
         $rootScope.screenTitle = 'View Customer Orders';
@@ -189,7 +190,7 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
      }
   }
 
-  var matchOrder = function() {
+  $scope.matchOrder = function() {
     var id = $location.url().split('/')[2];
     var actorType = $location.url().split('/')[3];
     if(actorType !== undefined) {
@@ -201,15 +202,23 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     }
 
     if(id !== undefined && id !== 'e') {
+      $rootScope.screenTitle = 'Matched Candidates';
 
-      $http.get('/api/hockey/order/matchine/'+id).success(function(matchedOrder) {
-        $log.debug(matchedOrder.hits.total);
-        $scope.matchedOrderList = matchedOrder.hits.hits;
-        if (matchedOrder.hits.hits.length<1) {
-          $scope.matchesNotFoundMsg = "We're sorry there aren't any matches meeting your requirements at this time. Would you like to edit your order?" ;
+      var promise = orderService.getMatches(id);
+
+      promise.then(
+        function(matchedOrder) {
+          $scope.matchedOrderList = matchedOrder.hits.hits;
+          if (matchedOrder.hits.hits.length < 1) {
+            $scope.matchesNotFoundMsg = "We're sorry there aren't any matches meeting your requirements at this time. Would you like to edit your order?" ;
+          }
+          $log.debug('success getting order matchest', matchedOrder);
+        },
+
+        function(errorPayload) {
+          $log.error('failure getting order match', errorPayload);
         }
-        $log.debug(matchedOrder.hits.hits.length);
-      });
+      );
 
     };
   }
@@ -245,8 +254,8 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     return '$' + value + '/mo';
   };
 
-  $scope.translateCentimeter = function(value) {
-    return value + ' cm';
+  $scope.translateInches = function(value) {
+    return value + ' in';
   };
 
   $scope.translateLbs = function(value) {
@@ -264,9 +273,6 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
   $scope.translatePhysicalStyle = function(value) {
      return '' + value;
   };
-
-  listOrders();
-  matchOrder();
 
   $scope.today = function() {
     $scope.dt = new Date();
