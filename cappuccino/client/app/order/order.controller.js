@@ -1,24 +1,28 @@
 'use strict';
 
 angular.module('cappuccinoApp').controller('OrderCtrl',
-   function ($scope, $rootScope, $location, $http, $modal, $log, Auth) {
+   function ($scope, $rootScope, $location, $http, $modal, $log, Auth, orderService) {
+  $scope.init = function() {
 
-  $scope.order = {};
-  $scope.rate = 7;
-  $scope.max = 10;
+    $rootScope.disableEnterOrderButton = true;
+    $rootScope.screenTitle = 'Choose Order Type';
+    $rootScope.userType = 'placementloopuser';
 
-  $rootScope.disableEnterOrderButton = true;
-  $rootScope.screenTitle = 'Choose Order Type';
-  $scope.loopDropDownValue = 'Select Loop';
+     $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+      };
 
-
-   var id = $location.url().split('/')[1];
-   if(id === 'placementorder') {
-     $rootScope.screenTitle = 'Placement Order Entry';
-   }
-   if(id === 'recruitingorder') {
-     $rootScope.screenTitle = 'Recruitment Order Entry';
-   }
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.hockeyLeagueData = [
+      {id: 'EJHL', label: 'EJHL'},
+      {id: 'NAHL', label: 'NAHL'},
+      {id: 'OHL', label: 'OHL'},
+      {id: 'QMJHL', label: 'QMJHL'},
+      {id: 'WHL', label: 'WHL'},
+      {id: 'USHL', label: 'USHL'}
+    ];
 
 // View matches
    var ops = $location.url().split('/')[2];
@@ -33,7 +37,67 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     isopen: false
   };
 
-  $scope.newContactFormCollapsed = true;
+    $scope.hockeyLeagueSettings = {
+      smartButtonMaxItems: 5,
+      scrollableHeight: '200px',
+      scrollable: true,
+      buttonClasses: 'btn btn-primary',
+      //{selectionLimit: 2};
+
+    };
+
+    $scope.hockeyLeagueTextSettings = {
+       buttonDefaultText: 'Select League',
+    };
+
+    $scope.loopDropDownValue = 'Select Loop';
+    $scope.rate = 7;
+    $scope.max = 10;
+    $scope.status = {
+      isopen: false
+    };
+    $scope.newContactFormCollapsed = true;
+    $scope.modal = {
+      "title": "Title",
+      "content": "Hello Modal<br />This is a multiline message!"
+    };
+    /* Set order defaults */
+    $scope.order = {};
+
+    $scope.order.playerWeight = {
+      min: 150,
+      max: 250
+    };
+
+    $scope.order.playerHeight = {
+      min: 162,
+      max: 204
+    };
+    $scope.order.hockeyLeague = "";
+    $scope.order.playerDefensiveScale = 5;
+    $scope.order.playerSystemBasedScale = 1;
+    $scope.order.playerPhysicalScale = 1;
+
+    $scope.order.playerTeamFee = '5';
+    $scope.order.playerAccomodationCost = '0';
+    $scope.order.playerEquipmentFee = '0';
+
+    $scope.order.playerDateOfBirth = '2014-12-15T10:11:36.001Z';
+    $scope.order.playerOwnTransport = false;
+
+    $scope.setTitle();
+  }
+
+
+  $scope.setTitle = function() {
+    var id = $location.url().split('/')[1];
+     if(id === 'placementorder') {
+       $rootScope.screenTitle = 'Placement Order Entry';
+     }
+     if(id === 'recruitingorder') {
+       $rootScope.screenTitle = 'Recruitment Order Entry';
+     }
+  }
 
   $scope.toggled = function(open) {
     console.log('Dropdown is now: ', open);
@@ -87,38 +151,45 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
         playerOwnTransport: $scope.order.playerOwnTransport
     }
 
-    if($scope.order._id) {
-      $http.put('/api/hockey/order/'+$scope.order._id, order).success(function(matchedOrder) {
-       $log.debug(order);
-       var modalInstance = $modal.open({
-        template: '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
-        controller: 'ModalInstanceCtrl'
-       });
-      });
-
-    } else {
-      $http.post('/api/hockey/order', order).success(function(matchedOrder) {
-        $log.debug(order);
-         var modalInstance = $modal.open({
+    var promise = orderService.submitOrder(order, $scope.order._id);
+    promise.then(
+      function(matchedOrder) {
+        var modalInstance = $modal.open({
           template: '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
           controller: 'ModalInstanceCtrl'
-         });
-      });
-    }
+        });
+      },
+      function(errorPayload) {
+        $log.error('failure submitting order', errorPayload);
+        var modalInstance = $modal.open({
+          template: '<div class="modal-header"><h3 class="modal-title">Error Processing Order</h3></div><div class="modal-body">There has been an error saving your order.</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
+          controller: 'ModalInstanceCtrl'
+        });
+      }
+    );
+
   };
 
   var listOrders = function() {
     var id = $location.url().split('/')[1];
      if(id === 'orderlist') {
         $rootScope.screenTitle = 'View Customer Orders';
-        $http.get('/api/hockey/order').success(function(orderlist) {
+        var promise = orderService.getOrderList();
+
+        promise.then(
+          function(orderlist) {
             $rootScope.orderList = orderlist;
-            $log.debug(orderlist);
-      });
+            console.log('success getting order list', orderlist);
+          },
+
+          function(errorPayload) {
+            $log.error('failure getting order list', errorPayload);
+          }
+        );
      }
   }
 
-var matchOrder = function() {
+  var matchOrder = function() {
     var id = $location.url().split('/')[2];
     var actorType = $location.url().split('/')[3];
     if(actorType !== undefined) {
@@ -143,9 +214,9 @@ var matchOrder = function() {
     };
   }
 
-$scope.cancelOrderPopup = function(orderId) {
-  $rootScope.cancelOrderId = orderId;
-  var modalInstance = $modal.open({
+  $scope.cancelOrderPopup = function(orderId) {
+    $rootScope.cancelOrderId = orderId;
+    var modalInstance = $modal.open({
       template: '<div class="modal-header"><h3 class="modal-title">Cancel Order</h3></div><div class="modal-body">Do you really want to cancel order.</div><div class="modal-footer"><button class="btn btn-primary" ng-click="cancelOrder()">Yes</button> <button class="btn btn-primary" ng-click="cancel()">No</button></div>',
       controller: 'ModalInstanceCtrl',
       resolve: {
@@ -154,101 +225,50 @@ $scope.cancelOrderPopup = function(orderId) {
         }
       }
     });
-}
-
+  }
 
 
   $scope.viewMatches = function(id, actorType) {
      $location.path('/ordermatches/'+id+'/'+actorType);
   }
 
+  // Value to dollar ammount
+  $scope.translateTeamFee = function(value) {
+    return '$' + value + 'k';
+  };
 
-    $scope.order.playerWeight = {
-      min: 150,
-      max: 250
-    };
+  $scope.translatePerMonthAccomodation = function(value) {
+    return '$' + value + '/mo';
+  };
 
-    $scope.order.playerHeight = {
-      min: 162,
-      max: 204
-    };
+  $scope.translatePerMonthEquip = function(value) {
+    return '$' + value + '/mo';
+  };
 
-    $scope.order.playerDefensiveScale = 5;
-    $scope.order.playerSystemBasedScale = 1;
-    $scope.order.playerPhysicalScale = 1;
+  $scope.translateCentimeter = function(value) {
+    return value + ' cm';
+  };
 
-    $scope.order.playerTeamFee = '5';
-    $scope.order.playerAccomodationCost = '0';
-    $scope.order.playerEquipmentFee = '0';
+  $scope.translateLbs = function(value) {
+    return value + ' lbs';
+  };
 
-    $scope.order.playerDOB = '2014-12-15T10:11:36.001Z';
-    $rootScope.userType = 'placementloopuser';
+  $scope.translateDefensiveStyle = function(value) {
+    return '' + value;
+  };
 
-  /*League multiselect dropdown settings*/
-    $scope.order.hockeyLeague = "";
-    $scope.hockeyLeagueData = [
-        {id: 'EJHL', label: 'EJHL'},
-        {id: 'NAHL', label: 'NAHL'},
-        {id: 'OHL', label: 'OHL'},
-        {id: 'QMJHL', label: 'QMJHL'},
-        {id: 'WHL', label: 'WHL'},
-        {id: 'USHL', label: 'USHL'}];
+  $scope.translateSystemBasedStyle = function(value) {
+    return '' + value;
+  };
 
-    $scope.hockeyLeagueSettings = {
-        smartButtonMaxItems: 5,
-        scrollableHeight: '200px',
-        scrollable: true,
-        buttonClasses: 'btn btn-primary',
-        //{selectionLimit: 2};
+  $scope.translatePhysicalStyle = function(value) {
+     return '' + value;
+  };
 
-    };
+  listOrders();
+  matchOrder();
 
-    $scope.hockeyLeagueTextSettings = {
-       buttonDefaultText: 'Select League',
-    };
-
-
-/*Slider settings*/
-
-    // Value to dollar ammount
-    $scope.translateTeamFee = function(value) {
-      return '$' + value + 'k';
-    };
-
-    $scope.translatePerMonthAccomodation = function(value) {
-      return '$' + value + '/mo';
-    };
-
-    $scope.translatePerMonthEquip = function(value) {
-      return '$' + value + '/mo';
-    };
-
-    $scope.translateCentimeter = function(value) {
-      return value + ' cm';
-    };
-
-    $scope.translateLbs = function(value) {
-      return value + ' lbs';
-    };
-
-    $scope.translateDefensiveStyle = function(value) {
-      return '' + value;
-    };
-
-    $scope.translateSystemBasedStyle = function(value) {
-      return '' + value;
-    };
-
-    $scope.translatePhysicalStyle = function(value) {
-       return '' + value;
-    };
-
-    listOrders();
-    matchOrder();
-
-
-
-$scope.today = function() {
+  $scope.today = function() {
     $scope.dt = new Date();
   };
   $scope.today();
@@ -274,12 +294,6 @@ $scope.today = function() {
     $scope.opened = true;
   };
 
-  $scope.dateOptions = {
-    formatYear: 'yy',
-    startingDay: 1
-  };
-
-  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-  $scope.format = $scope.formats[0];
+  $scope.init();
 
   });

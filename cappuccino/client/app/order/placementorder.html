@@ -14,7 +14,7 @@
         </div>
       </div>
 
-        
+
       <h4>Player Position <small>{{radioModel || ''}}</small></h4>
 
       <div class="form-group  btn-group">
@@ -23,9 +23,9 @@
         <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left Defense'">Left Defense</label>
         <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Center'">Center</label>
         <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right Defense'">Right Defense</label>
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right wing'">Right wing</label>               
+        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right wing'">Right wing</label>
       </div>
-      
+
        <h4><i class="fa fa-calendar"></i>
             Player's Date of Birth <small>(as date)</small></h4>
         <div class="row">
@@ -71,7 +71,7 @@
       <div class="form-group  btn-group">
         <label class="btn btn-primary" ng-model="order.playerShootWith"
                                btn-radio="'Left'">Left</label>
-        <label class="btn btn-primary" ng-model="order.playerShootWith" 
+        <label class="btn btn-primary" ng-model="order.playerShootWith"
                                btn-radio="'Right'">Right</label>
       </div>
 
@@ -87,7 +87,7 @@
           rz-slider-model="order.playerDefensiveScale"
           rz-slider-translate="translateDefensiveStyle"
           rz-slider-step="1">
-        </rzslider> 
+        </rzslider>
       </div>
 
       <div class="form-group">
@@ -99,7 +99,7 @@
             rz-slider-model="order.playerSystemBasedScale"
             rz-slider-translate="translateSystemBasedStyle"
             rz-slider-step="1">
-          </rzslider>              
+          </rzslider>
       </div>
 
       <div class="form-group" style="margin-bottom:25px;">
@@ -111,7 +111,7 @@
             rz-slider-model="order.playerPhysicalScale"
             rz-slider-translate="translatePhysicalStyle"
             rz-slider-step="1">
-          </rzslider>                    
+          </rzslider>
       </div>
 
       <div class="form-group">
@@ -126,7 +126,7 @@
             rz-slider-model="order.playerTeamFee"
             rz-slider-translate="translateTeamFee"
             rz-slider-step="1">
-          </rzslider> 
+          </rzslider>
       </div>
 
       <div class="form-group">
@@ -137,7 +137,7 @@
           rz-slider-model="order.playerAccomodationCost"
           rz-slider-translate="translatePerMonthAccomodation"
           rz-slider-step="1">
-        </rzslider> 
+        </rzslider>
       </div>
 
       <div class="form-group" style="margin-bottom:25px;">
@@ -148,12 +148,12 @@
           rz-slider-model="order.playerEquipmentFee"
           rz-slider-translate="translatePerMonthEquip"
           rz-slider-step="1">
-        </rzslider> 
+        </rzslider>
       </div>
 
       <div class="form-group">
           <h4>Will the Player have their own transportation?</h4>
-      </div> 
+      </div>
       <div class="form-group  btn-group">
           <label class="btn btn-primary" ng-model="order.playerOwnTransport"
                  btn-radio="'Left'">Yes</label>
@@ -163,8 +163,8 @@
 
       <div class="form-group">
         <button ng-show="order._id" ng-click="enterOrder('Placement', 'Candidate')" class="btn btn-info pull-right">Update Order</button>
-        <button ng-hide="order._id" ng-click="enterOrder('Placement', 'Candidate')" class="btn btn-info pull-right">Enter Order</button>
-      </div>                          
+        <button ng-click="enterOrder('Placement Order')" class="btn btn-info pull-right">View Matches</button>
+      </div>
     </div>
 
   </div>
@@ -176,5 +176,5 @@
       </div>
       <div class="modal-body">
           <img src="assets/images/spinner.gif" id="loading-indicator"  />
-      </div>   
+      </div>
 </script>

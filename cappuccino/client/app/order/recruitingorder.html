@@ -237,9 +237,14 @@
         <h3 class="panel-title">Transportation</h3>
       </div>
       <div class="panel-body">
-         <div class="form-group  btn-group">
-            <label class="btn btn-primary" ng-model="order.playerOwnTransport" btn-radio="'Left'">Yes</label>
-            <label class="btn btn-primary" ng-model="order.playerOwnTransport" btn-radio="'Right'">No</label>
+         <div class="form-group">
+            <div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="order.playerOwnTransport"> Player will have their own transportation
+                </label>
+              </div>
+            </div>
           </div>
       </div>
     </div>
@@ -249,8 +254,9 @@
           <button ng-hide="order._id" ng-click="enterOrder('Recruitment', 'Talent Seeker')" class="btn btn-info pull-right">Enter Order</button>
         </div>
     <div class="form-group">
+
       <button ng-show="order._id" ng-click="enterOrder('Recruitment', 'Talent Seeker')" class="btn btn-info pull-right">Update Order</button>
-      <button ng-hide="order._id" ng-click="enterOrder('Recruitment Order')" class="btn btn-info pull-right">Enter Order</button>
+      <button ng-hide="order._id" ng-click="enterOrder('Recruitment Order')" class="btn btn-info pull-right">View Matches</button>
     </div>
 
   </div>
