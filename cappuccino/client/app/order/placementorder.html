@@ -2,32 +2,90 @@
   <div ng-include="'components/sidebar/sidebar.html'"></div>
 
   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-              <!--<h1 class="page-header">Placement Order Entry</h1>-->
-    <h2 class="sub-header">Placement Order Entry</h2>
+    <h2 class="sub-header">Placement Order</h2>
 
-    <div class="jumbotron">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Player Name</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6">
+            <input type="text" ng-model="order.name" class="form-control" required>
+            <a ng-click="newContactFormCollapsed = !newContactFormCollapsed">New Contact</a>
+            <hr>
+            <form collapse="newContactFormCollapsed" class="form-horizontal">
+              <div class="form-group">
+              </div>
+              <div class="form-group">
+                <label for="candidate_fn" class="col-sm-4 control-label">First Name</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="candidate_fn" placeholder="Enter First Name">
+                </div>
+              </div>
 
-      <h4>Player Name</h4>
-      <div class="row">
-        <div class="col-md-6">
-          <input type="text" ng-model="order.name" class="form-control" required>
+              <div class="form-group">
+                <label for="candidate_ln" class="col-sm-4 control-label">Last Name</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="candidate_ln" placeholder="Enter Last Name">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="candidate_email" class="col-sm-4 control-label">Email Address</label>
+                <div class="col-sm-8">
+                  <input type="email" class="form-control" id="candidate_email" placeholder="Enter Email Address">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox"> Save Contact
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
+    </div>
 
-
-      <h4>Player Position <small>{{radioModel || ''}}</small></h4>
-
-      <div class="form-group  btn-group">
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Goalie'">Goalie</label>
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left wing'">Left wing</label>
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left Defense'">Left Defense</label>
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Center'">Center</label>
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right Defense'">Right Defense</label>
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right wing'">Right wing</label>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">League</h3>
       </div>
+      <div class="panel-body">
+        <div ng-dropdown-multiselect="" options="hockeyLeagueData" selected-model="order.hockeyLeague" extra-settings="hockeyLeagueDropdownSettings"></div>
+      </div>
+    </div>
 
-       <h4><i class="fa fa-calendar"></i>
-            Player's Date of Birth <small>(as date)</small></h4>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Position</h3>
+      </div>
+      <div class="panel-body">
+
+        <select class="form-control" ng-model="order.playerPosition">
+          <option value="" ng-selected="order.playerPosition == ''">Position of Interest</option>
+          <option value="Goalie" ng-selected="order.playerPosition == Goalie">Goalie</option>
+          <option value="Left wing" ng-selected="order.playerPosition == 'Left wing'">Left wing</option>
+          <option value="Left Defense" ng-selected="order.playerPosition == 'Left Defense'">Left Defense</option>
+          <option value="Center" ng-selected="order.playerPosition == 'Center'">Center</option>
+          <option value="Right Defense" ng-selected="order.playerPosition == 'Right Defense'">Right Defense</option>
+          <option value="Right wing" ng-selected="order.playerPosition == 'Right wing'">Right wing</option>
+        </select>
+
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-calendar"></i> Date of Birth Range</h3>
+      </div>
+      <div class="panel-body">
         <div class="row">
         <div class="col-md-6">
             <p class="input-group">
@@ -38,61 +96,72 @@
             </p>
         </div>
         </div>
-
+      </div>
     </div>
 
-    <div class="jumbotron">
-      <div class="form-group">
-        <h4>What are the Player's Physical Traits?</h4>
-         <span class="help-block">What is the player's height?</span>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Physical Traits</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <span class="help-block">Height Range</span>
           <rzslider
             rz-slider-floor="162"
             rz-slider-ceil="204"
-            rz-slider-model="order.playerHeight"
-            rz-slider-translate="translateCentimeter"
+            rz-slider-model="order.playerHeight.min"
+            rz-slider-high="order.playerHeight.max"
+            rz-slider-translate="translateInches"
             rz-slider-step="1">
           </rzslider>
-      </div>
-      <div class="form-group">
-        <span class="help-block">What is the player's weight?</span>
-        <rzslider
-          rz-slider-floor="150"
-          rz-slider-ceil="250"
-          rz-slider-model="order.playerWeight"
-          rz-slider-translate="translateLbs"
-          rz-slider-step="1">
-        </rzslider>
-      </div>
+        </div>
 
-      <div class="form-group">
-        <h4>What hand does the player shoot with?</h4>
-      </div>
+        <div class="form-group">
+          <span class="help-block">Weight Range</span>
+          <rzslider
+              rz-slider-floor="150"
+              rz-slider-ceil="250"
+              rz-slider-model="order.playerWeight.min"
+              rz-slider-high="order.playerWeight.max"
+              rz-slider-translate="translateLbs"
+              rz-slider-step="1">
+          </rzslider>
+        </div>
 
-      <div class="form-group  btn-group">
-        <label class="btn btn-primary" ng-model="order.playerShootWith"
-                               btn-radio="'Left'">Left</label>
-        <label class="btn btn-primary" ng-model="order.playerShootWith"
-                               btn-radio="'Right'">Right</label>
-      </div>
+        <div class="form-group">
+          <span class="help-block">Dominant Hand</span>
+        </div>
 
-      <div class="form-group">
-        <h4>What style of team play is the player looking for ?</h4>
+        <div class="form-group">
+          <select class="form-control" ng-model="order.playerShootWith">
+            <option value="" ng-selected="order.playerShootWith == ''">Shoots/Catches</option>
+            <option value="Left" ng-selected="order.playerShootWith == Left">Left</option>
+            <option value="Right" ng-selected="order.playerShootWith == 'Right'">Right</option>
+          </select>
+        </div>
       </div>
-      <div class="form-group">
-        <span class="help-block pull-left">More Defensive</span>
-        <span class="help-block pull-right">More Offensive</span>
-        <rzslider
-          rz-slider-floor="1"
-          rz-slider-ceil="10"
-          rz-slider-model="order.playerDefensiveScale"
-          rz-slider-translate="translateDefensiveStyle"
-          rz-slider-step="1">
-        </rzslider>
-      </div>
+    </div>
 
-      <div class="form-group">
-        <span class="help-block pull-left">System Based</span>
-        <span class="help-block pull-right">Free Flowing</span>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Player Style</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <span class="help-block pull-left">Defensive</span>
+          <span class="help-block pull-right">Offensive</span>
+          <rzslider
+            rz-slider-floor="1"
+            rz-slider-ceil="10"
+            rz-slider-model="order.playerDefensiveScale"
+            rz-slider-translate="translateDefensiveStyle"
+            rz-slider-step="1">
+          </rzslider>
+        </div>
+
+        <div class="form-group">
+          <span class="help-block pull-left">System Based</span>
+          <span class="help-block pull-right">Free Flowing</span>
           <rzslider
             rz-slider-floor="1"
             rz-slider-ceil="10"
@@ -100,11 +169,11 @@
             rz-slider-translate="translateSystemBasedStyle"
             rz-slider-step="1">
           </rzslider>
-      </div>
+        </div>
 
-      <div class="form-group" style="margin-bottom:25px;">
-        <span class="help-block pull-left">Physical</span>
-        <span class="help-block pull-right">Skill</span>
+        <div class="form-group" style="margin-bottom:25px;">
+          <span class="help-block pull-left">Physical</span>
+          <span class="help-block pull-right">Skill</span>
           <rzslider
             rz-slider-floor="1"
             rz-slider-ceil="10"
@@ -112,14 +181,17 @@
             rz-slider-translate="translatePhysicalStyle"
             rz-slider-step="1">
           </rzslider>
+        </div>
       </div>
+    </div>
 
-      <div class="form-group">
-       <h4>What costs are acceptable to the player ?</h4>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Player must be able to afford...</h3>
       </div>
-
-      <div class="form-group">
-        <span class="help-block">Team Fee $</span>
+      <div class="panel-body">
+        <div class="form-group">
+          <span class="help-block">Team Fee $</span>
           <rzslider
             rz-slider-floor="0"
             rz-slider-ceil="12"
@@ -127,44 +199,51 @@
             rz-slider-translate="translateTeamFee"
             rz-slider-step="1">
           </rzslider>
-      </div>
+        </div>
 
-      <div class="form-group">
-        <span class="help-block">Accomodation $</span>
-        <rzslider
-          rz-slider-floor="0"
-          rz-slider-ceil="2000"
-          rz-slider-model="order.playerAccomodationCost"
-          rz-slider-translate="translatePerMonthAccomodation"
-          rz-slider-step="1">
-        </rzslider>
-      </div>
+        <div class="form-group">
+          <span class="help-block">Accomodation $</span>
+          <rzslider
+            rz-slider-floor="0"
+            rz-slider-ceil="2000"
+            rz-slider-model="order.playerAccomodationCost"
+            rz-slider-translate="translatePerMonthAccomodation"
+            rz-slider-step="1">
+          </rzslider>
+        </div>
 
-      <div class="form-group" style="margin-bottom:25px;">
-        <h4>Equipment Player Resposibility</h4>
-        <rzslider
-          rz-slider-floor="0"
-          rz-slider-ceil="500"
-          rz-slider-model="order.playerEquipmentFee"
-          rz-slider-translate="translatePerMonthEquip"
-          rz-slider-step="1">
-        </rzslider>
+        <div class="form-group" style="margin-bottom:25px;">
+          <span class="help-block">Equipment Costs $</span>
+          <rzslider
+            rz-slider-floor="0"
+            rz-slider-ceil="500"
+            rz-slider-model="order.playerEquipmentFee"
+            rz-slider-translate="translatePerMonthEquip"
+            rz-slider-step="1">
+          </rzslider>
+        </div>
       </div>
+    </div>
 
-      <div class="form-group">
-          <h4>Will the Player have their own transportation?</h4>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Transportation</h3>
       </div>
-      <div class="form-group  btn-group">
-          <label class="btn btn-primary" ng-model="order.playerOwnTransport"
-                 btn-radio="'Left'">Yes</label>
-          <label class="btn btn-primary" ng-model="order.playerOwnTransport"
-                 btn-radio="'Right'">No</label>
+      <div class="panel-body">
+         <div class="form-group">
+            <div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="order.playerOwnTransport"> Player will have their own transportation
+                </label>
+              </div>
+            </div>
+          </div>
       </div>
-
-      <div class="form-group">
-        <button ng-show="order._id" ng-click="enterOrder('Placement', 'Candidate')" class="btn btn-info pull-right">Update Order</button>
-        <button ng-click="enterOrder('Placement Order')" class="btn btn-info pull-right">View Matches</button>
-      </div>
+    </div>
+    <div class="form-group">
+      <button ng-show="order._id" ng-click="enterOrder('Placement', 'Candidate')" class="btn btn-info pull-right">Update Order</button>
+      <button ng-click="enterOrder('Placement Order')" class="btn btn-info pull-right">View Matches</button>
     </div>
 
   </div>

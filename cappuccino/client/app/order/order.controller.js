@@ -72,7 +72,8 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
       min: 162,
       max: 204
     };
-    $scope.order.hockeyLeague = "";
+    $scope.order.hockeyLeague = [];
+    $scope.hockeyLeagueDropdownSettings = {externalIdProp: ""};
     $scope.order.playerDefensiveScale = 5;
     $scope.order.playerSystemBasedScale = 1;
     $scope.order.playerPhysicalScale = 1;
