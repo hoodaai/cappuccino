@@ -1,0 +1,32 @@
+  <div class="modal-header">
+    <h3 class="modal-title">New Contact</h3>
+  </div>
+  <div class="modal-body">
+    <form name="newContactForm">
+      <div class="form-group">
+      </div>
+      <div class="form-group" ng-class="{'has-error': newContactForm.firstName.$invalid && newContactForm.firstName.$dirty}">
+        <label for="candidate_fn" class="col-sm-4 control-label">First Name</label>
+        <input type="text" class="form-control" ng-model="firstName" name="firstName" required placeholder="Enter First Name">
+        <span class="help-block" ng-show="newContactForm.firstName.$error.required && newContactForm.firstName.$dirty">Contact first name is required.</span>
+      </div>
+
+      <div class="form-group" ng-class="{'has-error': newContactForm.lastName.$invalid && newContactForm.lastName.$dirty}">
+        <label for="candidate_ln" class="col-sm-4 control-label">Last Name</label>
+        <input type="text" class="form-control" ng-model="lastName" name="lastName" required placeholder="Enter Last Name">
+        <span class="help-block" ng-show="newContactForm.lastName.$error.required && newContactForm.lastName.$dirty">Contact last name is required.</span>
+      </div>
+
+      <div class="form-group" ng-class="{'has-error': newContactForm.email.$invalid && newContactForm.email.$dirty}">
+        <label for="candidate_email" class="col-sm-4 control-label">Email Address</label>
+        <input type="email" class="form-control" ng-model="email" name="email" required placeholder="Enter Email Address">
+        <span class="help-block"ng-show="newContactForm.email.$error.required && newContactForm.email.$dirty">Contact email is required.</span>
+        <span class="help-block"ng-show="newContactForm.email.$invalid && newContactForm.email.$dirty">Valid email required.</span>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" ng-disabled="newContactForm.$invalid" ng-click="ok()">Save Contact</button>
+  </div>
+

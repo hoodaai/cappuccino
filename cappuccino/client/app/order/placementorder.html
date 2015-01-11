@@ -1,8 +1,8 @@
   <div ng-include="'components/navbar/navbar.html'"></div>
   <div ng-include="'components/sidebar/sidebar.html'"></div>
 
-  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h2 class="sub-header">Placement Order</h2>
+  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 order">
+    <h3 class="sub-header">Placement Order</h3>
 
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -10,44 +10,16 @@
       </div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-md-6">
-            <input type="text" ng-model="order.name" class="form-control" required>
-            <a ng-click="newContactFormCollapsed = !newContactFormCollapsed">New Contact</a>
-            <hr>
-            <form collapse="newContactFormCollapsed" class="form-horizontal">
-              <div class="form-group">
-              </div>
-              <div class="form-group">
-                <label for="candidate_fn" class="col-sm-4 control-label">First Name</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" id="candidate_fn" placeholder="Enter First Name">
-                </div>
-              </div>
+          <div class="col-md-12">
+            <div class="input-group">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+              <input type="text" ng-model="order.name" typeahead="contact as (contact.firstName + ' ' + contact.lastName + ' <' + contact.email + '>') for contact in contacts | filter:{firstName:$viewValue} | limitTo:8"
+                typeahead-on-select="selectContact($item, $model, $label)" class="form-control" required placeholder="Search exising contacts"/>
+            </div>
+            <div>
+              <a class="pull-right" ng-click="newContact()">New Contact</a>
 
-              <div class="form-group">
-                <label for="candidate_ln" class="col-sm-4 control-label">Last Name</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" id="candidate_ln" placeholder="Enter Last Name">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="candidate_email" class="col-sm-4 control-label">Email Address</label>
-                <div class="col-sm-8">
-                  <input type="email" class="form-control" id="candidate_email" placeholder="Enter Email Address">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-offset-4 col-sm-10">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox"> Save Contact
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -83,17 +55,31 @@
 
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-calendar"></i> Date of Birth Range</h3>
+        <h3 class="panel-title">Date of Birth Range</h3>
       </div>
       <div class="panel-body">
         <div class="row">
-        <div class="col-md-6">
-            <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="order.playerDOB" is-open="opened"  ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
+        <div class="col-md-12">
+            <form class="form-inline">
+                <div class="form-group col-md-6 col-sm-6">
+                  <label for="minBirthdate">Start Date</label>
+                  <div class="input-group">
+                    <input type="text" name="minBirthdate" class="form-control" datepicker-popup="{{format}}" ng-model="order.playerDateOfBirth.min" is-open="minBirthdateOpened"  ng-required="true" close-text="Close" />
+                    <div class="input-group-addon birthdate-addon" ng-click="toggleMinBirthdate($event)">
+                      <i class="glyphicon glyphicon-calendar"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6 col-sm-6">
+                  <label for="maxBirthdate">End Date</label>
+                  <div class="input-group" ng-click="toggleMaxBirthdate($event)">
+                    <input type="text" name="maxBirthdate" class="form-control" datepicker-popup="{{format}}" ng-model="order.playerDateOfBirth.max" is-open="maxBirthdateOpened"  ng-required="true" close-text="Close" />
+                    <div class="input-group-addon birthdate-addon">
+                     <i class="glyphicon glyphicon-calendar"></i>
+                    </div>
+                  </div>
+                </div>
+          </form>
         </div>
         </div>
       </div>
@@ -243,11 +229,8 @@
     </div>
     <div class="form-group">
       <button ng-show="order._id" ng-click="enterOrder('Placement', 'Candidate')" class="btn btn-info pull-right">Update Order</button>
-      <button ng-click="enterOrder('Placement Order')" class="btn btn-info pull-right">View Matches</button>
-    </div>
-
+      <button ng-click="enterOrder('Placement Order')" class="btn btn-info pull-right view-matches-btn">View Matches</button>
   </div>
-
 
 <script type="text/ng-template" id="myModalContent.html">
       <div class="modal-header">
@@ -257,3 +240,4 @@
           <img src="assets/images/spinner.gif" id="loading-indicator"  />
       </div>
 </script>
+

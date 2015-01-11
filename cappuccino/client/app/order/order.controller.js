@@ -82,12 +82,17 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     $scope.order.playerAccomodationCost = '0';
     $scope.order.playerEquipmentFee = '0';
 
-    $scope.order.playerDateOfBirth = '2014-12-15T10:11:36.001Z';
+    $scope.order.playerDateOfBirth = {
+      min: '2004-12-15T10:11:36.001Z',
+      max: '2014-12-15T10:11:36.001Z'
+    };
+
     $scope.order.playerOwnTransport = false;
 
     $scope.setTitle();
     $scope.listOrders();
     $scope.matchOrder();
+    $scope.getContacts();
   }
 
 
@@ -237,9 +242,38 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     });
   }
 
+  $scope.getContacts = function() {
+    $scope.contacts = [
+      {
+        firstName: "Test",
+        lastName: "User",
+        email: "test@test.com"
+      },
+      {
+        firstName: "Admin",
+        lastName: "User",
+        email: "admin@admin.com"
+      }
+    ];
+  };
 
-  $scope.viewMatches = function(id, actorType) {
-     $location.path('/ordermatches/'+id+'/'+actorType);
+  $scope.newContact = function() {
+    var modalInstance = $modal.open({
+      templateUrl: 'app/contacts/newContact.html',
+      controller: 'ContactModalCtrl'
+    });
+
+    modalInstance.result.then(function(response){
+      $scope.order.name = response.firstName + " " + response.lastName + " <" + response.email + ">";
+    });
+  }
+
+  $scope.selectContact = function($item, $model, $label) {
+    $scope.order.name = $item.firstName + " " + $item.lastName + " <" + $item.email + ">";
+  };
+
+  $scope.viewMatches = function(id) {
+     $location.path('/ordermatches/'+id);
   }
 
   // Value to dollar ammount
@@ -294,12 +328,19 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
   };
   $scope.toggleMin();
 
-  $scope.open = function($event) {
+  $scope.toggleMinBirthdate = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
-
-    $scope.opened = true;
+    $scope.maxBirthdateOpened = false;
+    $scope.minBirthdateOpened = true;
   };
+
+  $scope.toggleMaxBirthdate = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $scope.minBirthdateOpened = false;
+    $scope.maxBirthdateOpened = true;
+  }
 
   $scope.init();
 
