@@ -159,10 +159,24 @@ $scope.cancelOrderPopup = function(orderId) {
      $location.path('/ordermatches/'+id+'/'+actorType);
   }
 
+/* Default data configuration*/
 
-    $scope.order.playerWeight = 150;
-    $scope.order.playerHeight = 167;
+    $scope.order.playerHeight = {
+      min: 170,
+      max: 180,
+      floor: 162,
+      ceil: 204
+     
+    };
 
+    $scope.order.playerWeight = {
+      min: 170,
+      max: 180,
+      floor: 150,
+      ceil: 250
+    };
+
+    
     $scope.order.playerDefensiveScale = 5;
     $scope.order.playerSystemBasedScale = 1;
     $scope.order.playerPhysicalScale = 1;

@@ -174,3 +174,15 @@ Use spinner instead of slider
 [Iterative Prototyping](http://reecegeorge.com/iterative-prototyping.html)
 
 
+http://css-tricks.com/stackicons-icon-fonts/
+
+casperjs
+jsoup.org
+phantom.js
+pointdtreak
+
+
+Graph:
+
+http://mbostock.github.io/protovis/
+

@@ -14,6 +14,17 @@
         </div>
       </div>
 
+      <h4>What league is this for?</h4>
+      <div class="row">
+         <div class="col-md-6"> 
+            <div ng-dropdown-multiselect="" options="hockeyLeagueData"
+                 selected-model="order.hockeyLeague" 
+                 extra-settings="hockeyLeagueSettings" 
+                 translation-texts="hockeyLeagueTextSettings">
+            </div>
+          </div>
+      </div>
+
         
       <h4>Player Position <small>{{radioModel || ''}}</small></h4>
 
@@ -45,10 +56,11 @@
       <div class="form-group">
         <h4>What are the Player's Physical Traits?</h4>
          <span class="help-block">What is the player's height?</span>
-          <rzslider
-            rz-slider-floor="162"
-            rz-slider-ceil="204"
-            rz-slider-model="order.playerHeight"
+         <rzslider
+            rz-slider-floor="order.playerHeight.floor"
+            rz-slider-ceil="order.playerHeight.ceil"
+            rz-slider-model="order.playerHeight.min"
+            rz-slider-high="order.playerHeight.max"
             rz-slider-translate="translateCentimeter"
             rz-slider-step="1">
           </rzslider>
@@ -56,11 +68,12 @@
       <div class="form-group">
         <span class="help-block">What is the player's weight?</span>
         <rzslider
-          rz-slider-floor="150"
-          rz-slider-ceil="250"
-          rz-slider-model="order.playerWeight"
-          rz-slider-translate="translateLbs"
-          rz-slider-step="1">
+            rz-slider-floor="order.playerWeight.floor"
+            rz-slider-ceil="order.playerWeight.ceil"
+            rz-slider-model="order.playerWeight.min"
+            rz-slider-high="order.playerWeight.max"
+            rz-slider-translate="translateLbs"
+            rz-slider-step="1">
         </rzslider>
       </div>
 
@@ -136,7 +149,7 @@
           rz-slider-ceil="2000"
           rz-slider-model="order.playerAccomodationCost"
           rz-slider-translate="translatePerMonthAccomodation"
-          rz-slider-step="1">
+          rz-slider-step="100">
         </rzslider> 
       </div>
 
@@ -147,7 +160,7 @@
           rz-slider-ceil="500"
           rz-slider-model="order.playerEquipmentFee"
           rz-slider-translate="translatePerMonthEquip"
-          rz-slider-step="1">
+          rz-slider-step="25">
         </rzslider> 
       </div>
 
