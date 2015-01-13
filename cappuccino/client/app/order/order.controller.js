@@ -10,7 +10,7 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
   $rootScope.disableEnterOrderButton = true;
   $rootScope.screenTitle = 'Choose Order Type';
   $scope.loopDropDownValue = 'Select Loop';
-
+  $scope.order.hockeyLeague = 'Select League';
 
    var id = $location.url().split('/')[1];
    if(id === 'placementorder') {
@@ -29,6 +29,12 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     });
    }
 
+$scope.items = [
+    'The first choice!',
+    'And another choice for you.',
+    'but wait! A third!'
+  ];
+
   $scope.status = {
     isopen: false
   };
@@ -43,11 +49,12 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     $scope.status.isopen = !$scope.status.isopen;
   };
   
-  $scope.chooseOrderType = function(loopName) {
-    console.log('loopName: '+loopName);
-    $scope.loopDropDownValue = loopName;
-    $scope.showOrderType = true;
-    $rootScope.disableEnterOrderButton = false;
+
+
+  $scope.chooseLeague = function(league) {
+    console.log('league: '+league);
+    $scope.order.hockeyLeague = league;
+    
   };
 
   $scope.redirectTo = function(path) {
@@ -287,3 +294,5 @@ $scope.today = function() {
   $scope.format = $scope.formats[0];
 
   });
+
+
