@@ -2,6 +2,11 @@
 
 var _ = require('lodash');
 var Order = require('./order.model');
+var elasticsearch = require('elasticsearch');
+var elasticSearchClient = new elasticsearch.Client({
+  host: 'localhost:9200',
+  log: 'trace'
+});
 
 
 // Get list of matched orders
@@ -47,14 +52,16 @@ exports.create = function(req, res) {
   Order.create(req.body, function(err, order) {
     if(err) { return handleError(res, err); }
 
-    Order.on('es-indexed', function(err, res){
+    createDocumentES(order);
+
+    /*Order.on('es-indexed', function(err, res){
       if (err) throw err;
-        /* Document is indexed */
+        
        // console.log(res);
-      });
+      });*/
 
    //search matched orders in elastic search cluster
-   return performMatch(order, res);
+   //return performMatch(order, res);
   });
 };
 
@@ -89,6 +96,52 @@ function handleError(res, err) {
   return res.send(500, err);
 }
 
+
+function createDocumentES(order) {
+
+   
+    elasticSearchClient.create({
+        index: 'matchine',
+        type: 'hockeyOrder',
+        // id: '1',
+        body: {
+          id: order._id,
+          name: order.name,
+          orderType: order.orderType,
+          actorType: order.actorType,
+          status: order.status,
+          league:  JSON.stringify(order.league),
+          playerPosition: order.playerPosition,
+          playerDOB: order.playerDOB,
+
+          playerDOBRange: JSON.stringify(order.playerDOBRange),
+          
+          playerHeight: order.playerHeight,
+          playerWeight: order.playerWeight,
+
+          playerHeightRange: JSON.stringify(order.playerHeightRange),
+
+          playerWeightRange: JSON.stringify(order.playerWeightRange),
+
+
+          playerShootWith: order.playerShootWith,
+          playerDefensiveScale: order.playerDefensiveScale,
+          playerSystemBasedScale: order.playerSystemBasedScale,
+          playerPhysicalScale: order.playerPhysicalScale,
+          playerTeamFee: order.playerTeamFee,
+          playerAccomodationCost: order.playerAccomodationCost,
+          playerEquipmentFee: order.playerEquipmentFee,
+          playerOwnTransport: order.playerOwnTransport,
+          user: order.user,
+          createdaAt: order.createdaAt
+        }
+    }, function (error, response) {
+        // ...
+    });
+
+    //eventEmitter.emit('doOutput', {message:'okay'});
+}
+
 function performMatch(order, res) {
   var lookingOrderType = 'Recruitment';
   if(order.orderType == 'Recruitment') {
@@ -114,7 +167,7 @@ function performMatch(order, res) {
                     playerEquipmentFee: {"gte": 0, "lte": parseInt(order.playerEquipmentFee)}
                   }
                 },
-                {
+                /*{
                   "range": {
                     playerHeight: {"gte": 0, "lte": parseInt(order.playerHeight)}
                   }
@@ -123,7 +176,7 @@ function performMatch(order, res) {
                   "range": {
                     playerWeight: {"gte": 0, "lte": parseInt(order.playerWeight)}
                   }
-                },
+                },*/
                 {
                   "match" : {
                    orderType : lookingOrderType

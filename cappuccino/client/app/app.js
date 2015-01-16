@@ -15,7 +15,7 @@ angular.module('cappuccinoApp', [
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $logProvider) {
     $urlRouterProvider
       .otherwise('/');
-    $logProvider.debugEnabled(false);
+    $logProvider.debugEnabled(true);
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
   })

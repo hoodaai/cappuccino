@@ -42,9 +42,9 @@
         <div class="row">
         <div class="col-md-6">
             <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="order.playerDOB" is-open="opened"  ng-required="true" close-text="Close" />
+              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="order.playerDOB" is-open="openedFirstCal"  ng-required="true" close-text="Close" />
               <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                <button type="button" class="btn btn-default" ng-click="openFirstCal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
             </p>
         </div>
@@ -57,10 +57,10 @@
         <h4>What are the Player's Physical Traits?</h4>
          <span class="help-block">What is the player's height?</span>
          <rzslider
-            rz-slider-floor="order.playerHeight.floor"
-            rz-slider-ceil="order.playerHeight.ceil"
-            rz-slider-model="order.playerHeight.min"
-            rz-slider-high="order.playerHeight.max"
+            rz-slider-floor="order.playerHeightRange.floor"
+            rz-slider-ceil="order.playerHeightRange.ceil"
+            rz-slider-model="order.playerHeightRange.min"
+            rz-slider-high="order.playerHeightRange.max"
             rz-slider-translate="translateCentimeter"
             rz-slider-step="1">
           </rzslider>
@@ -68,10 +68,10 @@
       <div class="form-group">
         <span class="help-block">What is the player's weight?</span>
         <rzslider
-            rz-slider-floor="order.playerWeight.floor"
-            rz-slider-ceil="order.playerWeight.ceil"
-            rz-slider-model="order.playerWeight.min"
-            rz-slider-high="order.playerWeight.max"
+            rz-slider-floor="order.playerWeightRange.floor"
+            rz-slider-ceil="order.playerWeightRange.ceil"
+            rz-slider-model="order.playerWeightRange.min"
+            rz-slider-high="order.playerWeightRange.max"
             rz-slider-translate="translateLbs"
             rz-slider-step="1">
         </rzslider>
@@ -169,9 +169,9 @@
       </div> 
       <div class="form-group  btn-group">
           <label class="btn btn-primary" ng-model="order.playerOwnTransport"
-                 btn-radio="'Left'">Yes</label>
+                 btn-radio="'Yes'">Yes</label>
           <label class="btn btn-primary" ng-model="order.playerOwnTransport"
-                 btn-radio="'Right'">No</label>
+                 btn-radio="'No'">No</label>
       </div>
 
       <div class="form-group">

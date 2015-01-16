@@ -26,19 +26,20 @@
         <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
       </ul>
 
-      <form class="navbar-form navbar-right" role="search">
-  
-         <button ng-show="isLoggedIn()" type="submit" ng-click="open()" 
-                 class="btn btn-default bg-green">Enter Order
+      <div class="navbar-form navbar-right">
+         <div class="btn-group">
+         <button ng-show="isLoggedIn()" type="button" ng-click="open()" 
+                 class="btn btn-homepage bg-green weighted-font">Enter Order
           </button>
-      </form>
+          </div>
+      </div>
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="weighted-font nav navbar-nav navbar-right">
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}">
-          <a style="color: #428bca;" href="/signup">Sign up</a>
+          <a  href="/signup">Sign up</a>
         </li>
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}">
-          <a style="color: #428bca;" href="/login">Login</a>
+          <a  href="/login">Login</a>
         </li>
         <li ng-show="isLoggedIn()">
            <p class="navbar-text">Hello {{ getCurrentUser().name }}</p>

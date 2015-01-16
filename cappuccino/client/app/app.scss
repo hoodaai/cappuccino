@@ -30,15 +30,16 @@ $primary-color-500: #7bd454;//#3F51B5;//#2196F3;
  * Base structure
  */
 
-/* Move down content because we have a fixed navbar that is 50px tall */
+
 
 * {
   /*box-sizing: border-box;*/
 }
+/* Move down content because we have a fixed navbar that is 25px tall */
 html, body {
   height: 100%;
   padding: 0;
-  padding-top: 30px;
+  padding-top: 25px;
   margin: 0;
 }
 body {
@@ -72,6 +73,10 @@ color: #FFFFFF;
 }
 .navbar-brand:hover { 
   color: #FFFFFF;
+}
+
+ul.nav a:hover {
+ color: #fff !important;
 }
 
 .sub-nav {

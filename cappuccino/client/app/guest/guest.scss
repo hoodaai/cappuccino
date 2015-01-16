@@ -3,6 +3,18 @@
     margin-top: -20px;
 }
 
+#banner-hockey {
+   /* padding-top: 430px; */
+   
+    background-image: url(/assets/images/ice_hockey_2-wallpaper-1440x1080.jpg); 
+    background-size: cover; 
+    background-repeat: no-repeat;
+
+}
+#banner-hockey h1 {
+  font-size: 56px;
+}
+
 #banner h1 {
     font-size: 60px;
     line-height: 1;
@@ -11,12 +23,16 @@
 
 .hero-unit {
     position: relative;
+    //position internal div
     padding: 30px 15px;
     color: #F5F5F5;
     text-align: center;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    background: #4393B9;
+    /*background: #4393B9;*/
+    height: 600px;
 }
+
+
 
 .footer {
     text-align: center;
@@ -27,4 +43,89 @@
 
 .bg-blue {
     background-color: #0D47A1;
+}
+
+.homepage_action_box {
+    margin: 112px auto 0;
+    max-width: 85%;
+    display: table;
+    background-color: #333;
+    background-color: rgba(0,0,0,0.85);
+    /*border-radius: 0.5em;*/
+    padding-bottom: 32px; 
+}
+.light {
+    font-weight: 300;
+}
+
+.btn-square {
+    border-radius: 0 !important;
+}
+.btn-homepage, .btn-homepage:active, .btn-homepage:hover, .btn-homepage:focus {
+    padding: 4px 20px;
+    -webkit-font-smoothing: antialiased;
+    color: #FFF;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+    background-color: #238de5;
+    border-color: #238de5;
+    border-color: rgba(0,0,0,.1)rgba(0,0,0,.1)rgba(0,0,0,.25);
+    font-weight:500;
+
+    padding: 9px 20px;
+    font-size: 26px;
+    line-height: normal;
+    border-radius: 5px;
+}
+.weighted-font, .weighted-font:active, .weighted-font:hover, .weighted-font:focus {
+    font-size: 16px;
+    font-weight: 500 !important;
+}
+
+.homepage-menu>li>a {
+   font-weight: 600 !important;
+   color: #000 !important;
+   font-size: 17px;
+}
+
+.homepage-menu {
+   background-color: #7bd454 !important;
+   opacity: .85;
+   border-radius: 0; 
+   margin: 0;
+}
+
+.homepage-menu>li>a:focus, .homepage-menu>li>a:hover {
+   text-decoration: none;
+   color: #262626;
+   background-color: #7bd454 !important;
+}
+
+.home-row {
+    margin-top:35px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.grey-box {
+    
+    background: #DDD;
+    color: #000;
+    font-size: 18px;
+    padding-top: 15px;
+    height: 160px;
+}
+
+.blue-box {
+    background: #238de5;
+    color: #FFF;
+    font-size: 18px;
+    padding-top: 15px;
+    height: 160px;
+}
+
+.blue-box h1, .grey-box h1 {
+    font-size: 35px;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin: 0 0 15px;
 }

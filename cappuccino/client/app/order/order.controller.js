@@ -29,28 +29,6 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     });
    }
 
-$scope.items = [
-    'The first choice!',
-    'And another choice for you.',
-    'but wait! A third!'
-  ];
-
-  $scope.status = {
-    isopen: false
-  };
-
-  $scope.toggled = function(open) {
-    console.log('Dropdown is now: ', open);
-  };
-
-  $scope.toggleDropdown = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    $scope.status.isopen = !$scope.status.isopen;
-  };
-  
-
-
   $scope.chooseLeague = function(league) {
     console.log('league: '+league);
     $scope.order.hockeyLeague = league;
@@ -80,8 +58,11 @@ $scope.items = [
         league: $scope.order.hockeyLeague,
         playerPosition: $scope.order.playerPosition,
         playerDOB: $scope.order.playerDOB,
+        playerDOBRange: $scope.order.playerDOBRange,
         playerHeight: $scope.order.playerHeight,
         playerWeight: $scope.order.playerWeight,
+        playerHeightRange:  $scope.order.playerHeightRange,
+        playerWeightRange: $scope.order.playerWeightRange,
         playerShootWith: $scope.order.playerShootWith,
         playerDefensiveScale: $scope.order.playerDefensiveScale,
         playerSystemBasedScale: $scope.order.playerSystemBasedScale,
@@ -91,12 +72,17 @@ $scope.items = [
         playerEquipmentFee: $scope.order.playerEquipmentFee,
         playerOwnTransport: $scope.order.playerOwnTransport
     } 
-
+console.log(order);
     if($scope.order._id) {
       $http.put('/api/hockey/order/'+$scope.order._id, order).success(function(matchedOrder) {
        $log.debug(order);
+       $log.debug(matchedOrder.hits.total);
+       var templateStr = '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>';
+       if(matchedOrder.hits.total === 0) {
+        templateStr = '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Were sorry there arent any matches meeting your requirements at this time. Would you like to edit your order?</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>';
+       }
        var modalInstance = $modal.open({
-        template: '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
+        template: templateStr,
         controller: 'ModalInstanceCtrl'
        });
       });
@@ -104,8 +90,12 @@ $scope.items = [
     } else {
       $http.post('/api/hockey/order', order).success(function(matchedOrder) {
         $log.debug(order);
+         var templateStr = '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>';
+         if(matchedOrder.hits.total === 0) {
+          templateStr = '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Were sorry there arent any matches meeting your requirements at this time. Would you like to edit your order?</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>';
+         }
          var modalInstance = $modal.open({
-          template: '<div class="modal-header"><h3 class="modal-title">Matched Result</h3></div><div class="modal-body">Your Order has been Saved. We have ' + matchedOrder.hits.total + ' match for you</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
+          template: templateStr,
           controller: 'ModalInstanceCtrl'
          });
       });
@@ -168,7 +158,7 @@ $scope.cancelOrderPopup = function(orderId) {
 
 /* Default data configuration*/
 
-    $scope.order.playerHeight = {
+    $scope.order.playerHeightRange = {
       min: 170,
       max: 180,
       floor: 162,
@@ -176,7 +166,7 @@ $scope.cancelOrderPopup = function(orderId) {
      
     };
 
-    $scope.order.playerWeight = {
+    $scope.order.playerWeightRange = {
       min: 170,
       max: 180,
       floor: 150,
@@ -278,12 +268,20 @@ $scope.today = function() {
   };
   $scope.toggleMin();
 
-  $scope.open = function($event) {
+  $scope.openFirstCal = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
 
-    $scope.opened = true;
+    $scope.openedFirstCal = true;
   };
+
+  $scope.openSecondCal = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.openedSecondCal = true;
+  };
+
 
   $scope.dateOptions = {
     formatYear: 'yy',
