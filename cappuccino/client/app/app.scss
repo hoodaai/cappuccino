@@ -15,6 +15,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'dashboard/dashboard.scss';
 @import 'guest/guest.scss';
 @import 'order/order.scss';
+@import 'footer/footer.scss';
 @import 'modal/modal.scss';
 @import 'sidebar/sidebar.scss';
 // endinjector
@@ -22,7 +23,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 
 
 $font-stack: 'RobotoDraft', 'Helvetica Neue', Helvetica, Arial;
-$primary-color-700: #2fb3db;//#303F9F;//#1976D2;
+$primary-color-700: #238de5;//#2fb3db;//#303F9F;//#1976D2;
 $primary-color-500: #7bd454;//#3F51B5;//#2196F3;
 
 
@@ -61,18 +62,19 @@ h3 {
   border-color: #0D47A1;
   -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+   /*opacity: 0.4;*/
 }
 
-.navbar-default .navbar-brand {
-color: #FFFFFF;
+.navbar-default, .navbar-brand, .navbar-brand a:hover, .navbar-brand:hover  {
+  color: #FFFFFF !important;
+ 
 }
-
-.navbar-brand a:hover {
-color: #FFFFFF;
-
+.navbar-brand {
+  background-image: url(/assets/images/logo.png); 
+  background-repeat: repeat-y;
 }
-.navbar-brand:hover { 
-  color: #FFFFFF;
+.navbar-brand h2 {
+  padding-left: 55px;
 }
 
 ul.nav a:hover {
@@ -91,3 +93,9 @@ ul.nav a:hover {
 label {
 font-weight: 300;
 }
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+border-color: $primary-color-700;
+box-shadow: none !important;
+}
+
