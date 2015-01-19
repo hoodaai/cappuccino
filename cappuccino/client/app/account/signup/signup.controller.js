@@ -11,8 +11,12 @@ angular.module('cappuccinoApp')
       if(form.$valid) {
         Auth.createUser({
           name: $scope.user.name,
+          lastName: $scope.user.lastName,
           email: $scope.user.email,
-          password: $scope.user.password
+          password: $scope.user.password,
+          city: $scope.user.city,
+          state: $scope.user.state,
+          phone: $scope.user.phone
         })
         .then( function() {
           // Account created, redirect to home

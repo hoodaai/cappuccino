@@ -148,9 +148,12 @@ function performMatch(order, res) {
     lookingOrderType = 'Placement';
   }
 
-  Order.search({
 
-    "bool": {
+  elasticSearchClient.search({
+  index: 'matchine',
+  body: {
+    query: {
+      "bool": {
             "must": [
                 {
                   "range": {
@@ -200,6 +203,15 @@ function performMatch(order, res) {
                 }
             ]
         }
+    }
+  }
+}).then(function (resp) {
+  console.log(resp.body);
+  return resp.body;
+});
+
+}
+  
 
       /*range: {
         playerAccomodationCost: {"gte": 0, "lte": 81}
@@ -212,9 +224,4 @@ function performMatch(order, res) {
             }
         }*/
 
-    }, function(err, orders){
-          if(err) { return handleError(res, err); }
-          return res.json(200, orders); 
-    });
 
-}
