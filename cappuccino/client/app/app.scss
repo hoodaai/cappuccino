@@ -99,3 +99,8 @@ border-color: $primary-color-700;
 box-shadow: none !important;
 }
 
+/*Its a fix for active class on navbar*/
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+color: #fff;
+background-color: $primary-color-700;
+}
