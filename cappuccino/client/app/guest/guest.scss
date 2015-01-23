@@ -70,6 +70,7 @@
 .column-colored-grey {
    @extend .column-colored;
    background-color: grey;
+   text-shadow: none !important;
    a {
        color: blue;
        text-decoration: none;  
@@ -204,3 +205,10 @@
     border-radius: 0px;
 }*/
 
+.error-block {
+  @extend .help-block;
+  color: #B71C1C !important;
+  text-align: left;
+  text-shadow: none !important;
+  font-weight: 500;
+}

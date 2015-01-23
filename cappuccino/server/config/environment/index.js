@@ -26,7 +26,7 @@ var all = {
 
   // Secret for session, you will want to change this and make it an environment variable
   secrets: {
-    session: 'placementloop-secret'
+    session: 'mUyd/R(%8ES[cu.placementloop-EN6r4G7G-secret.tREnaHa7'
   },
 
   // List of user roles

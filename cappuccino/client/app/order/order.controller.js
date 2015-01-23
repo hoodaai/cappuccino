@@ -32,7 +32,6 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
   $scope.chooseLeague = function(league) {
     console.log('league: '+league);
     $scope.order.hockeyLeague = league;
-    
   };
 
   $scope.redirectTo = function(path) {
