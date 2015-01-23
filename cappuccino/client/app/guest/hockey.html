@@ -1,29 +1,14 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <header >
-  <div class="banner-homepage">
+  <div class="banner-hockey">
 
-  <div class="homepage_action_box">
-  <h1>On Demand Assistance to Recruit and Place Ability.</h1>
+  <div class="hockey_action_box">
+  <h1>On Demand Assistance to Recruit and Place Ability in Hockey.</h1>
   <h3>We make it easy to connect domain experts with talent seekers who have a recruiting need and candidates who have a placement need. Matches available as long as they last!</h3>
 
-  <div style="margin-top:10px;" class="row">
-        <div class="col-md-5" style="padding-left: 40%"> 
-           <div class="btn-group" style="width: 100%;" dropdown>
-            <button type="button" class="btn btn-homepage dropdown-toggle" 
-                    data-toggle="dropdown">{{loop===undefined ? 'Choose Loop' : loop }}
-            <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu dropdown-home" style="margin-left: 0px;" role="menu" >
-              <li>
-                <a href ng-click="chooseLoop('Hockey')">Hockey</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-   </div>
+   <div style="margin-top:10px;" class="row">
 
-   <div style="margin-top:10px;" class="row"  ng-show="loop">
         <div class="col-md-3"> 
          <div class="btn-group home-page-group">
             <button type="button" class="disabled btn btn-homepage ">Talent Seeker</button>

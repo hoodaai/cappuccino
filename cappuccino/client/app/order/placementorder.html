@@ -54,7 +54,7 @@
 
     <div class="jumbotron">
       <div class="form-group">
-        <h4>What are the Player's Physical Traits?</h4>
+        <h4>What are the player's physical traits?</h4>
          <span class="help-block">What is the player's height?</span>
          <rzslider
             rz-slider-floor="order.playerHeightRange.floor"
@@ -143,7 +143,7 @@
       </div>
 
       <div class="form-group">
-        <span class="help-block">Accomodation $</span>
+        <span class="help-block">Room & Board</span>
         <rzslider
           rz-slider-floor="0"
           rz-slider-ceil="2000"
@@ -154,7 +154,7 @@
       </div>
 
       <div class="form-group" style="margin-bottom:25px;">
-        <h4>Equipment Player Resposibility</h4>
+        <span class="help-block">Equipment Costs</span>
         <rzslider
           rz-slider-floor="0"
           rz-slider-ceil="500"
@@ -176,7 +176,7 @@
 
       <div class="form-group">
         <button ng-show="order._id" ng-click="enterOrder('Placement', 'Candidate')" class="btn btn-homepage pull-right">Update Order</button>
-        <button ng-hide="order._id" ng-click="enterOrder('Placement', 'Candidate')" class="btn btn-homepage pull-right">Enter Order</button>
+        <button ng-hide="order._id" ng-click="enterOrder('Placement', 'Candidate')" class="btn btn-homepage pull-right">View Matches</button>
       </div>                          
     </div>
 
