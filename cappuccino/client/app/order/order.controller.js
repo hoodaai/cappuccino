@@ -34,6 +34,11 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     $scope.order.hockeyLeague = league;
   };
 
+  $scope.choosePlayerPosition = function(playerPosition) {
+    console.log('playerPosition: '+playerPosition);
+    $scope.order.playerPosition = playerPosition;
+  };
+
   $scope.redirectTo = function(path) {
     $location.path(path);
   }
@@ -194,6 +199,15 @@ $scope.cancelOrderPopup = function(orderId) {
         {id: 'QMJHL', label: 'QMJHL'},
         {id: 'WHL', label: 'WHL'},
         {id: 'USHL', label: 'USHL'}];
+
+    $scope.order.playerPosition = null;
+    $scope.playerPositionData = [
+        {id: 'Goalie', label: 'Goalie'},
+        {id: 'Left wing', label: 'Left wing'},
+        {id: 'Left Defense', label: 'Left Defense'},
+        {id: 'Center', label: 'Center'},
+        {id: 'Right Defense', label: 'Right Defense'},
+        {id: 'Right wing', label: 'Right wing'}];
 
     $scope.hockeyLeagueSettings = {
         smartButtonMaxItems: 5,

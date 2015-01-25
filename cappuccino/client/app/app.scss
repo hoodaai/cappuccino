@@ -23,7 +23,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 
 
 $font-stack: 'RobotoDraft', 'Helvetica Neue', Helvetica, Arial;
-$primary-color-700: #238de5;//#2fb3db;//#303F9F;//#1976D2;
+$primary-color-700: #4285f4;//#238de5;//#2fb3db;//#303F9F;//#1976D2;
 $primary-color-500: #7bd454;//#3F51B5;//#2196F3;
 
 
@@ -46,7 +46,7 @@ html, body {
 body {
   font-family: $font-stack;
   /*font-weight: 300;*/
-  background-color: #FFFFFF;
+  background-color: #ececec;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
