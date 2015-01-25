@@ -126,12 +126,13 @@ var matchOrder = function() {
     if(id !== undefined && id !== 'e') {
       
       $http.get('/api/hockey/order/matchine/'+id).success(function(matchedOrder) {
-        $log.debug(matchedOrder.hits.total);
+        console.log(matchedOrder);
+         console.log(matchedOrder.hits.total);
         $scope.matchedOrderList = matchedOrder.hits.hits;
         if (matchedOrder.hits.hits.length<1) {
           $scope.matchesNotFoundMsg = "We're sorry there aren't any matches meeting your requirements at this time. Would you like to edit your order?" ;
         }
-        $log.debug(matchedOrder.hits.hits.length);
+         console.log(matchedOrder.hits.hits.length);
       }); 
     };
   } 

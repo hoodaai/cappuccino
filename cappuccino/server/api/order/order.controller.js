@@ -5,7 +5,7 @@ var Order = require('./order.model');
 var elasticsearch = require('elasticsearch');
 var elasticSearchClient = new elasticsearch.Client({
   host: 'localhost:9200',
-  log: 'trace'
+  log: 'error'
 });
 
 
@@ -19,7 +19,14 @@ exports.matchedOrder = function(req, res) {
     if(order.orderType == 'Recruitment') {
       lookingOrderType = 'Placement';
     }
-    performMatch(order, res);
+    
+    performMatch(order,function (err, matchedOrder) { 
+       if(err) { return handleError(res, err); }
+       console.log("matched response");
+       console.log(matchedOrder);
+       return res.json(200, matchedOrder);;
+    });
+  
     });
 };
 
@@ -142,7 +149,7 @@ function createDocumentES(order) {
     //eventEmitter.emit('doOutput', {message:'okay'});
 }
 
-function performMatch(order, res) {
+function performMatch(order, callback) {
   var lookingOrderType = 'Recruitment';
   if(order.orderType == 'Recruitment') {
     lookingOrderType = 'Placement';
@@ -205,9 +212,12 @@ function performMatch(order, res) {
         }
     }
   }
-}).then(function (resp) {
-  console.log(resp.body);
-  return resp.body;
+}).then(function (body) {
+  console.log(body);
+  callback(null, body);
+}, function (error) {
+  console.log(error.message);
+  callback(error, null);
 });
 
 }
