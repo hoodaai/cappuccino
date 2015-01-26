@@ -15,7 +15,7 @@
 
      
 <div  ng-repeat="match in matchedOrderList" >
-<div class="panel panel-orderlist">
+<!-- <div class="panel panel-orderlist">
      <div class="panel-body">
 
     <div class="row">
@@ -23,9 +23,7 @@
 		    <span class="user-noimage" style="background-color:#1B5">{{match._source.name | limitTo: 1}} </span>
 		    {{match._source.name}}
 		</div>
-		<!-- <div class="col-md-3"> League: {{match._source.league[0]}}
-		   
-		</div> -->
+		
 		<div class="col-md-3">Room & Board: {{match._source.playerAccomodationCost}}</div>
 		<div class="col-md-3">Equipment Costs: {{match._source.playerEquipmentFee}}</div>
 		<div class="col-md-3">Team Fee: {{match._source.playerTeamFee}}</div>		
@@ -36,7 +34,9 @@
 		<div class="col-md-3">Defensive Scale: {{match._source.playerDefensiveScale}}</div>
 		<div class="col-md-3">Physical Scale: {{match._source.playerPhysicalScale}}</div>
 		<div class="col-md-3">System based Scale: {{match._source.playerSystemBasedScale}}</div>
-		<div class="col-md-3">Date Of Birth: {{match._source.playerDOB}}</div>
+		<div class="col-md-3">
+		   Date Of Birth:  <span>{{match._source.playerDOB | amDateFormat:'MMMM Do YYYY'}}</span>
+		</div>
 		<div class="col-md-3">Has own transport: {{match._source.playerOwnTransport}}</div>
 	</div>
 
@@ -44,15 +44,12 @@
 		<div class="col-md-3">Height: {{match._source.playerHeightRange}}</div>
 		<div class="col-md-3">Weight: {{match._source.playerWeightRange}}</div>
 		<div class="col-md-3">Shoot with: {{match._source.playerShootWith}}</div>
-		<div class="col-md-3">Position: {{match._source.playerPosition}}</div>
+		<div class="col-md-3">Position: {{match._source.playerPosition}}
+		</div>
 	
 	</div>
-
-
-
-
       </div>
-</div>
+</div> -->
 
 
 
@@ -67,29 +64,48 @@
 		    <div class="col-md-11">
 				<div class="row">
 				    <div class="col-md-4">
-				       <h4 class="media-heading">{{match._source.name}}</h4>
+				       League he is looking for
+				       <span class="highlight"> {{match._source.league}}</span>
 				    </div>
 				    <div class="col-md-4">
-				       jdnjdfbdjfdfdjf
+				       Date Of Birth: <span>{{match._source.playerDOB | amDateFormat:'MMMM Do YYYY'}}</span>
 				    </div>
 			    </div>
 
 			    <div class="row">
-				    <div class="col-md-4">
-				      {{match._source.actorType}}
-				    </div>
-				     <div class="col-md-6">
-				       <rating ng-model="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+				    <div class="col-md-10">
+				      {{match._source.name}}'s <span class="highlight">height is 170</span> and <span class="highlight">weight is 180</span>.
+				      He shoot with <span class="highlight">{{match._source.playerShootWith}} hand</span> and his <span class="highlight">position is {{match._source.playerPosition}}</span>.
 				    </div>
 				</div>
 
 				<div class="row">
-				    <div class="col-md-4">
-				       <button class="btn btn-danger">Reject</button>
+				    <div class="col-md-10">
+				      His playing style includes <span class="highlight">Defensive (Scale: {{match._source.playerDefensiveScale}}), Physical (Scale: {{match._source.playerPhysicalScale}})</span> and <span class="highlight">System based (Scale: {{match._source.playerSystemBasedScale}})</span>
+
 				    </div>
+				</div>
+
+				<div class="row">
+				    <div class="col-md-10">
+				    <span class="highlight">Room & Board (${{match._source.playerAccomodationCost}}), 
+		            Equipment Costs (${{match._source.playerEquipmentFee}}), 
+		            Team Fee (${{match._source.playerTeamFee}})</span>	
+				    are acceptable to the player.
+				    <span ng-show="match._source.playerOwnTransport === 'Yes'">Player has own transport.</span>
+				    </div>
+				</div>
+
+				<div class="row">
 				     <div class="col-md-4">
-				        <button class="btn btn-info">Notify</button>
+				       Rating: <rating ng-model="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
 				    </div>
+
+				    <div class="col-md-6">
+				       <button class="btn btn-default btn-sm">Notify</button>
+				       <button class="btn btn-default btn-sm reject">Reject</button>
+				    </div>
+				     
 				</div>
 
 		    </div>
