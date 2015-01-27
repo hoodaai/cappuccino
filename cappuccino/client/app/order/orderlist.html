@@ -3,11 +3,32 @@
 
  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   
-<h4>Recruitment Order</h4>
+
     <div class="panel panel-orderlist">
+    <div class="panel-heading"><h4>Recruitment Order</h4></div>
       <div class="panel-body">
      
      <table class="table">
+        <thead>
+          <tr>
+            <th>
+            	    <div class="row">
+					    <div class="col-md-2 userImage">
+					        
+					    </div>
+						<div class="col-md-6">
+					        Name
+					    </div>
+				    </div>
+            </th>
+            <th>Time</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
         <tbody>
            <tr ng-repeat="order in orderList" ng-show="order.status == 'Open' && order.orderType == 'Recruitment'">
 			    <td>
@@ -15,7 +36,7 @@
 					    <div class="col-md-2 userImage">
 					        <span class="user-noimage" style="background-color:#3F51B5">{{order.name | limitTo: 1}} </span>
 					    </div>
-						<div class="col-md-2">
+						<div class="col-md-6">
 					        {{order.name}}   
 					    </div>
 				    </div>
@@ -36,19 +57,31 @@
     </div>
 
 
-<h4>Placement Order</h4>
     <div class="panel panel-orderlist">
+     <div class="panel-heading"><h4>Placement Order</h4></div>
       <div class="panel-body">
      
      <table class="table">
-        <!-- <thead>
+        <thead>
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>
+            	    <div class="row">
+					    <div class="col-md-2 userImage">
+					        
+					    </div>
+						<div class="col-md-6">
+					        Name
+					    </div>
+				    </div>
+            </th>
+            <th>Time</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
           </tr>
-        </thead> -->
+        </thead>
         <tbody>
             <tr ng-repeat="order in orderList" ng-show="order.status == 'Open' && order.orderType == 'Placement'">
 			    <td>
@@ -56,7 +89,7 @@
 					    <div class="col-md-2 userImage">
 					        <span class="user-noimage" style="background-color:#1B5">{{order.name | limitTo: 1}} </span>
 					    </div>
-						<div class="col-md-2">
+						<div class="col-md-6">
 					        {{order.name}}   
 					    </div>
 				    </div>

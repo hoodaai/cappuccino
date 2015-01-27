@@ -10,7 +10,7 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
   $rootScope.disableEnterOrderButton = true;
   $rootScope.screenTitle = 'Choose Order Type';
   $scope.loopDropDownValue = 'Select Loop';
-  $scope.order.hockeyLeague = 'Select League';
+  $scope.order.league = 'Select League';
 
    var id = $location.url().split('/')[1];
    if(id === 'placementorder') {
@@ -31,7 +31,7 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
 
   $scope.chooseLeague = function(league) {
     console.log('league: '+league);
-    $scope.order.hockeyLeague = league;
+    $scope.order.league = league;
   };
 
   $scope.choosePlayerPosition = function(playerPosition) {
@@ -59,7 +59,7 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
         orderType: orderType,
         actorType: actorType,
         status: 'Open',
-        league: $scope.order.hockeyLeague,
+        league: $scope.order.league,
         playerPosition: $scope.order.playerPosition,
         playerDOB: $scope.order.playerDOB,
         playerDOBRange: $scope.order.playerDOBRange,
@@ -163,6 +163,7 @@ $scope.cancelOrderPopup = function(orderId) {
 
 /* Default data configuration*/
 
+
     $scope.order.playerHeightRange = {
       min: 170,
       max: 180,
@@ -182,7 +183,9 @@ $scope.cancelOrderPopup = function(orderId) {
     $scope.order.playerDefensiveScale = 5;
     $scope.order.playerSystemBasedScale = 1;
     $scope.order.playerPhysicalScale = 1;
-
+    
+    $scope.order.playerHeight = 170;
+    $scope.order.playerWeight = 170;
     $scope.order.playerTeamFee = '5';
     $scope.order.playerAccomodationCost = '0';
     $scope.order.playerEquipmentFee = '0';
@@ -191,7 +194,7 @@ $scope.cancelOrderPopup = function(orderId) {
     $rootScope.userType = 'placementloopuser';
 
   /*League multiselect dropdown settings*/
-    $scope.order.hockeyLeague = [];
+    $scope.order.league = [];
     $scope.hockeyLeagueData = [
         {id: 'EJHL', label: 'EJHL'},
         {id: 'NAHL', label: 'NAHL'},

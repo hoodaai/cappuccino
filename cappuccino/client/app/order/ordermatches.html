@@ -51,21 +51,84 @@
       </div>
 </div> -->
 
-
-
-<div class="panel panel-orderlist">
-    <div class="panel-body">
+<div class="panel panel-orderlist" ng-show="match._source.actorType === 'Talent Seeker'">
+<div class="panel-body">
 	    <div class="row">
 		    <div class="col-md-1 userImage">
 			    <span class="user-noimage" style="background-color:#1B5">{{match._source.name | limitTo: 1}} </span>
-			    {{match._source.name}}
+			    {{match._source.actorType}}
 		    </div>
 
 		    <div class="col-md-11">
 				<div class="row">
 				    <div class="col-md-4">
+				       <h4> {{match._source.name}}</h4>
+				        
+				    </div>
+				    <div class="col-md-4">
+				       Date Of Birth Range: <span>{{match._source.playerDOBRange | amDateFormat:'MMMM Do YYYY'}}</span>
+				    </div>
+			    </div>
+
+			    <div class="row">
+				    <div class="col-md-10">
+				      {{match._source.name}} is looking for <span class="highlight">height range {{match._source.playerHeightRange}}</span> 
+				      and <span class="highlight">weight range {{match._source.playerWeightRange}}</span>.
+				      Who can shoot with <span class="highlight">{{match._source.playerShootWith}} hand</span> and his <span class="highlight">position is {{match._source.playerPosition}}</span>.
+				    </div>
+				</div>
+
+				<div class="row">
+				    <div class="col-md-10">
 				       League he is looking for
-				       <span class="highlight"> {{match._source.league}}</span>
+				       <span class="highlight"> {{match._source.league[0].id}}</span>.
+				      Candudate's playing style should include <span class="highlight">Defensive (Scale: {{match._source.playerDefensiveScale}}), Physical (Scale: {{match._source.playerPhysicalScale}})</span> and <span class="highlight">System based (Scale: {{match._source.playerSystemBasedScale}})</span>
+
+				    </div>
+				</div>
+
+				<div class="row">
+				    <div class="col-md-10">
+				    <span class="highlight">Room & Board (${{match._source.playerAccomodationCost}}), 
+		            Equipment Costs (${{match._source.playerEquipmentFee}}), 
+		            Team Fee (${{match._source.playerTeamFee}})</span>	
+				    are acceptable to the player.
+				    <span ng-show="match._source.playerOwnTransport === 'Yes'">Player should have own transport.</span>
+				    </div>
+				</div>
+
+				<div class="row">
+				     <div class="col-md-4">
+				       Rating: <rating ng-model="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+				    </div>
+
+				    <div class="col-md-6">
+				       <button class="btn btn-default btn-sm">Notify</button>
+				       <button class="btn btn-default btn-sm reject">Reject</button>
+				    </div>
+				     
+				</div>
+
+		    </div>
+
+	    </div>
+	</div>
+</div>	
+
+
+<div class="panel panel-orderlist" ng-show="match._source.actorType === 'Candidate'">
+    <div class="panel-body">
+	    <div class="row">
+		    <div class="col-md-1 userImage">
+			    <span class="user-noimage" style="background-color:#1B5">{{match._source.name | limitTo: 1}} </span>
+			    {{match._source.actorType}}
+		    </div>
+
+		    <div class="col-md-11">
+				<div class="row">
+				    <div class="col-md-4">
+				       <h4> {{match._source.name}}</h4>
+				        
 				    </div>
 				    <div class="col-md-4">
 				       Date Of Birth: <span>{{match._source.playerDOB | amDateFormat:'MMMM Do YYYY'}}</span>
@@ -74,13 +137,15 @@
 
 			    <div class="row">
 				    <div class="col-md-10">
-				      {{match._source.name}}'s <span class="highlight">height is 170</span> and <span class="highlight">weight is 180</span>.
+				      {{match._source.name}}'s <span class="highlight">height is {{match._source.playerHeight}}</span> and <span class="highlight">weight is {{match._source.playerWeight}}</span>.
 				      He shoot with <span class="highlight">{{match._source.playerShootWith}} hand</span> and his <span class="highlight">position is {{match._source.playerPosition}}</span>.
 				    </div>
 				</div>
 
 				<div class="row">
 				    <div class="col-md-10">
+				       League he is looking for
+				       <span class="highlight"> {{match._source.league[0].id}}</span>.
 				      His playing style includes <span class="highlight">Defensive (Scale: {{match._source.playerDefensiveScale}}), Physical (Scale: {{match._source.playerPhysicalScale}})</span> and <span class="highlight">System based (Scale: {{match._source.playerSystemBasedScale}})</span>
 
 				    </div>

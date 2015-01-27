@@ -117,18 +117,18 @@ function createDocumentES(order) {
           orderType: order.orderType,
           actorType: order.actorType,
           status: order.status,
-          league:  JSON.stringify(order.league),
+          league:  order.league,
           playerPosition: order.playerPosition,
           playerDOB: order.playerDOB,
 
-          playerDOBRange: JSON.stringify(order.playerDOBRange),
+          playerDOBRange: order.playerDOBRange,
           
           playerHeight: order.playerHeight,
           playerWeight: order.playerWeight,
 
-          playerHeightRange: JSON.stringify(order.playerHeightRange),
+          playerHeightRange: order.playerHeightRange,
 
-          playerWeightRange: JSON.stringify(order.playerWeightRange),
+          playerWeightRange: order.playerWeightRange,
 
 
           playerShootWith: order.playerShootWith,
