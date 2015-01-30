@@ -59,16 +59,18 @@ exports.create = function(req, res) {
   Order.create(req.body, function(err, order) {
     if(err) { return handleError(res, err); }
 
-    createDocumentES(order);
+    createDocumentES(order,function (err, createdOrder) { 
+       if(err) { return handleError(res, err); }
+       console.log("document created");
 
-    /*Order.on('es-indexed', function(err, res){
-      if (err) throw err;
-        
-       // console.log(res);
-      });*/
+         performMatch(order,function (err, matchedOrder) { 
+           if(err) { return handleError(res, err); }
+           console.log("matched response");
+           console.log(matchedOrder);
+           return res.json(200, matchedOrder);;
+        });
+    });
 
-   //search matched orders in elastic search cluster
-   //return performMatch(order, res);
   });
 };
 
@@ -104,32 +106,42 @@ function handleError(res, err) {
 }
 
 
-function createDocumentES(order) {
+function createDocumentES(order, callback) {
+   console.log("In createDocumentES");
+  
+    if (order.playerDOBRange === undefined) {
+      order.playerDOBRange = {Start: undefined, End: undefined};
+      order.playerHeightRange = {Min: undefined, Max: undefined};
+      order.playerWeightRange = {Min: undefined, Max: undefined};
 
+      console.log(order.playerDOBRange);
+    }
    
     elasticSearchClient.create({
         index: 'matchine',
         type: 'hockeyOrder',
-        // id: '1',
+
         body: {
           id: order._id,
           name: order.name,
           orderType: order.orderType,
           actorType: order.actorType,
           status: order.status,
-          league:  order.league,
+          league:  JSON.stringify(order.league),
           playerPosition: order.playerPosition,
           playerDOB: order.playerDOB,
 
-          playerDOBRange: order.playerDOBRange,
-          
           playerHeight: order.playerHeight,
           playerWeight: order.playerWeight,
 
-          playerHeightRange: order.playerHeightRange,
+          playerDOBRangeMin: order.playerDOBRange.Start,
+          playerDOBRangeMax: order.playerDOBRange.End,
+          
+          playerHeightRangeMin: order.playerHeightRange.min,
+          playerHeightRangeMax: order.playerHeightRange.max,
 
-          playerWeightRange: order.playerWeightRange,
-
+          playerWeightRangeMin: order.playerWeightRange.min,
+          playerWeightRangeMax: order.playerWeightRange.max,
 
           playerShootWith: order.playerShootWith,
           playerDefensiveScale: order.playerDefensiveScale,
@@ -143,7 +155,11 @@ function createDocumentES(order) {
           createdaAt: order.createdaAt
         }
     }, function (error, response) {
-        // ...
+        if(error) { 
+          console.log(error.message);
+          callback(error, null);
+        }
+        return  callback(null, response);;
     });
 
     //eventEmitter.emit('doOutput', {message:'okay'});
@@ -213,6 +229,7 @@ function performMatch(order, callback) {
     }
   }
 }).then(function (body) {
+  console.log("In performMatch");
   console.log(body);
   callback(null, body);
 }, function (error) {

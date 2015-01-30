@@ -31,7 +31,8 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
 
   $scope.chooseLeague = function(league) {
     console.log('league: '+league);
-    $scope.order.league = league;
+
+    $scope.order.league[0] = {id: league, label: league};
   };
 
   $scope.choosePlayerPosition = function(playerPosition) {
