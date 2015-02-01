@@ -72,8 +72,8 @@
 
 			    <div class="row">
 				    <div class="col-md-10">
-				      {{match._source.name}} is looking for <span class="highlight">height range {{match._source.playerHeightRange}}</span> 
-				      and <span class="highlight">weight range {{match._source.playerWeightRange}}</span>.
+				      {{match._source.name}} is looking for <span class="highlight">height range {{match._source.playerHeightRangeMin}} to {{match._source.playerHeightRangeMax}}</span> 
+				      and <span class="highlight">weight range {{match._source.playerWeightRangeMin}} to {{match._source.playerWeightRangeMax}}</span>.
 				      Who can shoot with <span class="highlight">{{match._source.playerShootWith}} hand</span> and his <span class="highlight">position is {{match._source.playerPosition}}</span>.
 				    </div>
 				</div>
@@ -82,7 +82,7 @@
 				    <div class="col-md-10">
 				       League he is looking for
 				       <span class="highlight"> {{match._source.league[0].id}}</span>.
-				      Candudate's playing style should include <span class="highlight">Defensive (Scale: {{match._source.playerDefensiveScale}}), Physical (Scale: {{match._source.playerPhysicalScale}})</span> and <span class="highlight">System based (Scale: {{match._source.playerSystemBasedScale}})</span>
+				      Candidate's playing style should include <span class="highlight">Defensive (Scale: {{match._source.playerDefensiveScale}}), Physical (Scale: {{match._source.playerPhysicalScale}})</span> and <span class="highlight">System based (Scale: {{match._source.playerSystemBasedScale}})</span>
 
 				    </div>
 				</div>
