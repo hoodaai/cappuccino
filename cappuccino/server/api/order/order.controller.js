@@ -84,7 +84,15 @@ exports.update = function(req, res) {
     var updated = _.merge(order, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-        return performMatch(order, res);
+
+      performMatch(order,function (err, matchedOrder) { 
+         if(err) { return handleError(res, err); }
+         console.log("matched response");
+         console.log(matchedOrder);
+         return res.json(200, matchedOrder);;
+      });
+
+        //return performMatch(order, res);
     });
   });
 };
@@ -127,7 +135,10 @@ function createDocumentES(order, callback) {
           orderType: order.orderType,
           actorType: order.actorType,
           status: order.status,
-          league:  JSON.stringify(order.league),
+
+          leagueRecruitingFor: order.leagueRecruitingFor,
+          leaguePlayingFor: JSON.stringify(order.leaguePlayingFor),
+
           playerPosition: order.playerPosition,
           playerDOB: order.playerDOB,
 
@@ -203,9 +214,26 @@ function performMatch(order, callback) {
                     playerWeight: {"gte": 0, "lte": parseInt(order.playerWeight)}
                   }
                 },*/
+                /*{
+                  "filtered": {
+                   "query": {
+                      "match_all": {}
+                   },
+                   "filter": {
+                      "term": {
+                         "league.id": order.league
+                      }
+                    }
+                  }
+                },*/
                 {
                   "match" : {
                    orderType : lookingOrderType
+                  }
+                },
+                {
+                  "match" : {
+                   leagueRecruitingFor : order.leagueRecruitingFor
                   }
                 },
                 {

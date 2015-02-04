@@ -10,7 +10,8 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
   $rootScope.disableEnterOrderButton = true;
   $rootScope.screenTitle = 'Choose Order Type';
   $scope.loopDropDownValue = 'Select Loop';
-  $scope.order.league = 'Select League';
+  $scope.order.leagueRecruitingFor = 'Select League';
+  $scope.order.leaguePlayingFor = 'Select League';
 
    var id = $location.url().split('/')[1];
    if(id === 'placementorder') {
@@ -32,7 +33,7 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
   $scope.chooseLeague = function(league) {
     console.log('league: '+league);
 
-    $scope.order.league[0] = {id: league, label: league};
+    $scope.order.leagueRecruitingFor = league;
   };
 
   $scope.choosePlayerPosition = function(playerPosition) {
@@ -60,7 +61,8 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
         orderType: orderType,
         actorType: actorType,
         status: 'Open',
-        league: $scope.order.league,
+        leagueRecruitingFor: $scope.order.leagueRecruitingFor,
+        leaguePlayingFor: $scope.order.leaguePlayingFor,
         playerPosition: $scope.order.playerPosition,
         playerDOB: $scope.order.playerDOB,
         playerDOBRange: $scope.order.playerDOBRange,
@@ -195,7 +197,7 @@ $scope.cancelOrderPopup = function(orderId) {
     $rootScope.userType = 'placementloopuser';
 
   /*League multiselect dropdown settings*/
-    $scope.order.league = [];
+    $scope.order.leaguePlayingFor = [];
     $scope.hockeyLeagueData = [
         {id: 'EJHL', label: 'EJHL'},
         {id: 'NAHL', label: 'NAHL'},

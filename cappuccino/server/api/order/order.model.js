@@ -11,8 +11,10 @@ var OrderSchema = new Schema({
   name: {type:String},
   status: {type:String},
   user: { type: Schema.ObjectId, ref: 'User' },
-  
-  league: {type:Array},
+
+  leagueRecruitingFor: {type:String},
+  leaguePlayingFor: {type:Array},
+
   playerPosition: {type:String},
   playerDOB: {type:Date},
   
