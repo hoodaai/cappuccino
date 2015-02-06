@@ -15,19 +15,22 @@ exports.matchedOrder = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!order) { return res.send(404); }
 
-    var lookingOrderType = 'Recruitment';
     if(order.orderType == 'Recruitment') {
-      lookingOrderType = 'Placement';
+        performRecruitingOrderMatch(order,function (err, matchedOrder) { 
+           if(err) { return handleError(res, err); }
+           console.log("recruiting order matched response");
+           console.log(matchedOrder);
+           return res.json(200, matchedOrder);
+        });
+    } else {
+        performPlacementOrderMatch(order,function (err, matchedOrder) { 
+           if(err) { return handleError(res, err); }
+           console.log("placement order matched response");
+           console.log(matchedOrder);
+           return res.json(200, matchedOrder);
+        });
     }
-    
-    performMatch(order,function (err, matchedOrder) { 
-       if(err) { return handleError(res, err); }
-       console.log("matched response");
-       console.log(matchedOrder);
-       return res.json(200, matchedOrder);;
-    });
-  
-    });
+  });
 };
 
 
@@ -60,15 +63,24 @@ exports.create = function(req, res) {
     if(err) { return handleError(res, err); }
 
     createDocumentES(order,function (err, createdOrder) { 
-       if(err) { return handleError(res, err); }
-       console.log("document created");
-
-         performMatch(order,function (err, matchedOrder) { 
+        if(err) { return handleError(res, err); }
+        console.log("document created");
+        
+        if(order.orderType == 'Recruitment') {
+        performRecruitingOrderMatch(order,function (err, matchedOrder) { 
            if(err) { return handleError(res, err); }
-           console.log("matched response");
+           console.log("recruiting order matched response");
            console.log(matchedOrder);
-           return res.json(200, matchedOrder);;
+           return res.json(200, matchedOrder);
         });
+        } else {
+            performPlacementOrderMatch(order,function (err, matchedOrder) { 
+               if(err) { return handleError(res, err); }
+               console.log("placement order matched response");
+               console.log(matchedOrder);
+               return res.json(200, matchedOrder);
+            });
+        }
     });
 
   });
@@ -82,15 +94,38 @@ exports.update = function(req, res) {
     if (err) { return handleError(res, err); }
     if(!order) { return res.send(404); }
     var updated = _.merge(order, req.body);
+
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-
-      performMatch(order,function (err, matchedOrder) { 
-         if(err) { return handleError(res, err); }
-         console.log("matched response");
-         console.log(matchedOrder);
-         return res.json(200, matchedOrder);;
+      //TODO: Perform update in elastic search as well
+      //delete document from elasticsearch
+      // then create document in elastic search
+      deleteDocumentES(order,function (err, createdOrder) { 
+        if(err) { return handleError(res, err); }
+        console.log("document deleted");
+        createDocumentES(order,function (err, createdOrder) { 
+          if(err) { return handleError(res, err); }
+          console.log("document created");
+        });
       });
+
+
+
+      if(order.orderType == 'Recruitment') {
+        performRecruitingOrderMatch(order,function (err, matchedOrder) { 
+           if(err) { return handleError(res, err); }
+           console.log("recruiting order matched response");
+           console.log(matchedOrder);
+           return res.json(200, matchedOrder);
+        });
+      } else {
+          performPlacementOrderMatch(order,function (err, matchedOrder) { 
+            if(err) { return handleError(res, err); }
+            console.log("placement order matched response");
+            console.log(matchedOrder);
+            return res.json(200, matchedOrder);
+          });
+      }
 
         //return performMatch(order, res);
     });
@@ -128,6 +163,7 @@ function createDocumentES(order, callback) {
     elasticSearchClient.create({
         index: 'matchine',
         type: 'hockeyOrder',
+        id: order._id.toString(),
 
         body: {
           id: order._id,
@@ -176,13 +212,9 @@ function createDocumentES(order, callback) {
     //eventEmitter.emit('doOutput', {message:'okay'});
 }
 
-function performMatch(order, callback) {
-  var lookingOrderType = 'Recruitment';
-  if(order.orderType == 'Recruitment') {
-    lookingOrderType = 'Placement';
-  }
-
-
+function performPlacementOrderMatch(order, callback) {
+  //var lookingOrderType = 'Recruitment';
+  
   elasticSearchClient.search({
   index: 'matchine',
   body: {
@@ -204,16 +236,16 @@ function performMatch(order, callback) {
                     playerEquipmentFee: {"gte": 0, "lte": parseInt(order.playerEquipmentFee)}
                   }
                 },
-                /*{
+                {
                   "range": {
-                    playerHeight: {"gte": 0, "lte": parseInt(order.playerHeight)}
+                    playerHeightRangeMin: {"lte": parseInt(order.playerHeight)}
                   }
                 },
                 {
                   "range": {
-                    playerWeight: {"gte": 0, "lte": parseInt(order.playerWeight)}
+                    playerHeightRangeMax: {"gte": parseInt(order.playerHeight)}
                   }
-                },*/
+                },
                 /*{
                   "filtered": {
                    "query": {
@@ -228,14 +260,14 @@ function performMatch(order, callback) {
                 },*/
                 {
                   "match" : {
-                   orderType : lookingOrderType
+                   orderType : 'Recruitment'
                   }
                 },
-                {
+              /*  {
                   "match" : {
                    leagueRecruitingFor : order.leagueRecruitingFor
                   }
-                },
+                },*/
                 {
                   "match" : {
                    status : 'Open'
@@ -257,7 +289,94 @@ function performMatch(order, callback) {
     }
   }
 }).then(function (body) {
-  console.log("In performMatch");
+  console.log("In performPlacementOrderMatch");
+  console.log(body);
+  callback(null, body);
+}, function (error) {
+  console.log(error.message);
+  callback(error, null);
+});
+
+}
+
+function performRecruitingOrderMatch(order, callback) {
+  var lookingOrderType = 'Placement';
+
+  elasticSearchClient.search({
+  index: 'matchine',
+  body: {
+    query: {
+      "bool": {
+            "must": [
+                {
+                  "range": {
+                    playerAccomodationCost: {"gte": 0, "lte": parseInt(order.playerAccomodationCost)}
+                  }
+                },
+                {
+                  "range": {
+                    playerTeamFee: {"gte": 0, "lte": parseInt(order.playerTeamFee)}
+                  }
+                },
+                {
+                  "range": {
+                    playerEquipmentFee: {"gte": 0, "lte": parseInt(order.playerEquipmentFee)}
+                  }
+                },
+                {
+                  "range": {
+                    playerHeightRangeMin: {"gte": parseInt(order.playerHeight)}
+                  }
+                },
+                {
+                  "range": {
+                    playerHeightRangeMax: {"lte": parseInt(order.playerHeight)}
+                  }
+                },
+                /*{
+                  "filtered": {
+                   "query": {
+                      "match_all": {}
+                   },
+                   "filter": {
+                      "term": {
+                         "league.id": order.league
+                      }
+                    }
+                  }
+                },*/
+                {
+                  "match" : {
+                   orderType : lookingOrderType
+                  }
+                },
+                /*{
+                  "match" : {
+                   leagueRecruitingFor : order.leagueRecruitingFor
+                  }
+                },*/
+                {
+                  "match" : {
+                   status : 'Open'
+                  }
+
+                },
+                {
+                  "match" : {
+                    playerShootWith : order.playerShootWith
+                  }
+                },
+                {
+                  "match" : {
+                    playerOwnTransport : order.playerOwnTransport
+                  }
+                }
+            ]
+        }
+    }
+  }
+}).then(function (body) {
+  console.log("In performRecruitingOrderMatch");
   console.log(body);
   callback(null, body);
 }, function (error) {
@@ -268,15 +387,20 @@ function performMatch(order, callback) {
 }
   
 
-      /*range: {
-        playerAccomodationCost: {"gte": 0, "lte": 81}
-      },
-      "filtered" : {
-            "filter" : {
-                "term" : {
-                    orderType : order.orderType
-                }
-            }
-        }*/
+function deleteDocumentES(order, callback) {
+   console.log("In deleteDocumentES");
+    elasticSearchClient.delete({
+        index: 'matchine',
+        type: 'hockeyOrder',
+        id: order._id.toString(),
+    }, function (error, response) {
+        if(error) { 
+          console.log(error.message);
+          callback(error, null);
+        }
+        return  callback(null, response);;
+    });
+}
+
 
 
