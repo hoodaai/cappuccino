@@ -66,12 +66,12 @@
 				        
 				    </div>
 				    <div class="col-md-4">
-				       Date Of Birth Range: <span>{{match._source.playerDOBRange | amDateFormat:'MMMM Do YYYY'}}</span>
+				       Date Of Birth Range: <span>{{match._source.playerDOBRangeMax| date:'MM/dd/yyyy'}} - {{match._source.playerDOBRangeMin |  date:'MM/dd/yyyy'}}</span>
 				    </div>
 			    </div>
 
 			    <div class="row">
-				    <div class="col-md-10">
+				    <div class="col-md-12">
 				      {{match._source.name}} is looking for <span class="highlight">height range {{match._source.playerHeightRangeMin}} to {{match._source.playerHeightRangeMax}}</span> 
 				      and <span class="highlight">weight range {{match._source.playerWeightRangeMin}} to {{match._source.playerWeightRangeMax}}</span>.
 				      Who can shoot with <span class="highlight">{{match._source.playerShootWith}} hand</span> and his <span class="highlight">position is {{match._source.playerPosition}}</span>.
@@ -79,10 +79,10 @@
 				</div>
 
 				<div class="row">
-				    <div class="col-md-10">
-				       League he is looking for
+				    <div class="col-md-12">
+				       League he is looking for 
 				      <!--  <span class="highlight" nglist> {{match._source.league[0]}}</span>. -->
-				       <span class="highlight" ng-model="match._source.league" ng-list>{{match._source.league}}</span>
+				       <span class="highlight">{{match._source.leagueRecruitingFor}}</span>
 
 				      Candidate's playing style should include <span class="highlight">Defensive (Scale: {{match._source.playerDefensiveScale}}), Physical (Scale: {{match._source.playerPhysicalScale}})</span> and <span class="highlight">System based (Scale: {{match._source.playerSystemBasedScale}})</span>
 
@@ -90,7 +90,7 @@
 				</div>
 
 				<div class="row">
-				    <div class="col-md-10">
+				    <div class="col-md-12">
 				    <span class="highlight">Room & Board (${{match._source.playerAccomodationCost}}), 
 		            Equipment Costs (${{match._source.playerEquipmentFee}}), 
 		            Team Fee (${{match._source.playerTeamFee}})</span>	
@@ -133,30 +133,30 @@
 				        
 				    </div>
 				    <div class="col-md-4">
-				       Date Of Birth: <span>{{match._source.playerDOB | amDateFormat:'MMMM Do YYYY'}}</span>
+				       Date Of Birth: <span>{{match._source.playerDOB |  date:'MM/dd/yyyy'}}</span>
 				    </div>
 			    </div>
 
 			    <div class="row">
-				    <div class="col-md-10">
+				    <div class="col-md-12">
 				      {{match._source.name}}'s <span class="highlight">height is {{match._source.playerHeight}}</span> and <span class="highlight">weight is {{match._source.playerWeight}}</span>.
 				      He shoot with <span class="highlight">{{match._source.playerShootWith}} hand</span> and his <span class="highlight">position is {{match._source.playerPosition}}</span>.
 				    </div>
 				</div>
 
 				<div class="row">
-				    <div class="col-md-10">
-				       League he is looking for
+				    <div class="col-md-12">
+				       League he is looking for 
 				       <!-- [{"id":"EJHL"},{"id":"NAHL"},{"id":"OHL"},{"id":"QMJHL"},{"id":"WHL"},{"id":"USHL"}]-->
 				      <!--  <span class="highlight"> {{match._source.league[0]}}</span>. -->
-				      <span class="highlight">{{match._source.league}}</span>
+				     <span class="highlight">{{match._source.leaguePlayingFor}}</span>
 				      His playing style includes <span class="highlight">Defensive (Scale: {{match._source.playerDefensiveScale}}), Physical (Scale: {{match._source.playerPhysicalScale}})</span> and <span class="highlight">System based (Scale: {{match._source.playerSystemBasedScale}})</span>
 
 				    </div>
 				</div>
 
 				<div class="row">
-				    <div class="col-md-10">
+				    <div class="col-md-12">
 				    <span class="highlight">Room & Board (${{match._source.playerAccomodationCost}}), 
 		            Equipment Costs (${{match._source.playerEquipmentFee}}), 
 		            Team Fee (${{match._source.playerTeamFee}})</span>	

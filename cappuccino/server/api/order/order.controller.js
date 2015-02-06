@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var moment = require('moment');
 var Order = require('./order.model');
 var elasticsearch = require('elasticsearch');
 var elasticSearchClient = new elasticsearch.Client({
@@ -166,7 +167,6 @@ function createDocumentES(order, callback) {
         id: order._id.toString(),
 
         body: {
-          id: order._id,
           name: order.name,
           orderType: order.orderType,
           actorType: order.actorType,
@@ -246,6 +246,26 @@ function performPlacementOrderMatch(order, callback) {
                     playerHeightRangeMax: {"gte": parseInt(order.playerHeight)}
                   }
                 },
+                {
+                  "range": {
+                    playerWeightRangeMin: {"lte": parseInt(order.playerWeight)}
+                  }
+                },
+                {
+                  "range": {
+                    playerWeightRangeMax: {"gte": parseInt(order.playerWeight)}
+                  }
+                },
+                /*{
+                  "range": {
+                    PlayerDOBRangeMax: {"gte": order.playerDOB}
+                  }
+                },*/
+                {
+                  "match" : {
+                   playerPosition : order.playerPosition
+                  }
+                },
                 /*{
                   "filtered": {
                    "query": {
@@ -253,7 +273,7 @@ function performPlacementOrderMatch(order, callback) {
                    },
                    "filter": {
                       "term": {
-                         "league.id": order.league
+                         "leagueRecruitingFor": ["EJHL"]
                       }
                     }
                   }
