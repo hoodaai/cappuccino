@@ -4,6 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var sendgrid = require('sendgrid')("placementloop", "sendgrid04SENDGRID04");
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -28,6 +29,33 @@ exports.create = function (req, res, next) {
   newUser.provider = 'local';
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
+    console.log("Sending welcome Email... ");
+    var email = new sendgrid.Email();
+    email.fromname = "PlacementLoop";
+    email.addTo(user.email);
+    email.addTo("hoodavarun2050@gmail.com");
+    email.setFrom("domainexpertcommunity@placementloop.com");
+    email.setSubject('Welcome to PlacementLoop!');
+    //email.setText('');
+    email.setHtml('Welcome <strong>%name% !</strong><br/>'
+      +'We are an active group of hundreds of hockey agents and advisors and we are here to help.'
+      +'Our community site has numerous resources for helping to place players at best-fit, '
+      +'troubleshooting issues and making the most of your placement consultancy, including:<br/>'
+      +'<ul><li>Curated topics and Whats Hot</li>'
+      +'<li>Recruiting and placement help in our active Q&A</li>' 
+      +'<li>Market research from the hockey analyst</li>' 
+      +'<li>A wide range of hockey topics</li></ul>'
+      +'<br/> Team Hockey');
+// +'CLICK BELOW to confirm your HOCKEY registration and to enable your WORKSTATION!');
+    email.addSubstitution("%name%", user.name + ' ' + user.lastName);
+    email.addHeader('X-Sent-Using', 'SendGrid-API');
+    email.addHeader('X-Transport', 'web');
+
+    sendgrid.send(email, function(err, json) {
+      if (err) { return console.error(err); }
+      console.log(json);
+    });
+
     var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
     res.json({ token: token });
   });
