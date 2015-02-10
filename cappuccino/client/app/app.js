@@ -11,6 +11,7 @@ angular.module('cappuccinoApp', [
   'hljs',
   'angularjs-dropdown-multiselect',
   'angularMoment',
+  'typeahead'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $logProvider) {
     $urlRouterProvider

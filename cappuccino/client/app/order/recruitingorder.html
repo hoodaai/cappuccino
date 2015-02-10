@@ -1,7 +1,6 @@
   <div ng-include="'components/navbar/navbar.html'"></div>
   <div ng-include="'components/sidebar/sidebar.html'"></div>
 
-
   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
        <!--<h1 class="page-header">Dashboard</h1>-->
     <h2 class="sub-header">Recruitment Order Entry</h2>
@@ -9,10 +8,22 @@
     <div class="panel panel-orderform">
       <div class="panel-heading">Team Name</div>
       <div class="panel-body">
+           <div ng-controller="TypeaheadCtrl">
+                <div class="typeahead" 
+                        model="model"
+                        template-type="recruit"
+                        add-btn-text="Add New Team"
+                        placeholder="Team name"
+                        search="search(model)"
+                        select="select(item)">
+               </div>
+            </div>
+          <!--
         <div class="input-group input-group-lg">
           <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
           <input type="text" class="form-control" placeholder="Team name" ng-model="order.name" aria-describedby="sizing-addon1" required>
         </div>
+        -->
       </div>
     </div>
 

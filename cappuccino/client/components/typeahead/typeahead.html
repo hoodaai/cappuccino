@@ -1,0 +1,89 @@
+<div class="input-group open input-group-lg">
+    <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
+    <input type="text"
+           class="form-control dropdown-toggle"
+           ng-model="model"
+           placeholder="{{placeholder}}"
+           ng-change="querySearch()"
+           aria-describedby="sizing-addon1" required>
+    <ul class="dropdown-menu" 
+        role="menu"
+
+        ng-hide="!model.length || hide">
+
+        <li role="presentation"
+            class="typehead-item"
+            ng-repeat="item in items | limitTo:20 track by $index"
+            ng-class="{active:isCurrent(item)}"
+            ng-click="selectItem(item)"
+            ng-mouseenter="setCurrent(item)"
+            >
+            <a role="menuitem" tabindex="-1" href="#"
+               ng-if="isEmpty">
+                <span>{{item.firstname}} {{item.lastname}}</span>
+            </a>
+        </li>
+
+        <li role="presentation"
+            class="typehead-item add-btn"
+            ng-if="!isEmpty">
+            <button
+                    type="button"
+                    class="btn-lg btn-primary btn-block"
+               href="#"
+               role="button"
+                ng-click="addNew()">
+               <span>
+                   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                   {{addBtnText}}
+                </span>
+            </button>
+        </li>
+    </ul>
+</div>
+
+
+<script type="text/ng-template" id="typeaheadModalContent.html">
+<div ng-controller="TypeaheadCtrl" class="typeaheadClass">
+    <div class="modal-header">
+        <h3 class="modal-title">Add</h3>
+    </div>
+    <div class="modal-body">
+        <form role="form">
+            <div class="form-group">                               
+                <input type="text"
+                       class="form-control"
+                       id="typeaheadFirstName"
+                       placeholder="First name"
+                       ng-model="formData.firstname"
+                       value="{{items.firstname}}">
+            </div>
+            
+            <div class="form-group">
+               
+                <input type="text"
+                       class="form-control"
+                       id="typeaheadLastName"
+                       placeholder="Last name"
+                       ng-model="formData.lastname"
+                       aria-describedby="lastname-addon1" value="{{items.lastname}}">   
+            </div>
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Email"
+                           ng-model="formData.email"
+                           aria-describedby="email-addon1" value="">
+                    <span class="input-group-addon glyphicon glyphicon-envelope" id="email-addon1"></span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()">Save</button>
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+    </div>
+</div>
+</script>
