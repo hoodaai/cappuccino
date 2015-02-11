@@ -18,5 +18,10 @@ angular.module('cappuccinoApp')
         templateUrl: 'app/account/settings/settings.html',
         controller: 'SettingsCtrl',
         authenticate: true
+      })
+      .state('forgotpassword', {
+        url: '/password/reset',
+        templateUrl: 'app/account/forgotpassword/forgotpassword.html',
+        controller: 'ForgotPasswordCtrl',
       });
   });

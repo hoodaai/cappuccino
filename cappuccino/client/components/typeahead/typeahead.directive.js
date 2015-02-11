@@ -1,7 +1,7 @@
 'use strict';
 
 // TypEahead Controller
-angular.module('typeahead', [])
+angular.module('cappuccinoApp')
     .controller('TypeaheadCtrl', function ($scope) {
 
     $scope.data = [{
