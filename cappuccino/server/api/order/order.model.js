@@ -18,14 +18,23 @@ var OrderSchema = new Schema({
   playerPosition: {type:String},
   playerDOB: {type:Date},
   
-  playerDOBRange: {type:Object},
+  playerDOBRange: {
+    Start: Date,
+    End: { type: Date }
+  },
 
   playerHeight: {type:Number},
   playerWeight: {type:Number},
 
-  playerHeightRange: {type:Object},
-  playerWeightRange: {type:Object},
+  playerHeightRange: {
+    max: Number,
+    min: Number
+  },
 
+  playerWeightRange: {
+    max: Number,
+    min: Number
+  },
 
   playerShootWith: {type:String},
   playerDefensiveScale: {type:Number},

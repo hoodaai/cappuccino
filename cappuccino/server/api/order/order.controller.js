@@ -90,21 +90,23 @@ exports.create = function(req, res) {
 
 // Updates an existing order in the DB.
 exports.update = function(req, res) {
+  console.log(req.body);
   if(req.body._id) { delete req.body._id; }
   Order.findById(req.params.id, function (err, order) {
     if (err) { return handleError(res, err); }
     if(!order) { return res.send(404); }
     var updated = _.merge(order, req.body);
-
+    console.log("updatedupdatedupdatedupdated----");
+    console.log(updated);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       //TODO: Perform update in elastic search as well
       //delete document from elasticsearch
       // then create document in elastic search
-      deleteDocumentES(order,function (err, createdOrder) { 
+      deleteDocumentES(updated,function (err, createdOrder) { 
         if(err) { return handleError(res, err); }
         console.log("document deleted");
-        createDocumentES(order,function (err, createdOrder) { 
+        createDocumentES(updated,function (err, createdOrder) { 
           if(err) { return handleError(res, err); }
           console.log("document created");
         });
@@ -112,15 +114,15 @@ exports.update = function(req, res) {
 
 
 
-      if(order.orderType == 'Recruitment') {
-        performRecruitingOrderMatch(order,function (err, matchedOrder) { 
+      if(updated.orderType == 'Recruitment') {
+        performRecruitingOrderMatch(updated,function (err, matchedOrder) { 
            if(err) { return handleError(res, err); }
            console.log("recruiting order matched response");
            console.log(matchedOrder);
            return res.json(200, matchedOrder);
         });
       } else {
-          performPlacementOrderMatch(order,function (err, matchedOrder) { 
+          performPlacementOrderMatch(updated,function (err, matchedOrder) { 
             if(err) { return handleError(res, err); }
             console.log("placement order matched response");
             console.log(matchedOrder);
@@ -256,11 +258,16 @@ function performPlacementOrderMatch(order, callback) {
                     playerWeightRangeMax: {"gte": parseInt(order.playerWeight)}
                   }
                 },
-                /*{
+                {
                   "range": {
-                    PlayerDOBRangeMax: {"gte": order.playerDOB}
+                    playerDOBRangeMax: {"gte": order.playerDOB}
                   }
-                },*/
+                },
+                  {
+                  "range": {
+                    playerDOBRangeMin: {"lte": order.playerDOB}
+                  }
+                },
                 {
                   "match" : {
                    playerPosition : order.playerPosition
@@ -320,8 +327,8 @@ function performPlacementOrderMatch(order, callback) {
 }
 
 function performRecruitingOrderMatch(order, callback) {
-  var lookingOrderType = 'Placement';
-
+  console.log("date start " + order.playerDOBRange.Start);
+  console.log("date end " + order.playerDOBRange.End);
   elasticSearchClient.search({
   index: 'matchine',
   body: {
@@ -343,38 +350,42 @@ function performRecruitingOrderMatch(order, callback) {
                     playerEquipmentFee: {"gte": 0, "lte": parseInt(order.playerEquipmentFee)}
                   }
                 },
+
+               {
+                  "range": {
+                    playerHeight: {"lte": parseInt(order.playerHeightRangeMax)}
+                  }
+                },
                 {
                   "range": {
-                    playerHeightRangeMin: {"gte": parseInt(order.playerHeight)}
+                    playerHeight: {"gte": parseInt(order.playerHeightRangeMin)}
                   }
                 },
                 {
                   "range": {
-                    playerHeightRangeMax: {"lte": parseInt(order.playerHeight)}
+                    playerWeight: {"lte": parseInt(order.playerWeightRangeMax)}
                   }
                 },
-                /*{
-                  "filtered": {
-                   "query": {
-                      "match_all": {}
-                   },
-                   "filter": {
-                      "term": {
-                         "league.id": order.league
-                      }
-                    }
+                {
+                  "range": {
+                    playerWeight: {"gte": parseInt(order.playerWeightRangeMin)}
                   }
-                },*/
+                },
+                {
+                  "range": {
+                    playerDOB: {"gte": order.playerDOBRange.Start}
+                  }
+                },
+                {
+                  "range": {
+                    playerDOB: {"lte": order.playerDOBRange.End}
+                  }
+                },
                 {
                   "match" : {
-                   orderType : lookingOrderType
+                   orderType : 'Placement'
                   }
                 },
-                /*{
-                  "match" : {
-                   leagueRecruitingFor : order.leagueRecruitingFor
-                  }
-                },*/
                 {
                   "match" : {
                    status : 'Open'
