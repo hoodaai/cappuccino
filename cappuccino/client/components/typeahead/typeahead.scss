@@ -1,0 +1,29 @@
+.typeahead li.typehead-item {
+    overflow: hidden;
+    width:300px;
+    cursor: pointer;
+}
+
+.typeahead li.typehead-item  a {
+    padding: 10px;
+    font-size: 18px;
+}
+
+.typeahead li.typehead-item {
+    overflow: hidden;
+    width:300px;
+    cursor: pointer;
+}
+
+.typeahead li.typehead-item.add-btn {
+    margin: 2px 5px;
+}
+
+.typeahead li.typehead-item.add-btn button {
+    border: none;
+}
+
+
+.typeaheadClass .modal-body .input-group-addon.glyphicon {
+    top:0px;
+}
