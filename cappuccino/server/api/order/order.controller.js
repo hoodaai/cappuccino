@@ -96,11 +96,10 @@ exports.update = function(req, res) {
     if (err) { return handleError(res, err); }
     if(!order) { return res.send(404); }
     var updated = _.merge(order, req.body);
-    console.log("updatedupdatedupdatedupdated----");
-    console.log(updated);
+    updated.markModified('leaguePlayingFor');
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-      //TODO: Perform update in elastic search as well
+      //Perform update in elastic search as well
       //delete document from elasticsearch
       // then create document in elastic search
       deleteDocumentES(updated,function (err, createdOrder) { 
@@ -273,28 +272,16 @@ function performPlacementOrderMatch(order, callback) {
                    playerPosition : order.playerPosition
                   }
                 },
-                /*{
-                  "filtered": {
-                   "query": {
-                      "match_all": {}
-                   },
-                   "filter": {
-                      "term": {
-                         "leagueRecruitingFor": ["EJHL"]
-                      }
-                    }
-                  }
-                },*/
                 {
                   "match" : {
                    orderType : 'Recruitment'
                   }
                 },
-              /*  {
+                {
                   "match" : {
-                   leagueRecruitingFor : order.leagueRecruitingFor
+                   leagueRecruitingFor :  order.leaguePlayingFor.toString()
                   }
-                },*/
+                },
                 {
                   "match" : {
                    status : 'Open'
@@ -350,25 +337,29 @@ function performRecruitingOrderMatch(order, callback) {
                     playerEquipmentFee: {"gte": 0, "lte": parseInt(order.playerEquipmentFee)}
                   }
                 },
-
                {
                   "range": {
-                    playerHeight: {"lte": parseInt(order.playerHeightRangeMax)}
+                    playerHeight: {"lte": parseInt(order.playerHeightRange.max)}
+                  }
+                },
+               {
+                  "range": {
+                    playerHeight: {"gte": parseInt(order.playerHeightRange.min)}
                   }
                 },
                 {
                   "range": {
-                    playerHeight: {"gte": parseInt(order.playerHeightRangeMin)}
+                    playerWeight: {"lte": parseInt(order.playerWeightRange.max)}
                   }
                 },
                 {
                   "range": {
-                    playerWeight: {"lte": parseInt(order.playerWeightRangeMax)}
+                    playerWeight: {"gte": parseInt(order.playerWeightRange.min)}
                   }
                 },
                 {
-                  "range": {
-                    playerWeight: {"gte": parseInt(order.playerWeightRangeMin)}
+                  "match" : {
+                   playerPosition : order.playerPosition
                   }
                 },
                 {
@@ -391,6 +382,11 @@ function performRecruitingOrderMatch(order, callback) {
                    status : 'Open'
                   }
 
+                },
+                {
+                  "match" : {
+                   leaguePlayingFor : order.leagueRecruitingFor
+                  }
                 },
                 {
                   "match" : {

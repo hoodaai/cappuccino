@@ -13,8 +13,8 @@ var OrderSchema = new Schema({
   user: { type: Schema.ObjectId, ref: 'User' },
 
   leagueRecruitingFor: {type:String},
-  leaguePlayingFor: {type:Array},
-
+  leaguePlayingFor: [{type:String}],
+  
   playerPosition: {type:String},
   playerDOB: {type:Date},
   
@@ -27,11 +27,15 @@ var OrderSchema = new Schema({
   playerWeight: {type:Number},
 
   playerHeightRange: {
+    floor: Number,
+    ceil: Number,
     max: Number,
     min: Number
   },
 
   playerWeightRange: {
+    floor: Number,
+    ceil: Number,
     max: Number,
     min: Number
   },

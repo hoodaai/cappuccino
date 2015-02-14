@@ -26,6 +26,13 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
     if(ops === 'e') {
       $http.get('/api/hockey/order/'+$location.url().split('/')[3]).success(function(order) {
         $scope.order = order;
+        $scope.order.leaguePlayingForIds = [];
+        for (var i = order.leaguePlayingFor.length - 1; i >= 0; i--) {
+            $scope.order.leaguePlayingForIds.push({id: order.leaguePlayingFor[i]});
+            console.log(order.leaguePlayingFor[i]);
+            console.log($scope.order.leaguePlayingForIds[i]);
+        };
+       
         $log.debug($scope.order);
     });
    }
@@ -55,6 +62,11 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
   }
 
   $scope.enterOrder = function(orderType, actorType) {
+    $scope.order.leaguePlayingForArr = [];
+    for (var i =  $scope.order.leaguePlayingForIds.length - 1; i >= 0; i--) {
+        $scope.order.leaguePlayingForArr.push($scope.order.leaguePlayingForIds[i].id)
+    };
+    
     var order = {
         id: $scope.order._id,
         name: $scope.order.name,
@@ -62,7 +74,7 @@ angular.module('cappuccinoApp').controller('OrderCtrl',
         actorType: actorType,
         status: 'Open',
         leagueRecruitingFor: $scope.order.leagueRecruitingFor,
-        leaguePlayingFor: $scope.order.leaguePlayingFor,
+        leaguePlayingFor: $scope.order.leaguePlayingForArr,
         playerPosition: $scope.order.playerPosition,
         playerDOB: $scope.order.playerDOB,
         playerDOBRange: $scope.order.playerDOBRange,
@@ -197,7 +209,8 @@ $scope.cancelOrderPopup = function(orderId) {
     $rootScope.userType = 'placementloopuser';
 
   /*League multiselect dropdown settings*/
-    $scope.order.leaguePlayingFor = [];
+    $scope.order.leaguePlayingForIds = [];
+    
     $scope.hockeyLeagueData = [
         {id: 'EJHL', label: 'EJHL'},
         {id: 'NAHL', label: 'NAHL'},
