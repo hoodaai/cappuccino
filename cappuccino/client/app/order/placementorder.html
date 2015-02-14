@@ -5,80 +5,102 @@
               <!--<h1 class="page-header">Placement Order Entry</h1>-->
     <h2 class="sub-header">Placement Order Entry</h2>
 
-    <div class="jumbotron">
-
-      <h4>Player Name</h4>
-      <div class="row">
-        <div class="col-md-6">
-          <input type="text" ng-model="order.name" class="form-control" required>
+    <div class="panel panel-orderform">
+      <div class="panel-heading">Player Name</div>
+      <div class="panel-body">
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
+          <input type="text" class="form-control" placeholder="Player name" ng-model="order.name" aria-describedby="sizing-addon1" required>
         </div>
       </div>
-
-        
-      <h4>Player Position <small>{{radioModel || ''}}</small></h4>
-
-      <div class="form-group  btn-group">
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Goalie'">Goalie</label>
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left wing'">Left wing</label>
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Left Defense'">Left Defense</label>
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Center'">Center</label>
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right Defense'">Right Defense</label>
-        <label class="btn btn-primary" ng-model="order.playerPosition" btn-radio="'Right wing'">Right wing</label>               
-      </div>
-      
-       <h4><i class="fa fa-calendar"></i>
-            Player's Date of Birth <small>(as date)</small></h4>
-        <div class="row">
-        <div class="col-md-6">
-            <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="order.playerDateOfBirth" is-open="opened"  ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-        </div>
-        </div>
-
     </div>
 
-    <div class="jumbotron">
-      <div class="form-group">
-        <h4>What are the Player's Physical Traits?</h4>
-         <span class="help-block">What is the player's height?</span>
+    <div class="panel panel-orderform">
+      <div class="panel-heading">What league is this for?</div>
+      <div class="panel-body">
+        <div ng-dropdown-multiselect="" options="hockeyLeagueData"
+             selected-model="order.leaguePlayingForIds" 
+             extra-settings="hockeyLeagueSettings" 
+             translation-texts="hockeyLeagueTextSettings">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-orderform">
+      <div class="panel-heading">Player Position <small>{{radioModel || ''}}</small></div>
+      <div class="panel-body">
+          <div class="btn-group" dropdown>
+            <button type="button" class="btn btn-primary">{{order.playerPosition===null ? 'Select Player Position' : order.playerPosition }}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+              <span class="sr-only">Split button!</span>
+            </button>
+            <ul class="dropdown-menu" role="menu" >
+              <li ng-repeat="playerPosition in playerPositionData">
+                <a href ng-click="choosePlayerPosition(playerPosition.label)">{{playerPosition.label}}</a>
+              </li>
+            </ul>
+          </div>
+      </div>
+    </div>
+
+
+    <div class="panel panel-orderform">
+      <div class="panel-heading"><i class="fa fa-calendar"></i>
+            Player's Date of Birth <small>(as date)</small></div>
+      <div class="panel-body">
+        <div class="input-group">
+               <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="order.playerDOB" is-open="openedFirstCal"  ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openFirstCal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+        </div>
+      </div>
+    </div>
+
+
+     <div class="panel panel-orderform">
+      <div class="panel-heading">What are the player's physical traits?</div>
+      <div class="panel-body">
+        <div class="form-group">
+           <span class="help-block">What is the player's height?</span>
+           <rzslider
+              rz-slider-floor="162"
+              rz-slider-ceil="204"
+              rz-slider-model="order.playerHeight"
+              rz-slider-translate="translateCentimeter"
+              rz-slider-step="1">
+            </rzslider>
+        </div>
+        <div class="form-group">
+          <span class="help-block">What is the player's weight?</span>
           <rzslider
-            rz-slider-floor="162"
-            rz-slider-ceil="204"
-            rz-slider-model="order.playerHeight"
-            rz-slider-translate="translateCentimeter"
-            rz-slider-step="1">
+              rz-slider-floor="150"
+              rz-slider-ceil="250"
+              rz-slider-model="order.playerWeight"
+              rz-slider-translate="translateCentimeter"
+              rz-slider-step="1">
           </rzslider>
+        </div>
       </div>
-      <div class="form-group">
-        <span class="help-block">What is the player's weight?</span>
-        <rzslider
-          rz-slider-floor="150"
-          rz-slider-ceil="250"
-          rz-slider-model="order.playerWeight"
-          rz-slider-translate="translateLbs"
-          rz-slider-step="1">
-        </rzslider>
-      </div>
+    </div>
 
-      <div class="form-group">
-        <h4>What hand does the player shoot with?</h4>
+    <div class="panel panel-orderform">
+      <div class="panel-heading">What hand does the player shoot with?</div>
+      <div class="panel-body">
+         <div class="form-group  btn-group">
+          <label class="btn btn-primary" ng-model="order.playerShootWith"
+                 btn-radio="'Left'">Left</label>
+          <label class="btn btn-primary" ng-model="order.playerShootWith" 
+                 btn-radio="'Right'">Right</label>
+         </div>
       </div>
+    </div>
 
-      <div class="form-group  btn-group">
-        <label class="btn btn-primary" ng-model="order.playerShootWith"
-                               btn-radio="'Left'">Left</label>
-        <label class="btn btn-primary" ng-model="order.playerShootWith" 
-                               btn-radio="'Right'">Right</label>
-      </div>
-
-      <div class="form-group">
-        <h4>What style of team play is the player looking for ?</h4>
-      </div>
-      <div class="form-group">
+    <div class="panel panel-orderform">
+      <div class="panel-heading">What style of team play is the player looking for ?</div>
+      <div class="panel-body">
+        <div class="form-group">
         <span class="help-block pull-left">More Defensive</span>
         <span class="help-block pull-right">More Offensive</span>
         <rzslider
@@ -89,7 +111,6 @@
           rz-slider-step="1">
         </rzslider> 
       </div>
-
       <div class="form-group">
         <span class="help-block pull-left">System Based</span>
         <span class="help-block pull-right">Free Flowing</span>
@@ -101,7 +122,6 @@
             rz-slider-step="1">
           </rzslider>              
       </div>
-
       <div class="form-group" style="margin-bottom:25px;">
         <span class="help-block pull-left">Physical</span>
         <span class="help-block pull-right">Skill</span>
@@ -113,12 +133,13 @@
             rz-slider-step="1">
           </rzslider>                    
       </div>
-
-      <div class="form-group">
-       <h4>What costs are acceptable to the player ?</h4>
       </div>
+    </div>
 
-      <div class="form-group">
+    <div class="panel panel-orderform">
+      <div class="panel-heading">What costs are acceptable to the player?</div>
+      <div class="panel-body">
+        <div class="form-group">
         <span class="help-block">Team Fee $</span>
           <rzslider
             rz-slider-floor="0"
@@ -130,40 +151,45 @@
       </div>
 
       <div class="form-group">
-        <span class="help-block">Accomodation $</span>
+        <span class="help-block">Room & Board</span>
         <rzslider
           rz-slider-floor="0"
           rz-slider-ceil="2000"
           rz-slider-model="order.playerAccomodationCost"
           rz-slider-translate="translatePerMonthAccomodation"
-          rz-slider-step="1">
+          rz-slider-step="100">
         </rzslider> 
       </div>
 
       <div class="form-group" style="margin-bottom:25px;">
-        <h4>Equipment Player Resposibility</h4>
+        <span class="help-block">Equipment Costs</span>
         <rzslider
           rz-slider-floor="0"
           rz-slider-ceil="500"
           rz-slider-model="order.playerEquipmentFee"
           rz-slider-translate="translatePerMonthEquip"
-          rz-slider-step="1">
+          rz-slider-step="25">
         </rzslider> 
       </div>
-
-      <div class="form-group">
-          <h4>Will the Player have their own transportation?</h4>
-      </div> 
-      <div class="form-group  btn-group">
-          <label class="btn btn-primary" ng-model="order.playerOwnTransport"
-                 btn-radio="'Left'">Yes</label>
-          <label class="btn btn-primary" ng-model="order.playerOwnTransport"
-                 btn-radio="'Right'">No</label>
       </div>
+    </div>
 
-      <div class="form-group">
-        <button ng-click="enterOrder('Placement Order')" class="btn btn-info pull-right">Enter Order</button>
-      </div>                          
+
+    <div class="panel panel-orderform">
+      <div class="panel-heading">Will the Player have their own transportation?</div>
+      <div class="panel-body">
+         <div class="form-group  btn-group">
+          <label class="btn btn-primary" ng-model="order.playerOwnTransport"
+                 btn-radio="'Yes'">Yes</label>
+          <label class="btn btn-primary" ng-model="order.playerOwnTransport"
+                 btn-radio="'No'">No</label>
+         </div>
+          <div class="form-group">
+        <button ng-show="order._id" ng-click="enterOrder('Placement', 'Candidate')" class="btn btn-homepage pull-right">Update Order</button>
+        <button ng-hide="order._id" ng-click="enterOrder('Placement', 'Candidate')" class="btn btn-homepage pull-right">View Matches</button>
+         </div>
+
+      </div>
     </div>
 
   </div>

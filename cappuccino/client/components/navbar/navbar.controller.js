@@ -31,7 +31,7 @@ angular.module('cappuccinoApp')
   });
 
   angular.module('cappuccinoApp').controller('ModalInstanceCtrl',
-   function ($scope, $modalInstance, $location) {
+   function ($http, $scope, $modalInstance, $location, $rootScope, $modal) {
 
   $scope.recruitingOrder = function () {
     $modalInstance.close();
@@ -46,5 +46,32 @@ angular.module('cappuccinoApp')
   $scope.ok = function () {
     $modalInstance.close();
   };
+
+
+  $scope.cancel = function () {
+  $modalInstance.close();
+};
+
+$scope.cancelOrder = function() {
+  $modalInstance.close();
+  var order = {
+        status: 'Cancelled'
+  }
+
+  $http.patch('/api/hockey/order/'+$rootScope.cancelOrderId, order).success(function(order) {
+    var modalInstance = $modal.open({
+      template: '<div class="modal-header"></div><div class="modal-body">Your Order has been Cancelled.</div><div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button></div>',
+      controller: 'ModalInstanceCtrl'
+    });
+
+    for (var i = $rootScope.orderList.length - 1; i >= 0; i--) {
+     if($rootScope.orderList[i]._id === $scope.cancelOrderId) {
+       $rootScope.orderList[i].status = "Cancelled";
+     }
+    };
+
+  });
+}
+
 
 });

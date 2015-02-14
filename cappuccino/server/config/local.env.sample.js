@@ -7,7 +7,7 @@
 
 module.exports = {
   DOMAIN:           'http://localhost:9000',
-  SESSION_SECRET:   'placementloop-secret',
+  SESSION_SECRET:   'mUyd/R(%8ES[cu.placementloop-EN6r4G7G-secret.tREnaHa7',
 
   FACEBOOK_ID:      'app-id',
   FACEBOOK_SECRET:  'secret',

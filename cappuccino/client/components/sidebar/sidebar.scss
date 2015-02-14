@@ -1,7 +1,7 @@
 /*
  * Global add-ons
  */
-$primary-color-700: #2fb3db;//#303F9F;//#1976D2;
+$primary-color-700: #238de5;//#2fb3db;//#303F9F;//#1976D2;
 $primary-color-500: #555;//green#7bd454;//#3F51B5;//#2196F3;
 
 .sub-header {
@@ -32,12 +32,14 @@ $primary-color-500: #555;//green#7bd454;//#3F51B5;//#2196F3;
     top: 50px;
     bottom: 0;
     left: 0;
-    z-index: 2000;
+    z-index: 100;
     display: block;
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     background-color: $primary-color-500;
+    -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   }
 }
 

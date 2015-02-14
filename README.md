@@ -80,6 +80,7 @@ mongodb Config File: `/etc/mongodb.conf`
 elastic http.port: 9292
 Finding how many core a machine have: grep processor /proc/cpuinfo | wc -l
 
+grunt build
 vi dist/server/app.js
 set env to production
 Change Elasticsearch port
@@ -173,3 +174,16 @@ Use spinner instead of slider
 [Iterative Prototyping](http://reecegeorge.com/iterative-prototyping.html)
 
 
+http://css-tricks.com/stackicons-icon-fonts/
+
+casperjs
+jsoup.org
+phantom.js
+pointdtreak
+
+
+Graph:
+
+http://mbostock.github.io/protovis/
+
+http://wallpaperswide.com/ice_hockey_2-wallpapers.html 

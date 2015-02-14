@@ -3,12 +3,122 @@
  border-bottom: 0px solid #eee;
 }
 .jumbotron {
-background-color: #E8F5E9;
+	background-color: #FFF;
+	-moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    font-size: 13px;
+    h4 {
+    	font-size: 14px;
+    }
 }
 
 .panel {
  border-radius: none;
 }
-.panel-body {
- background: #E8F5E9;
+
+.panel-orderform {
+	@extend .panel-default;
+
+	.panel-heading {
+		/*background-color: #fff;
+		border-color: #fff;*/
+		color: #fff;
+        background-color: #757575;
+        border-color: #ddd;
+	}
+	.panel-heading {
+		font-weight: 500;
+	}
+	.help-block {
+	   font-size: 13px;
+	}
+}
+
+.panel-orderlist {
+    @extend .panel-orderform;
+    font-size: 12px;	
+    color: #999;
+
+    .highlight {
+    	color: #555;
+        font-weight: 500
+    }
+    .btn-sm {
+		padding: 0 40px;
+		font-size: 12px;
+		color: royalblue;
+		border-radius: 0;
+		border: 0px;
+		font-weight: 500;
+		text-transform: uppercase;
+    }
+    .reject {
+    	color: #F44336;
+    }
+    h4 {
+    	margin-top: 0px;
+        margin-bottom: 5px;
+    }
+
+}
+
+.bold {
+	font-weight: 500;
+}
+.bgopen {
+	background: #E8F5E9;
+	border-color: #0D47A1;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+}
+
+.bgcancel {
+	background: #FFEBEE;
+	border-color: #0D47A1;
+	box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+}
+
+.img-responsive {
+ display: block;
+ height: auto;
+ max-width: 100%;
+}
+
+.remove-icon {
+  color: #EF5350;
+}
+.remove-icon:hover {
+  color: #B71C1C;
+}
+
+.view-icon {
+  color: #428bca;
+}
+
+.bg-royalblue {
+background-color: royalblue !important;
+color: #FFF!important;
+}
+
+.userImage {
+
+border-radius: 25px;
+-webkit-box-shadow: 0 0 4px #fff;
+-moz-box-shadow: 0 0 4px #fff;
+-ms-box-shadow: 0 0 4px #fff;
+-o-box-shadow: 0 0 4px #fff;
+box-shadow: 0 0 4px #fff;
+display: block;
+}
+
+.user-noimage {
+font-size: 20px;
+color: #fff;
+text-align: center;
+box-sizing: content-box;
+display: table-cell;
+width: 35px;
+height: 35px;
+border-radius: 25px;
+text-transform: uppercase;
+vertical-align: middle;
 }

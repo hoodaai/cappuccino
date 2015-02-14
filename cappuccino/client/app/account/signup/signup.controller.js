@@ -11,8 +11,13 @@ angular.module('cappuccinoApp')
       if(form.$valid) {
         Auth.createUser({
           name: $scope.user.name,
+          lastName: $scope.user.lastName,
           email: $scope.user.email,
-          password: $scope.user.password
+          password: $scope.user.password,
+          city: $scope.user.city,
+          state: $scope.user.state,
+          phone: $scope.user.phone,
+          role: $scope.user.role
         })
         .then( function() {
           // Account created, redirect to home
@@ -34,4 +39,10 @@ angular.module('cappuccinoApp')
     $scope.loginOauth = function(provider) {
       $window.location.href = '/auth/' + provider;
     };
+
+  $scope.chooseRole = function(role) {
+    console.log('role: '+role);
+    $scope.user.role = role;
+  };
+
   });
