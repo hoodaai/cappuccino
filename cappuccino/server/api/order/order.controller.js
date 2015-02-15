@@ -2,10 +2,11 @@
 
 var _ = require('lodash');
 var moment = require('moment');
+var config = require('../../config/environment');
 var Order = require('./order.model');
 var elasticsearch = require('elasticsearch');
 var elasticSearchClient = new elasticsearch.Client({
-  host: 'localhost:9200',
+  host: 'localhost:'+ config.elasticsearchPort,
   log: 'error'
 });
 

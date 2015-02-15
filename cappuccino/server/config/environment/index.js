@@ -21,6 +21,8 @@ var all = {
   // Server port
   port: process.env.PORT || 9000,
 
+  elasticsearchPort: process.env.ES_PORT || 9200,
+
   // Should we populate the DB with sample data?
   seedDB: false,
 
