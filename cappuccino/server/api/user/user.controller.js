@@ -54,6 +54,28 @@ exports.create = function (req, res, next) {
     sendgrid.send(email, function(err, json) {
       if (err) { return console.error(err); }
       console.log(json);
+      // send mail to admin
+
+          var email = new sendgrid.Email();
+          email.fromname = "PlacementLoop";
+          email.addTo("kevin.carroll@placementloop.com");
+          email.addTo("hoodavarun2050@gmail.com");
+          email.setFrom("domainexpertcommunity@placementloop.com");
+          email.setSubject('Welcome to PlacementLoop!');
+          //email.setText('');
+          email.setHtml(user.name + ' ' + user.lastName + ' just signed up<br/>'
+          +'His phone number is: '+ user.phone  + '<br/>'
+          +'email: ' + user.email + '<br/>'
+          +'City: ' + user.city + '<br/>'
+          +'State: ' + user.state +'<br/>'
+          +'<br/> PlacementLoop Admin');
+          // +'CLICK BELOW to confirm your HOCKEY registration and to enable your WORKSTATION!');
+          email.addHeader('X-Sent-Using', 'SendGrid-API');
+          email.addHeader('X-Transport', 'web');
+          sendgrid.send(email, function(err, json) {
+          if (err) { return console.error(err); }
+             console.log(json);
+          });
     });
 
     var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });

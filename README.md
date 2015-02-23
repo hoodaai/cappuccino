@@ -187,3 +187,17 @@ Graph:
 http://mbostock.github.io/protovis/
 
 http://wallpaperswide.com/ice_hockey_2-wallpapers.html 
+
+
+
+curl 'localhost:9292/_cat/indices?v'
+
+curl -XGET localhost:9292/
+
+curl -XDELETE 'localhost:9292/matchine?pretty'
+
+curl 'localhost:9292/_aliases?pretty=1'
+
+curl 'localhost:9292/matchine/_search'
+
+curl -XGET 'localhost:9292/_mapping/matchine'

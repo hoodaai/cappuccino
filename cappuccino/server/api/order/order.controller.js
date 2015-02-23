@@ -287,7 +287,7 @@ function performPlacementOrderMatch(order, callback) {
                    status : 'Open'
                   }
 
-                },
+                }/*,
                 {
                   "match" : {
                     playerShootWith : order.playerShootWith
@@ -297,7 +297,7 @@ function performPlacementOrderMatch(order, callback) {
                   "match" : {
                     playerOwnTransport : order.playerOwnTransport
                   }
-                }
+                }*/
             ]
         }
     }
@@ -387,7 +387,7 @@ function performRecruitingOrderMatch(order, callback) {
                   "match" : {
                    leaguePlayingFor : order.leagueRecruitingFor
                   }
-                },
+                }/*,
                 {
                   "match" : {
                     playerShootWith : order.playerShootWith
@@ -397,7 +397,7 @@ function performRecruitingOrderMatch(order, callback) {
                   "match" : {
                     playerOwnTransport : order.playerOwnTransport
                   }
-                }
+                }*/
             ]
         }
     }
