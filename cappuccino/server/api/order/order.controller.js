@@ -5,7 +5,7 @@ var moment = require('moment');
 var Order = require('./order.model');
 var elasticsearch = require('elasticsearch');
 var elasticSearchClient = new elasticsearch.Client({
-  host: 'localhost:9200',
+  host: 'localhost:9292',
   log: 'error'
 });
 
