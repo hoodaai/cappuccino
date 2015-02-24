@@ -76,25 +76,69 @@
       <div class="row">
         <div class="col-md-6">
         <small>Start date</small>
+            
+            <div class="row">
+                <div class="col-sm-4">             
+                    <select class="form-control" name="options" >
+                        <option value="{{month}}" ng-repeat="month in allMonths">{{month}}</option>
+                    </select>          
+                </div>
+                
+                <div class="col-sm-3">             
+                    <select class="form-control" name="options" >
+                        <option value="{{day}}" ng-repeat="day in allDays">{{day}}</option>
+                    </select>          
+                </div>
+                
+                <div class="col-sm-3">             
+                    <select class="form-control" name="options" >
+                        <option value="{{year}}" ng-repeat="year in allYears">{{year}}</option>
+                    </select>          
+                </div>
+            </div>
+<!--
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="order.playerDOBRange.Start" is-open="openedFirstCal"  ng-required="true" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openFirstCal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
             </p>
+-->
         </div>
 
         <div class="col-md-6">
          <small>End date</small>
+            
+            <div class="row">
+                <div class="col-sm-4">             
+                    <select class="form-control" name="options" >
+                        <option value="{{month}}" ng-repeat="month in allMonths">{{month}}</option>
+                    </select>          
+                </div>
+                
+                <div class="col-sm-3">             
+                    <select class="form-control" name="options" >
+                        <option value="{{day}}" ng-repeat="day in allDays">{{day}}</option>
+                    </select>          
+                </div>
+                
+                <div class="col-sm-3">             
+                    <select class="form-control" name="options" >
+                        <option value="{{year}}" ng-repeat="year in allYears">{{year}}</option>
+                    </select>          
+                </div>
+            </div>
+            <!--
             <p class="input-group">
               <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="order.playerDOBRange.End" is-open="openedSecondCal"  ng-required="true" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openSecondCal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
             </p>
+            -->
         </div>
 
-        </div>
+        </div> 
 
     </div>
 
@@ -108,7 +152,7 @@
               rz-slider-ceil="order.playerHeightRange.ceil"
               rz-slider-model="order.playerHeightRange.min"
               rz-slider-high="order.playerHeightRange.max"
-              rz-slider-translate="translateCentimeter"
+              rz-slider-translate="translateFeet"
               rz-slider-step="1">
             </rzslider>
         </div>

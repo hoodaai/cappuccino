@@ -64,12 +64,34 @@
       <div class="panel-heading"><i class="fa fa-calendar"></i>
             Player's Date of Birth <small>(as date)</small></div>
       <div class="panel-body">
+          
+            <div class="row">
+                <div class="col-sm-4">             
+                    <select class="form-control" name="options" >
+                        <option value="{{month}}" ng-repeat="month in allMonths">{{month}}</option>
+                    </select>          
+                </div>
+                
+                <div class="col-sm-3">             
+                    <select class="form-control" name="options" >
+                        <option value="{{day}}" ng-repeat="day in allDays">{{day}}</option>
+                    </select>          
+                </div>
+                
+                <div class="col-sm-3">             
+                    <select class="form-control" name="options" >
+                        <option value="{{year}}" ng-repeat="year in allYears">{{year}}</option>
+                    </select>          
+                </div>
+            </div>
+          <!--
         <div class="input-group">
                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="order.playerDOB" is-open="openedFirstCal"  ng-required="true" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openFirstCal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
         </div>
+-->
       </div>
     </div>
 
@@ -83,7 +105,7 @@
               rz-slider-floor="162"
               rz-slider-ceil="204"
               rz-slider-model="order.playerHeight"
-              rz-slider-translate="translateCentimeter"
+              rz-slider-translate="translateFeet"
               rz-slider-step="1">
             </rzslider>
         </div>

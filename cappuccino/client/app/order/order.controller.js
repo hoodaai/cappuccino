@@ -180,11 +180,10 @@ $scope.cancelOrderPopup = function(orderId) {
 
 
     $scope.order.playerHeightRange = {
-      min: 170,
-      max: 180,
-      floor: 162,
-      ceil: 204
-     
+      min: 5,
+      max: 10,
+      ceil: 10,
+      floor: 5
     };
 
     $scope.order.playerWeightRange = {
@@ -264,6 +263,10 @@ $scope.cancelOrderPopup = function(orderId) {
     $scope.translateLbs = function(value) {
       return value + ' lbs';
     };
+    
+    $scope.translateFeet = function(value) {
+      return value + ' ft';
+    };
 
     $scope.translateDefensiveStyle = function(value) {
       return '' + value;
@@ -276,7 +279,7 @@ $scope.cancelOrderPopup = function(orderId) {
     $scope.translatePhysicalStyle = function(value) {
        return '' + value;
     };    
-  
+
     listOrders();
     matchOrder();
 
@@ -324,6 +327,32 @@ $scope.today = function() {
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   $scope.format = $scope.formats[1];
 
+  $scope.allDays = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];   
+  $scope.allMonths = ["January","February","March","April","May","June", "July","August","September","October","November","December"];
+
+    
+  $scope.allYears = [];
+    
+    for (var i = new Date().getFullYear(); i > 1900; i--) {
+        $scope.allYears.push(i);    
+    }
+    
+ 
+
+    function daysInMonth(month, year) {
+        return new Date(year, month, 0).getDate();
+    }
+    
+    function getMonthLen(theYear, theMonth) {
+        var oneDay = 1000 * 60 * 60 * 24
+        var thisMonth = new Date(theYear, theMonth, 1)
+        var nextMonth = new Date(theYear, theMonth + 1, 1)
+        var len = Math.ceil((nextMonth.getTime() - 
+            thisMonth.getTime())/oneDay)
+        return len
+    }
+    
   });
+
 
 

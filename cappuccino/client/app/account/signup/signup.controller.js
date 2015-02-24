@@ -2,7 +2,7 @@
 
 angular.module('cappuccinoApp')
   .controller('SignupCtrl', function ($scope, Auth, $location, $window) {
-    $scope.user = {};
+    $scope.user = {role: "Domain Expert"};
     $scope.errors = {};
 
     $scope.register = function(form) {
