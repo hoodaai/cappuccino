@@ -18,7 +18,6 @@ angular.module('cappuccinoApp')
                         "lastname": "Moody",
                         "email": " mavis@email.com" }];
     
-
     $scope.name = ""
     
     $scope.search = function(query) {

@@ -265,7 +265,11 @@ $scope.cancelOrderPopup = function(orderId) {
     };
     
     $scope.translateFeet = function(value) {
-      return value + ' ft';
+        var $val = value.toString().split("."),
+            $ft = $val[0] + "ft ",
+            $in = !$val[1] ? "" : $val[1] + '\"';
+        
+      return $ft + $in ;
     };
 
     $scope.translateDefensiveStyle = function(value) {

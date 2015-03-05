@@ -102,11 +102,13 @@
         <div class="form-group">
            <span class="help-block">What is the player's height?</span>
            <rzslider
-              rz-slider-floor="162"
-              rz-slider-ceil="204"
-              rz-slider-model="order.playerHeight"
+              rz-slider-floor="order.playerHeightRange.floor"
+              rz-slider-ceil="order.playerHeightRange.ceil"
+              rz-slider-model="order.playerHeightRange.min"
+              rz-slider-high="order.playerHeightRange.max"
               rz-slider-translate="translateFeet"
-              rz-slider-step="1">
+              rz-slider-precision="2"
+              rz-slider-step="0.1">
             </rzslider>
         </div>
         <div class="form-group">
