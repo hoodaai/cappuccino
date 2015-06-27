@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Cappuccino by varunhooda</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Cappuccino</h1>
+        <p>A Recruitment Order Entry System implemented in NodeJS, ElasticSearch and MongoDB </p>
+
+        <p class="view"><a href="https://github.com/varunhooda/cappuccino">View the Project on GitHub <small>varunhooda/cappuccino</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/varunhooda/cappuccino/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/varunhooda/cappuccino/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/varunhooda/cappuccino">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="cappuccino" class="anchor" href="#cappuccino" aria-hidden="true"><span class="octicon octicon-link"></span></a>cappuccino</h1>
+
+<p>Front end stack for PlacementLoop. Its contains REST APIs along with client application</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3>
+<a id="installing-node" class="anchor" href="#installing-node" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing node</h3>
+
+<pre><code>$ sudo apt-get install python-software-properties
+Then, do this:
+
+$ sudo add-apt-repository ppa:chris-lea/node.js
+$ sudo apt-get update
+$ sudo apt-get install nodejs
+Then, you have the latest version of node.js installed.
+
+$ ln -s /usr/bin/nodejs /usr/bin/node
+</code></pre>
+
+<h3>
+<a id="installing-npm" class="anchor" href="#installing-npm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing npm</h3>
+
+<pre><code>$ sudo apt-get install npm
+$ npm install express
+</code></pre>
+
+<h3>
+<a id="installing-grunt-globally" class="anchor" href="#installing-grunt-globally" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing grunt globally</h3>
+
+<div class="highlight highlight-bash"><pre>$ npm install -g grunt-cli</pre></div>
+
+<h3>
+<a id="installing-yoeman-globally-optional" class="anchor" href="#installing-yoeman-globally-optional" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing Yoeman globally (optional)</h3>
+
+<div class="highlight highlight-bash"><pre>$ npm install -g yo
+
+$ npm list -g yo
+
+$ which yo</pre></div>
+
+<ul>
+<li>Install code generator</li>
+</ul>
+
+<div class="highlight highlight-bash"><pre>$ npm install -g generator-angular</pre></div>
+
+<pre><code>$ npm install -g generator-angular-fullstack
+</code></pre>
+
+<ul>
+<li>Creating angularJS code using Yoeman</li>
+</ul>
+
+<pre><code>$ yo
+</code></pre>
+
+<h2>
+<a id="running-application" class="anchor" href="#running-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running Application</h2>
+
+<p>Go to project home directory</p>
+
+<pre><code>$ npm install
+$ bower install
+$ grunt serve OR
+$ grunt serve:dist
+</code></pre>
+
+<h6>
+<a id="running-app-in-background" class="anchor" href="#running-app-in-background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running app in background</h6>
+
+<pre><code>$ nohup grunt serve:dist --force &amp;
+</code></pre>
+
+<h3>
+<a id="install-forever" class="anchor" href="#install-forever" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install forever</h3>
+
+<pre><code>$ sudo npm install forever -g
+$ forever start server/app.js
+$ forever stop server/app.js
+</code></pre>
+
+<p>port = 28019
+mongodb Config File: <code>/etc/mongodb.conf</code>
+elastic http.port: 9292
+Finding how many core a machine have: grep processor /proc/cpuinfo | wc -l</p>
+
+<p>grunt build
+vi dist/server/app.js
+set env to production
+Change Elasticsearch port
+go to dist
+forever start server/app.js
+node server/app.js</p>
+
+<h3>
+<a id="general-mongodb-command" class="anchor" href="#general-mongodb-command" aria-hidden="true"><span class="octicon octicon-link"></span></a>General mongodb command</h3>
+
+<pre><code>mongo
+show dbs;
+use DB;
+show collections;
+
+db.users.find();
+
+</code></pre>
+
+<h2>
+<a id="installing-maven" class="anchor" href="#installing-maven" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing maven</h2>
+
+<p>sudo apt-get install maven
+command apt-get install the Maven in /usr/share/maven.</p>
+
+<h2>
+<a id="installing-elasticsearch" class="anchor" href="#installing-elasticsearch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing Elasticsearch</h2>
+
+<pre><code>$ apt-get install elasticsearch
+
+http://localhost:9200/_plugin/bigdesk/#nodes
+http://localhost:9200/_plugin/HQ/?#cluster
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/varunhooda">varunhooda</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
