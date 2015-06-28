@@ -1,5 +1,13 @@
 # cappuccino
-Front end stack for PlacementLoop. Its contains REST APIs along with client application
+
+Prototype developed for Placementloop.com. It contains a recruitment order entry system along with the order matching functionality.
+## Technology Stack
+- AngularJS
+- NodeJS
+- ExpressJS
+- MongoDB
+- ElasticSearch
+
 
 ## Installation
 
