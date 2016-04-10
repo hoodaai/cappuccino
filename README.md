@@ -1,5 +1,5 @@
 # cappuccino
-### Checkout develop branch for latest code.
+
 
 Prototype developed for Placementloop.com. It contains a recruitment order entry system along with the order matching functionality.
 ## Technology Stack
